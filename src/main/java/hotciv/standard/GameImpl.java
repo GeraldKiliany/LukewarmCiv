@@ -30,6 +30,7 @@ import hotciv.framework.*;
 */
 
 public class GameImpl implements Game {
+
   //matt
   private Player currPlayer = Player.RED;
 
@@ -54,6 +55,7 @@ public class GameImpl implements Game {
     else
       currPlayer = Player.RED;
   }
+
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {}
   public void performUnitActionAt( Position p ) {}
