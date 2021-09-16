@@ -87,6 +87,17 @@ public class TestAlphaCiv {
   public void winnerNullWhenGameNotOver(){
     assertNull(game.getWinner());
   }
+
+  //
+  @Test
+  public void redWinsAt3000BC(){
+    while(game.getAge() != -3000) {
+      assertNull(game.getWinner());
+      game.endOfTurn();
+    }
+    assertThat(game.getWinner(), is(Player.RED));
+  }
+
 }
 
 
