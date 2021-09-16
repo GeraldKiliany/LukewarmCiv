@@ -59,7 +59,8 @@ public class GameImpl implements Game {
 
 
   //Ben
-  private Unit originUnit = new UnitImpl("archer");
+  private Player testUnitPlayer = Player.RED;
+  private Unit originUnit = new UnitImpl("archer", testUnitPlayer);
   public Unit getUnitAt( Position p ) { return originUnit; }
 
   public City getCityAt( Position p ) { return null; }
