@@ -72,7 +72,15 @@ public class GameImpl implements Game {
   public int getAge() {return age;}
 
 
-  public boolean moveUnit( Position from, Position to ) {return false;}
+  public boolean moveUnit( Position from, Position to ) {
+
+    if(getUnitAt(to) == null) {
+      unitTiles[to.getRow()][to.getColumn()]= unitTiles[from.getRow()][from.getColumn()];
+      unitTiles[from.getRow()][from.getColumn()]= null;
+    }
+
+
+    return false;}
 
   //matt
   public void endOfTurn() {

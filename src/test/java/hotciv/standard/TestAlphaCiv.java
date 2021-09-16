@@ -190,7 +190,7 @@ public class TestAlphaCiv {
     Position twoZero = new Position(2, 0);
     Position threeZero = new Position(3, 0);
     assertThat(game.getUnitAt(twoZero).getTypeString(), is("archer"));
-    assertThat(game.getUnitAt(threeZero), is("archer"));
+    assertThat(game.getUnitAt(threeZero), is(nullValue()));
     game.moveUnit(twoZero,threeZero);
     assertThat(game.getUnitAt(threeZero).getTypeString(),is("archer"));
   }
