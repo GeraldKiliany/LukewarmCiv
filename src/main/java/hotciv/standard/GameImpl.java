@@ -34,6 +34,8 @@ public class GameImpl implements Game {
   private Player currPlayer = Player.RED;
   private int age = -4000;
 
+
+
   //Gerald
   private Tile originTile = new TileImpl("plains");
   public Tile getTileAt( Position p ) { return originTile; }
@@ -47,13 +49,9 @@ public class GameImpl implements Game {
   //matt
   public Player getPlayerInTurn() {return currPlayer;}
   public Player getWinner() { return (age==-3000)?Player.RED:null; }
-  public int getAge() {
-    return age;
-  }
+  public int getAge() {return age;}
 
-  public boolean moveUnit( Position from, Position to ) {
-    return false;
-  }
+  public boolean moveUnit( Position from, Position to ) {return false;}
 
   //matt
   public void endOfTurn() {
@@ -67,9 +65,6 @@ public class GameImpl implements Game {
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {}
   public void performUnitActionAt( Position p ) {}
-
-
-
 
 }
 

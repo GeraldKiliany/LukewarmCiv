@@ -99,6 +99,10 @@ public class TestAlphaCiv {
     assertThat(game.getWinner(), is(Player.RED));
   }
 
+  //matt
+  @Test public void redCityAtOneOne(){
+    assertThat(game.getCityAt(new Position(1,1)), is(notNullValue()));
+  }
 
   //Added by Gerald
   @Test
