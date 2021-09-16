@@ -34,7 +34,9 @@ public class GameImpl implements Game {
   private Player currPlayer = Player.RED;
   private int age = -4000;
 
-  public Tile getTileAt( Position p ) { return null; }
+  //Gerald
+  private Tile originTile = new TileImpl("plains");
+  public Tile getTileAt( Position p ) { return originTile; }
   public Unit getUnitAt( Position p ) { return null; }
   public City getCityAt( Position p ) { return null; }
 
@@ -63,4 +65,10 @@ public class GameImpl implements Game {
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {}
   public void performUnitActionAt( Position p ) {}
+
+
+
+
 }
+
+
