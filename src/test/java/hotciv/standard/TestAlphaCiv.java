@@ -109,9 +109,6 @@ public class TestAlphaCiv {
     assertThat(game.getCityAt(new Position(4,1)).getOwner(), is(Player.BLUE));
   }
 
-
-
-
   //Added by Gerald
   @Test
   public void tileAtOriginShouldBePlains() {
@@ -151,7 +148,6 @@ public class TestAlphaCiv {
     Position origin = new Position(0,0);
     Position thirdRow = new Position(2,0);
     Position thirdColumn = new Position(3,0 );
-
     assertThat(game.getTileAt(origin).getTypeString(), is("plains"));
     assertThat(game.getTileAt(thirdRow).getTypeString(), is("plains"));
     assertThat(game.getTileAt(thirdColumn).getTypeString(), is("plains"));
@@ -178,8 +174,20 @@ public class TestAlphaCiv {
   public void tileAtRow2Col2isMountains(){
     Position row2Col2 = new Position(2,2);
     assertThat(game.getTileAt(row2Col2).getTypeString(), is("mountain"));
+  }
 
-
+  //matt
+  @Test
+  public void citiesAreAlwaysPopulationOne(){
+    assertThat(game.getCityAt(new Position(1,1)).getSize(), is(1));
+    assertThat(game.getCityAt(new Position(4,1)).getSize(), is(1));
+  }
+  //Added by Ben
+  @Test
+  public void unitAtFourThreeShouldBeSettlerRed() {
+    Position fourThree = new Position(4,3);
+    assertThat(game.getUnitAt(fourThree).getTypeString(), is("settler"));
+    assertThat(game.getUnitAt(fourThree).getOwner(), is(Player.BLUE));
   }
 
   //Gerald
