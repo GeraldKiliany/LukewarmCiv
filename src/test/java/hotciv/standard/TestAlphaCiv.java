@@ -81,7 +81,6 @@ public class TestAlphaCiv {
     game.endOfTurn();
     game.endOfTurn();
     assertThat(game.getAge(),is(-4000+200));
-
   }
 
   //matt
@@ -134,11 +133,9 @@ public class TestAlphaCiv {
     Position origin = new Position(0,0);
     Position thirdRow = new Position(2,0);
     Position thirdColumn = new Position(3,0 );
-
     assertThat(game.getTileAt(origin).getTypeString(), is("plains"));
     assertThat(game.getTileAt(thirdRow).getTypeString(), is("plains"));
     assertThat(game.getTileAt(thirdColumn).getTypeString(), is("plains"));
-
   }
 
   @Test
@@ -157,8 +154,6 @@ public class TestAlphaCiv {
   public void tileAtRow2Col2isMountains(){
     Position row2Col2 = new Position(2,2);
     assertThat(game.getTileAt(row2Col2).getTypeString(), is("mountain"));
-
-
   }
 
   //matt
