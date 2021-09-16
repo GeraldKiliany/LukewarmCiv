@@ -104,5 +104,14 @@ public class TestAlphaCiv {
     Position origin = new Position(0, 0);
     assertThat(game.getTileAt(origin).getTypeString(), is("plains"));
   }
+
+  //Added by Ben
+  @Test
+  public void unitAtOriginShouldBeArcher() {
+    Position origin = new Position(0, 0);
+    assertThat(game.getUnitAt(origin).getTypeString(), is("archer"));
+
+
+  }
 }
 

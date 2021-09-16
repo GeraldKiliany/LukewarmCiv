@@ -43,7 +43,7 @@ public interface Unit {
   /** return the owner of this unit.
    * @return the player that controls this unit.
    */
-  public Player getOwner();
+  //public Player getOwner();
 
   /** return the move distance left (move count).
    * A move count of N means the unit may travel
@@ -52,15 +52,15 @@ public interface Unit {
    * a new turn starts.
    * @return the move count
    */
-  public int getMoveCount();
+  //public int getMoveCount();
   
   /** return the defensive strength of this unit
    * @return defensive strength
    */
-  public int getDefensiveStrength();
+  //public int getDefensiveStrength();
   
   /** return the attack strength of this unit
    * @return attack strength
    */
-  public int getAttackingStrength();
+  //public int getAttackingStrength();
 }
