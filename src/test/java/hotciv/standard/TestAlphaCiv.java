@@ -53,7 +53,6 @@ public class TestAlphaCiv {
     assertThat(game.getPlayerInTurn(), is(Player.RED));
   }
 
-
   //matt
   @Test
   public void turnsShouldAlternate(){
@@ -83,6 +82,11 @@ public class TestAlphaCiv {
 
   }
 
+  //matt
+  @Test
+  public void winnerNullWhenGameNotOver(){
+    assertNull(game.getWinner());
+  }
 }
 
 

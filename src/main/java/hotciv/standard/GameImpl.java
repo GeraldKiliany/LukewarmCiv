@@ -30,7 +30,6 @@ import hotciv.framework.*;
 */
 
 public class GameImpl implements Game {
-
   //matt
   private Player currPlayer = Player.RED;
   private int age = -4000;
