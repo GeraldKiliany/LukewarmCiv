@@ -147,6 +147,21 @@ public class TestAlphaCiv {
 
   }
 
+  @Test
+  public void tileAtRow0Col1isHills(){
+    Position row0Col1 = new Position(0,1);
+    assertThat(game.getTileAt(row0Col1).getTypeString(), is("hills"));
+
+  }
+
+  @Test
+  public void tileAtRow2Col2isMountains(){
+    Position row2Col2 = new Position(2,2);
+    assertThat(game.getTileAt(row2Col2).getTypeString(), is("mountain"));
+
+
+  }
+
 }
 
 //end of file
