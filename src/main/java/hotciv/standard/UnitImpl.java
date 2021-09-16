@@ -1,4 +1,6 @@
-package hotciv.framework;
+package hotciv.standard;
+
+import hotciv.framework.Unit;
 
 public  class UnitImpl implements Unit {
 

@@ -119,33 +119,30 @@ public class TestAlphaCiv {
 
 
   }
-}
-  /* REMOVE ME. Not a test of HotCiv, just an example of what
-   matchers the hamcrest library has... */
-  /*
+
+  //Gerald
   @Test
-  public void shouldDefinetelyBeRemoved() {
-    // Matching null and not null values
-    // 'is' require an exact match
-    String s = null;
-    assertThat(s, is(nullValue()));
-    s = "Ok";
-    assertThat(s, is(notNullValue()));
-    assertThat(s, is("Ok"));
+  public void multipleTilesArePlains(){
+    Position origin = new Position(0,0);
+    Position thirdRow = new Position(2,0);
+    Position thirdColumn = new Position(3,0 );
 
-    // If you only validate substrings, use containsString
-    assertThat("This is a dummy test", containsString("dummy"));
+    assertThat(game.getTileAt(origin).getTypeString(), is("plains"));
+    assertThat(game.getTileAt(thirdRow).getTypeString(), is("plains"));
+    assertThat(game.getTileAt(thirdColumn).getTypeString(), is("plains"));
 
-    // Match contents of Lists
-    List<String> l = new ArrayList<String>();
-    l.add("Bimse");
-    l.add("Bumse");
-    // Note - ordering is ignored when matching using hasItems
-    assertThat(l, hasItems(new String[] {"Bumse","Bimse"}));
-
-    // Matchers may be combined, like is-not
-    assertThat(l.get(0), is(not("Bumse")));
   }
 
-   */
+  @Test
+  public void tileAtRow1Col0isOcean(){
+    Position row1Col0 = new Position(1,0);
+    assertThat(game.getTileAt(row1Col0).getTypeString(), is("ocean"));
+
+
+  }
+
+}
+
+
+
 
