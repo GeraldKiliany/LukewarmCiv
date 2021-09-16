@@ -28,7 +28,7 @@ package hotciv.framework;
 
 */
 
-public interface Game {
+public interface Game{
   // === Accessor methods ===================================
   
   /** return a specific tile.

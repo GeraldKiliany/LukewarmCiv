@@ -39,9 +39,7 @@ import java.util.*;
 public class TestAlphaCiv {
   private Game game;
 
-  /**
-   * Fixture for alphaciv testing.
-   */
+  /** Fixture for alphaciv testing. */
   @Before
   public void setUp() {
     game = new GameImpl();
@@ -55,8 +53,9 @@ public class TestAlphaCiv {
     assertThat(game.getPlayerInTurn(), is(Player.RED));
   }
 
+  //matt
   @Test
-  public void turnsShouldAlternate() {
+  public void turnsShouldAlternate(){
     assertThat(game.getPlayerInTurn(), is(Player.RED));
     game.endOfTurn();
     assertThat(game.getPlayerInTurn(), is(Player.BLUE));
@@ -65,6 +64,42 @@ public class TestAlphaCiv {
     game.endOfTurn();
     assertThat(game.getPlayerInTurn(), is(Player.BLUE));
   }
+
+  //matt
+  @Test
+  public void gameStartsAt4000BC(){
+    assertThat(game.getAge(),is(-4000));
+  }
+
+  //matt
+  @Test
+  public void gameAges100YearsPerRound(){
+    assertThat(game.getAge(),is(-4000));
+    game.endOfTurn();
+    assertThat(game.getAge(),is(-4000+100));
+    game.endOfTurn();
+    assertThat(game.getAge(),is(-4000+200));
+
+  }
+
+  //matt
+  @Test
+  public void winnerNullWhenGameNotOver(){
+    assertNull(game.getWinner());
+  }
+
+  //matt
+  @Test
+  public void redWinsAt3000BC(){
+    while(game.getAge() != -3000) {
+      assertNull(game.getWinner());
+      game.endOfTurn();
+    }
+    assertThat(game.getWinner(), is(Player.RED));
+  }
+
+
+
 
 
   //Added by Gerald
@@ -79,9 +114,6 @@ public class TestAlphaCiv {
   /* REMOVE ME. Not a test of HotCiv, just an example of what
    matchers the hamcrest library has... */
   /*
-
-  }
-
   @Test
   public void shouldDefinetelyBeRemoved() {
     // Matching null and not null values
