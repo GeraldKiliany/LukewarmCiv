@@ -104,7 +104,5 @@ public class TestAlphaCiv {
     Position origin = new Position(0, 0);
     assertThat(game.getTileAt(origin).getTypeString(), is("plains"));
   }
-
-
 }
 
