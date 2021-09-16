@@ -95,6 +95,7 @@ public class TestAlphaCiv {
       assertNull(game.getWinner());
       game.endOfTurn();
     }
+    assertThat(game.getAge(),is(-3000));
     assertThat(game.getWinner(), is(Player.RED));
   }
 
@@ -110,8 +111,6 @@ public class TestAlphaCiv {
   public void unitAtOriginShouldBeArcher() {
     Position origin = new Position(0, 0);
     assertThat(game.getUnitAt(origin).getTypeString(), is("archer"));
-
-
   }
 }
 
