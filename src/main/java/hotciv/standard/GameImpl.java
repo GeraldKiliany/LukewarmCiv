@@ -35,30 +35,26 @@ public class GameImpl implements Game {
   private int age = -4000;
   private CityImpl[][] cities = new CityImpl[8][8];
 
-
-
   //Gerald
   int mapRows = 8, mapCols = 8; //Assume map for AlphaCiv is 8 by 8
   private Tile originTile = new TileImpl("plains");
   public Tile getTileAt( Position p ) { return gameTiles[p.getRow()][p.getColumn()]; }
   private Tile gameTiles[][] = new Tile[mapRows][mapCols];
 
-  public GameImpl(){
+  public GameImpl() {
 
-    for(int currRow = 0; currRow < mapRows; currRow++){
-      for(int currCol = 0; currCol < mapCols; currCol++){
-          gameTiles[currRow][currCol] = new TileImpl("plains");
-        }
+    for (int currRow = 0; currRow < mapRows; currRow++) {
+      for (int currCol = 0; currCol < mapCols; currCol++) {
+        gameTiles[currRow][currCol] = new TileImpl("plains");
       }
-    gameTiles[1][0]= new TileImpl("ocean");
-    gameTiles[0][1]= new TileImpl("hills");
-    gameTiles[2][2]= new TileImpl("mountain");
     }
-
+    gameTiles[1][0] = new TileImpl("ocean");
+    gameTiles[0][1] = new TileImpl("hills");
+    gameTiles[2][2] = new TileImpl("mountain");
     cities[1][1] = new CityImpl(Player.RED);
     cities[4][1] = new CityImpl(Player.BLUE);
-
   }
+
 
 
 
@@ -67,12 +63,12 @@ public class GameImpl implements Game {
   private Unit originUnit = new UnitImpl("archer", testUnitPlayer);
   public Unit getUnitAt( Position p ) { return originUnit; }
 
-  public City getCityAt( Position p ) { return cities[p.getRow()][p.getColumn()]; }
-
   //matt
+  public City getCityAt( Position p ) { return cities[p.getRow()][p.getColumn()]; }
   public Player getPlayerInTurn() {return currPlayer;}
   public Player getWinner() { return (age==-3000)?Player.RED:null; }
   public int getAge() {return age;}
+
 
   public boolean moveUnit( Position from, Position to ) {return false;}
 
