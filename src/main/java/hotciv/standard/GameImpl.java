@@ -37,8 +37,28 @@ public class GameImpl implements Game {
 
 
   //Gerald
+  int mapRows = 8, mapCols = 8; //Assume map for AlphaCiv is 8 by 8
   private Tile originTile = new TileImpl("plains");
-  public Tile getTileAt( Position p ) { return originTile; }
+  public Tile getTileAt( Position p ) { return gameTiles[p.getRow()][p.getColumn()]; }
+  private Tile gameTiles[][] = new Tile[mapRows][mapCols];
+
+  public GameImpl(){
+
+    for(int currRow = 0; currRow < mapRows; currRow++){
+      for(int currCol = 0; currCol < mapCols; currCol++){
+        if(currRow == 1 && currCol == 0) {
+          gameTiles[currRow][currCol]= new TileImpl("ocean");
+          System.out.println("Successfully added "+ gameTiles[1][0].getTypeString());
+        }
+        else {
+          gameTiles[currRow][currCol] = new TileImpl("plains");
+        }
+      }
+    }
+
+  }
+
+
 
   //Ben
   private Unit originUnit = new UnitImpl("archer");
@@ -69,3 +89,4 @@ public class GameImpl implements Game {
 }
 
 
+//end of file

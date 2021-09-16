@@ -48,7 +48,7 @@ public class TestAlphaCiv {
   // FRS p. 455 states that 'Red is the first player to take a turn'.
   @Test
   public void shouldBeRedAsStartingPlayer() {
-    assertThat(game, is(notNullValue()));
+    //assertThat(game, is(notNullValue()));
     // TODO: reenable the assert below to get started...
     assertThat(game.getPlayerInTurn(), is(Player.RED));
   }
@@ -104,11 +104,16 @@ public class TestAlphaCiv {
     assertThat(game.getCityAt(new Position(1,1)), is(notNullValue()));
   }
 
+
+
+
   //Added by Gerald
   @Test
   public void tileAtOriginShouldBePlains() {
     Position origin = new Position(0, 0);
     assertThat(game.getTileAt(origin).getTypeString(), is("plains"));
+
+
   }
 
   //Added by Ben
@@ -116,8 +121,32 @@ public class TestAlphaCiv {
   public void unitAtOriginShouldBeArcher() {
     Position origin = new Position(0, 0);
     assertThat(game.getUnitAt(origin).getTypeString(), is("archer"));
+
+
   }
 
+  //Gerald
+  @Test
+  public void multipleTilesArePlains(){
+    Position origin = new Position(0,0);
+    Position thirdRow = new Position(2,0);
+    Position thirdColumn = new Position(3,0 );
+
+    assertThat(game.getTileAt(origin).getTypeString(), is("plains"));
+    assertThat(game.getTileAt(thirdRow).getTypeString(), is("plains"));
+    assertThat(game.getTileAt(thirdColumn).getTypeString(), is("plains"));
+
+  }
+
+  @Test
+  public void tileAtRow1Col0isOcean(){
+    Position row1Col0 = new Position(1,0);
+    assertThat(game.getTileAt(row1Col0).getTypeString(), is("ocean"));
+
+
+
+  }
 
 }
 
+//end of file
