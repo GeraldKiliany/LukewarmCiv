@@ -162,7 +162,24 @@ public class TestAlphaCiv {
     assertThat(game.getCityAt(new Position(1,1)).getSize(), is(1));
     assertThat(game.getCityAt(new Position(4,1)).getSize(), is(1));
   }
+  //Added by Ben
+  @Test
+  public void unitAtFourThreeShouldBeSettlerRed() {
+    Position fourThree = new Position(4,3);
+    assertThat(game.getUnitAt(fourThree).getTypeString(), is("settler"));
+    assertThat(game.getUnitAt(fourThree).getOwner(), is(Player.BLUE));
+  }
 
+  //Gerald
+  @Test
+  public void moveArcherFromTwoZeroToThreeZero(){
+    Position twoZero = new Position(2, 0);
+    Position threeZero = new Position(3, 0);
+    assertThat(game.getUnitAt(twoZero).getTypeString(), is("archer"));
+    assertThat(game.getUnitAt(threeZero), is("archer"));
+    game.moveUnit(twoZero,threeZero);
+    assertThat(game.getUnitAt(threeZero).getTypeString(),is("archer"));
+  }
 }
 
 //end of file
