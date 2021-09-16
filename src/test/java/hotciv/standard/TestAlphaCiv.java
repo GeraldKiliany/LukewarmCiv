@@ -95,6 +95,7 @@ public class TestAlphaCiv {
       assertNull(game.getWinner());
       game.endOfTurn();
     }
+    assertThat(game.getAge(),is(-3000));
     assertThat(game.getWinner(), is(Player.RED));
   }
 
@@ -139,10 +140,9 @@ public class TestAlphaCiv {
     assertThat(game.getTileAt(row1Col0).getTypeString(), is("ocean"));
 
 
+
   }
 
 }
-
-
 
 

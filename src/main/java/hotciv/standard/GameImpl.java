@@ -65,9 +65,7 @@ public class GameImpl implements Game {
   public City getCityAt( Position p ) { return null; }
 
   //matt
-  public Player getPlayerInTurn() {
-    return currPlayer;
-  }
+  public Player getPlayerInTurn() {return currPlayer;}
   public Player getWinner() { return (age==-3000)?Player.RED:null; }
   public int getAge() {
     return age;
