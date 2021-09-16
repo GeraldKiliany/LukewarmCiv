@@ -33,7 +33,7 @@ public class GameImpl implements Game {
 
   //matt
   private Player currPlayer = Player.RED;
-  private int age;
+  private int age = 4000;
 
   public Tile getTileAt( Position p ) { return null; }
   public Unit getUnitAt( Position p ) { return null; }
