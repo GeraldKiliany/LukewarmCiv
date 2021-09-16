@@ -106,7 +106,7 @@ public class TestAlphaCiv {
   @Test
   public void tileAtOriginShouldBePlains() {
     Position origin = new Position(0, 0);
-    assertThat(game.getTileAt(origin), is("plains"));
+    assertThat(game.getTileAt(origin).getTypeString(), is("plains"));
 
 
   }
