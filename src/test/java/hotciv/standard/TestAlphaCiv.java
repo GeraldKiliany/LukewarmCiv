@@ -39,7 +39,9 @@ import java.util.*;
 public class TestAlphaCiv {
   private Game game;
 
-  /** Fixture for alphaciv testing. */
+  /**
+   * Fixture for alphaciv testing.
+   */
   @Before
   public void setUp() {
     game = new GameImpl();
@@ -48,13 +50,13 @@ public class TestAlphaCiv {
   // FRS p. 455 states that 'Red is the first player to take a turn'.
   @Test
   public void shouldBeRedAsStartingPlayer() {
-    assertThat(game, is(notNullValue()));
+    //assertThat(game, is(notNullValue()));
     // TODO: reenable the assert below to get started...
     assertThat(game.getPlayerInTurn(), is(Player.RED));
   }
 
   @Test
-  public void turnsShouldAlternate(){
+  public void turnsShouldAlternate() {
     assertThat(game.getPlayerInTurn(), is(Player.RED));
     game.endOfTurn();
     assertThat(game.getPlayerInTurn(), is(Player.BLUE));
@@ -64,16 +66,22 @@ public class TestAlphaCiv {
     assertThat(game.getPlayerInTurn(), is(Player.BLUE));
   }
 
+
+  //Added by Gerald
+  @Test
+  public void tileAtOriginShouldBePlains() {
+    Position origin = new Position(0, 0);
+    assertThat(game.getTileAt(origin), is("plains"));
+
+
+  }
 }
-
-
-
-
-
-
   /* REMOVE ME. Not a test of HotCiv, just an example of what
    matchers the hamcrest library has... */
   /*
+
+  }
+
   @Test
   public void shouldDefinetelyBeRemoved() {
     // Matching null and not null values
