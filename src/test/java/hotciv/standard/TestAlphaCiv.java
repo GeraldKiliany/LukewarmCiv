@@ -76,7 +76,9 @@ public class TestAlphaCiv {
   public void gameAges100YearsPerRound(){
     assertThat(game.getAge(),is(-4000));
     game.endOfTurn();
+    game.endOfTurn();
     assertThat(game.getAge(),is(-4000+100));
+    game.endOfTurn();
     game.endOfTurn();
     assertThat(game.getAge(),is(-4000+200));
 
@@ -181,13 +183,6 @@ public class TestAlphaCiv {
   public void citiesAreAlwaysPopulationOne(){
     assertThat(game.getCityAt(new Position(1,1)).getSize(), is(1));
     assertThat(game.getCityAt(new Position(4,1)).getSize(), is(1));
-  }
-  //Added by Ben
-  @Test
-  public void unitAtFourThreeShouldBeSettlerRed() {
-    Position fourThree = new Position(4,3);
-    assertThat(game.getUnitAt(fourThree).getTypeString(), is("settler"));
-    assertThat(game.getUnitAt(fourThree).getOwner(), is(Player.BLUE));
   }
 
   //Gerald
