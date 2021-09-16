@@ -76,7 +76,9 @@ public class TestAlphaCiv {
   public void gameAges100YearsPerRound(){
     assertThat(game.getAge(),is(-4000));
     game.endOfTurn();
+    game.endOfTurn();
     assertThat(game.getAge(),is(-4000+100));
+    game.endOfTurn();
     game.endOfTurn();
     assertThat(game.getAge(),is(-4000+200));
 

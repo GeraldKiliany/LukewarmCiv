@@ -42,7 +42,6 @@ public class GameImpl implements Game {
   private Tile gameTiles[][] = new Tile[mapRows][mapCols];
 
   public GameImpl() {
-
     for (int currRow = 0; currRow < mapRows; currRow++) {
       for (int currCol = 0; currCol < mapCols; currCol++) {
         gameTiles[currRow][currCol] = new TileImpl("plains");
@@ -54,9 +53,6 @@ public class GameImpl implements Game {
     cities[1][1] = new CityImpl(Player.RED);
     cities[4][1] = new CityImpl(Player.BLUE);
   }
-
-
-
 
   //Ben
   private Player testUnitPlayer = Player.RED;
@@ -74,11 +70,12 @@ public class GameImpl implements Game {
 
   //matt
   public void endOfTurn() {
-    age+=100;
     if (currPlayer == Player.RED)
       currPlayer = Player.BLUE;
-    else
+    else {
       currPlayer = Player.RED;
+      age+=100;
+    }
   }
 
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
