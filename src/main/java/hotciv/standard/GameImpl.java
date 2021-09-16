@@ -33,6 +33,7 @@ public class GameImpl implements Game {
   //matt
   private Player currPlayer = Player.RED;
   private int age = -4000;
+  private CityImpl[][] cities = new CityImpl[8][8];
 
 
 
@@ -56,6 +57,9 @@ public class GameImpl implements Game {
       }
     }
 
+    cities[1][1] = new CityImpl(Player.RED);
+    cities[4][1] = new CityImpl(Player.BLUE);
+
   }
 
 
@@ -64,7 +68,7 @@ public class GameImpl implements Game {
   private Unit originUnit = new UnitImpl("archer");
   public Unit getUnitAt( Position p ) { return originUnit; }
 
-  public City getCityAt( Position p ) { return null; }
+  public City getCityAt( Position p ) { return cities[p.getRow()][p.getColumn()]; }
 
   //matt
   public Player getPlayerInTurn() {return currPlayer;}
