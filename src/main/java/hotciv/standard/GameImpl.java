@@ -53,15 +53,18 @@ public class GameImpl implements Game {
     gameTiles[2][2] = new TileImpl("mountain");
     cities[1][1] = new CityImpl(Player.RED);
     cities[4][1] = new CityImpl(Player.BLUE);
+
+    Player redPlayer = Player.RED;
+    Player bluePlayer = Player.BLUE;
+
+    unitTiles[2][0] = new UnitImpl("archer", redPlayer);
+    unitTiles[4][3] = new UnitImpl("settler", redPlayer);
+    unitTiles[3][2] = new UnitImpl("legion", bluePlayer);
   }
 
-
-
-
   //Ben
-  private Player testUnitPlayer = Player.RED;
-  private Unit originUnit = new UnitImpl("archer", testUnitPlayer);
-  public Unit getUnitAt( Position p ) { return originUnit; }
+  public Unit getUnitAt( Position p ) { return unitTiles[p.getRow()][p.getColumn()]; }
+  private Unit unitTiles[][] = new Unit[mapRows][mapCols];
 
   //matt
   public City getCityAt( Position p ) { return cities[p.getRow()][p.getColumn()]; }
