@@ -47,14 +47,12 @@ public class GameImpl implements Game {
 
     for(int currRow = 0; currRow < mapRows; currRow++){
       for(int currCol = 0; currCol < mapCols; currCol++){
-        if(currRow == 1 && currCol == 0) {
-          gameTiles[currRow][currCol]= new TileImpl("ocean");
-          System.out.println("Successfully added "+ gameTiles[1][0].getTypeString());
-        }
-        else {
           gameTiles[currRow][currCol] = new TileImpl("plains");
         }
       }
+    gameTiles[1][0]= new TileImpl("ocean");
+    gameTiles[0][1]= new TileImpl("hills");
+    gameTiles[2][2]= new TileImpl("mountain");
     }
 
     cities[1][1] = new CityImpl(Player.RED);
@@ -65,7 +63,8 @@ public class GameImpl implements Game {
 
 
   //Ben
-  private Unit originUnit = new UnitImpl("archer");
+  private Player testUnitPlayer = Player.RED;
+  private Unit originUnit = new UnitImpl("archer", testUnitPlayer);
   public Unit getUnitAt( Position p ) { return originUnit; }
 
   public City getCityAt( Position p ) { return cities[p.getRow()][p.getColumn()]; }

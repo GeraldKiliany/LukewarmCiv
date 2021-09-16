@@ -43,7 +43,7 @@ public interface Unit {
   /** return the owner of this unit.
    * @return the player that controls this unit.
    */
-  //public Player getOwner();
+  public Player getOwner();
 
   /** return the move distance left (move count).
    * A move count of N means the unit may travel

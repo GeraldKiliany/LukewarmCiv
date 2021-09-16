@@ -123,11 +123,10 @@ public class TestAlphaCiv {
 
   //Added by Ben
   @Test
-  public void unitAtOriginShouldBeArcher() {
-    Position origin = new Position(0, 0);
-    assertThat(game.getUnitAt(origin).getTypeString(), is("archer"));
-
-
+  public void unitAtTwoZeroShouldBeArcherRed() {
+    Position twoZero = new Position(2, 0);
+    assertThat(game.getUnitAt(twoZero).getTypeString(), is("archer"));
+    assertThat(game.getUnitAt(twoZero).getOwner(), is(Player.RED));
   }
 
   //Gerald
@@ -148,6 +147,21 @@ public class TestAlphaCiv {
     Position row1Col0 = new Position(1,0);
     assertThat(game.getTileAt(row1Col0).getTypeString(), is("ocean"));
 
+
+
+  }
+
+  @Test
+  public void tileAtRow0Col1isHills(){
+    Position row0Col1 = new Position(0,1);
+    assertThat(game.getTileAt(row0Col1).getTypeString(), is("hills"));
+
+  }
+
+  @Test
+  public void tileAtRow2Col2isMountains(){
+    Position row2Col2 = new Position(2,2);
+    assertThat(game.getTileAt(row2Col2).getTypeString(), is("mountain"));
 
 
   }
