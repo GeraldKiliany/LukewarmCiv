@@ -110,6 +110,15 @@ public class TestAlphaCiv {
 
 
   }
+
+  //Added by Ben
+  @Test
+  public void unitAtOriginShouldBeArcher() {
+    Position origin = new Position(0, 0);
+    assertThat(game.getUnitAt(origin).getTypeString(), is("archer"));
+
+
+  }
 }
   /* REMOVE ME. Not a test of HotCiv, just an example of what
    matchers the hamcrest library has... */

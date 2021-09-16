@@ -37,7 +37,11 @@ public class GameImpl implements Game {
   //Gerald
   private Tile originTile = new TileImpl("plains");
   public Tile getTileAt( Position p ) { return originTile; }
-  public Unit getUnitAt( Position p ) { return null; }
+
+  //Ben
+  private Unit originUnit = new UnitImpl("archer");
+  public Unit getUnitAt( Position p ) { return originUnit; }
+
   public City getCityAt( Position p ) { return null; }
 
   //matt
