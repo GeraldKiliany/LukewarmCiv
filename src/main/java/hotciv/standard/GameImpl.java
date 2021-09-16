@@ -41,7 +41,7 @@ public class GameImpl implements Game {
   public Player getPlayerInTurn() {
     return currPlayer;
   }
-  public Player getWinner() { return null; }
+  public Player getWinner() { return (age==-3000)?Player.RED:null; }
 
   //matt
   public int getAge() {
