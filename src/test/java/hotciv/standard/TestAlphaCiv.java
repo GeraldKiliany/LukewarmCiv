@@ -141,7 +141,7 @@ public class TestAlphaCiv {
     assertThat(game.getTileAt(thirdColumn).getTypeString(), is("plains"));
 
   }
-
+  //Gerald
   @Test
   public void tileAtRow1Col0isOcean(){
     Position row1Col0 = new Position(1,0);
@@ -150,20 +150,39 @@ public class TestAlphaCiv {
 
 
   }
-
+  //Gerald
   @Test
   public void tileAtRow0Col1isHills(){
     Position row0Col1 = new Position(0,1);
     assertThat(game.getTileAt(row0Col1).getTypeString(), is("hills"));
 
   }
-
+  //Gerald
   @Test
   public void tileAtRow2Col2isMountains(){
     Position row2Col2 = new Position(2,2);
     assertThat(game.getTileAt(row2Col2).getTypeString(), is("mountain"));
 
 
+  }
+
+  //Gerald
+  @Test
+  public void moveArcherFromTwoZeroToThreeZero(){
+    Position twoZero = new Position(2, 0);
+    Position threeZero = new Position(3, 0);
+    assertThat(game.getUnitAt(twoZero).getTypeString(), is("archer"));
+    assertThat(game.getUnitAt(threeZero), is("archer"));
+    game.moveUnit(twoZero,threeZero);
+    assertThat(game.getUnitAt(threeZero).getTypeString(),is("archer"));
+  }
+
+  //Added by Ben
+  @Test
+  public void unitAtFourThreeShouldBeSettlerRed() {
+    Position fourThree = new Position(4,3);
+    assertThat(game.getUnitAt(fourThree).getTypeString(), is("settler"));
+    assertThat(game.getUnitAt(fourThree).getOwner(), is(Player.BLUE));
   }
 
 }
