@@ -53,6 +53,7 @@ public class GameImpl implements Game {
 
   //matt
   public void endOfTurn() {
+    age-=100;
     if (currPlayer == Player.RED)
       currPlayer = Player.BLUE;
     else
