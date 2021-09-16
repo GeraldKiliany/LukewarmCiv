@@ -33,27 +33,29 @@ public class GameImpl implements Game {
 
   //matt
   private Player currPlayer = Player.RED;
-  private int age = 4000;
+  private int age = -4000;
 
   public Tile getTileAt( Position p ) { return null; }
   public Unit getUnitAt( Position p ) { return null; }
   public City getCityAt( Position p ) { return null; }
 
-  //matt
   public Player getPlayerInTurn() {
     return currPlayer;
   }
   public Player getWinner() { return null; }
+
+  //matt
   public int getAge() {
     return age;
   }
+
   public boolean moveUnit( Position from, Position to ) {
     return false;
   }
 
   //matt
   public void endOfTurn() {
-    age-=100;
+    age+=100;
     if (currPlayer == Player.RED)
       currPlayer = Player.BLUE;
     else

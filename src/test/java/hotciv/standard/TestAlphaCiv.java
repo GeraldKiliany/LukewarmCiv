@@ -53,6 +53,8 @@ public class TestAlphaCiv {
     assertThat(game.getPlayerInTurn(), is(Player.RED));
   }
 
+
+  //matt
   @Test
   public void turnsShouldAlternate(){
     assertThat(game.getPlayerInTurn(), is(Player.RED));
@@ -64,18 +66,20 @@ public class TestAlphaCiv {
     assertThat(game.getPlayerInTurn(), is(Player.BLUE));
   }
 
+  //matt
   @Test
   public void gameStartsAt4000BC(){
-    assertThat(game.getAge(),is(4000));
+    assertThat(game.getAge(),is(-4000));
   }
 
+  //matt
   @Test
   public void gameAges100YearsPerRound(){
-    assertThat(game.getAge(),is(4000));
+    assertThat(game.getAge(),is(-4000));
     game.endOfTurn();
-    assertThat(game.getAge(),is(4000-100));
+    assertThat(game.getAge(),is(-4000+100));
     game.endOfTurn();
-    assertThat(game.getAge(),is(4000-200));
+    assertThat(game.getAge(),is(-4000+200));
 
   }
 
