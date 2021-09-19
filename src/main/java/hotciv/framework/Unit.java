@@ -40,6 +40,12 @@ public interface Unit {
    */
   public String getTypeString();
 
+  /** change the type of the unit
+   * @param unitType a string defining the type of unit the unit
+   * is changing to
+   */
+  public void setTypeString( String unitType );
+
   /** return the owner of this unit.
    * @return the player that controls this unit.
    */

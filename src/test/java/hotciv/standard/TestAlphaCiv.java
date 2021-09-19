@@ -143,6 +143,17 @@ public class TestAlphaCiv {
     assertThat(game.getUnitAt(threeTwo).getOwner(), is(Player.BLUE));
   }
 
+  //Added by Ben
+  @Test
+  public void changingUnitFromSettlerRedToLegionBlue() {
+    Position twoZero = new Position(2,0);
+    assertThat(game.getUnitAt(twoZero).getTypeString(), is("archer"));
+    assertThat(game.getUnitAt(twoZero).getOwner(), is(Player.RED));
+
+    game.getUnitAt(twoZero).setTypeString("legion");
+    assertThat(game.getUnitAt(twoZero).getTypeString(), is("legion"));
+  }
+
   //Gerald
   @Test
   public void multipleTilesArePlains(){
