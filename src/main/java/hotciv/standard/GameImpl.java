@@ -33,13 +33,14 @@ public class GameImpl implements Game {
   //matt
   private Player currPlayer = Player.RED;
   private int age = -4000;
-  private CityImpl[][] cities = new CityImpl[8][8];
 
   //Gerald
   int mapRows = 8, mapCols = 8; //Assume map for AlphaCiv is 8 by 8
   private Tile originTile = new TileImpl("plains");
   public Tile getTileAt( Position p ) { return gameTiles[p.getRow()][p.getColumn()]; }
   private Tile gameTiles[][] = new Tile[mapRows][mapCols];
+  //matt
+  private CityImpl[][] cities = new CityImpl[mapRows][mapCols];
 
   public GameImpl() {
     for (int currRow = 0; currRow < mapRows; currRow++) {
