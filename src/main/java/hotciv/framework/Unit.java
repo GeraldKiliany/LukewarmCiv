@@ -51,6 +51,11 @@ public interface Unit {
    */
   public Player getOwner();
 
+  /** change the owner of the unit
+   * @param newOwner the Player that the unit now belongs to
+   */
+  public void setOwner( Player newOwner );
+
   /** return the move distance left (move count).
    * A move count of N means the unit may travel
    * a distance of N in this turn. The move count

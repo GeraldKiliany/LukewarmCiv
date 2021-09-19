@@ -152,6 +152,9 @@ public class TestAlphaCiv {
 
     game.getUnitAt(twoZero).setTypeString("legion");
     assertThat(game.getUnitAt(twoZero).getTypeString(), is("legion"));
+
+    game.getUnitAt(twoZero).setOwner(Player.BLUE);
+    assertThat(game.getUnitAt(twoZero).getOwner(), is(Player.BLUE));
   }
 
   //Gerald
