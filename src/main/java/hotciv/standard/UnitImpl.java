@@ -16,4 +16,7 @@ public  class UnitImpl implements Unit {
         return type;
     }
     public Player getOwner() { return owner; }
+    public void setTypeString( String unitType ) {
+        type = unitType;
+    }
 }
