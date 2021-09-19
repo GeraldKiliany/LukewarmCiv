@@ -57,7 +57,11 @@ public class GameImpl implements Game {
     Player redPlayer = Player.RED;
     Player bluePlayer = Player.BLUE;
 
-    unitTiles[2][0] = new UnitImpl("archer", redPlayer);
+    //unitTiles[2][0] = new UnitImpl("archer", redPlayer);
+    unitTiles[2][0] = new UnitImpl();
+    unitTiles[2][0].setTypeString("archer");
+    unitTiles[2][0].setOwner(Player.RED);
+
     unitTiles[4][3] = new UnitImpl("settler", redPlayer);
     unitTiles[3][2] = new UnitImpl("legion", bluePlayer);
   }
