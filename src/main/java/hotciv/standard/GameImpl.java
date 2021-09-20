@@ -37,7 +37,7 @@ public class GameImpl implements Game {
   //Gerald
   int mapRows = 8, mapCols = 8; //Assume map for AlphaCiv is 8 by 8
 
- /* public Tile getTileAt(Position p) { return originTile}; //"Fake it" version of method, used in TDD process
+ /* public Tile getTileAt(Position p) { return originTile}; //The "Fake it" version of method, used in TDD process
  private Tile originTile = new TileImpl("plains"); */
 
   public Tile getTileAt( Position p ) { return gameTiles[p.getRow()][p.getColumn()]; }
