@@ -110,14 +110,6 @@ public class TestAlphaCiv {
     assertThat(game.getCityAt(new Position(4,1)).getOwner(), is(Player.BLUE));
   }
 
-  //Added by Gerald
-  @Test
-  public void tileAtOriginShouldBePlains() {
-    Position origin = new Position(0, 0);
-    assertThat(game.getTileAt(origin).getTypeString(), is("plains"));
-
-
-  }
 
   //Added by Ben
   @Test
@@ -155,6 +147,14 @@ public class TestAlphaCiv {
 
     game.getUnitAt(twoZero).setOwner(Player.BLUE);
     assertThat(game.getUnitAt(twoZero).getOwner(), is(Player.BLUE));
+  }
+
+  //Added by Gerald
+  @Test
+  public void tileAtOriginShouldBePlains() {
+    Position origin = new Position(0, 0);
+    assertThat(game.getTileAt(origin).getTypeString(), is("plains"));
+
   }
 
   //Gerald
@@ -209,23 +209,6 @@ public class TestAlphaCiv {
     assertThat(game.getUnitAt(threeZero).getTypeString(),is("archer"));
   }
 
-  //matt
-  @Test
-  public void citiesProduce6ProductionPerRound(){
-    assertThat(game.getCityAt(new Position(1,1)).getTreasury(),is(0));
-    assertThat(game.getCityAt(new Position(4,1)).getTreasury(),is(0));
-    game.endOfTurn();
-    assertThat(game.getCityAt(new Position(1,1)).getTreasury(),is(6));
-    game.endOfTurn();
-    assertThat(game.getCityAt(new Position(4,1)).getTreasury(),is(6));
-
-
-
-  }
-
-
-  //Test unit moving only one space at a time
-
   //Gerald
   @Test
   public void legionAttackingSettlerWins(){
@@ -242,8 +225,24 @@ public class TestAlphaCiv {
 
   }
 
+  //matt
+  @Test
+  public void citiesProduce6ProductionPerRound(){
+    assertThat(game.getCityAt(new Position(1,1)).getTreasury(),is(0));
+    assertThat(game.getCityAt(new Position(4,1)).getTreasury(),is(0));
+    game.endOfTurn();
+    assertThat(game.getCityAt(new Position(1,1)).getTreasury(),is(6));
+    game.endOfTurn();
+    assertThat(game.getCityAt(new Position(4,1)).getTreasury(),is(6));
 
-  //Test for attacking units , implementation,
+
+
+  }
+
+
+
+
+  //TODO: Add test for moving units works only for adjacent tiles
   //Units for
 }
 
