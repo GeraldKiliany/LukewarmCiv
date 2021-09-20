@@ -15,10 +15,10 @@ public class CityImpl implements City {
 
     public Player getOwner(){return owner;}
     public int getSize(){return size;}
-    public int getTreasury(){return 0;}
+    public int getTreasury(){return treasury;}
     public String getProduction(){return null;}
     public String getWorkforceFocus(){return null;}
-    public void endOfTurn(){
-        treasury += 6;
+    public void incrementTreasury(int a){
+        treasury += a;
     }
 }

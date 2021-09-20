@@ -209,6 +209,20 @@ public class TestAlphaCiv {
     assertThat(game.getUnitAt(threeZero).getTypeString(),is("archer"));
   }
 
+  //matt
+  @Test
+  public void citiesProduce6ProductionPerRound(){
+    assertThat(game.getCityAt(new Position(1,1)).getTreasury(),is(0));
+    assertThat(game.getCityAt(new Position(4,1)).getTreasury(),is(0));
+    game.endOfTurn();
+    assertThat(game.getCityAt(new Position(1,1)).getTreasury(),is(6));
+    game.endOfTurn();
+    assertThat(game.getCityAt(new Position(4,1)).getTreasury(),is(6));
+
+
+
+  }
+
 }
 
 //end of file

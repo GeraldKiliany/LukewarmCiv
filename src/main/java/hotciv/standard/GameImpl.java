@@ -89,12 +89,20 @@ public class GameImpl implements Game {
 
   //matt
   public void endOfTurn() {
+    for (int i=0;i<mapRows;i++){
+      for (int j=0;j<mapCols;j++){
+        if (cities[i][j] != null && cities[i][j].getOwner() == currPlayer)
+          cities[i][j].incrementTreasury(6);
+      }
+    }
+
     if (currPlayer == Player.RED)
       currPlayer = Player.BLUE;
     else {
       currPlayer = Player.RED;
       age+=100;
     }
+
   }
 
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
