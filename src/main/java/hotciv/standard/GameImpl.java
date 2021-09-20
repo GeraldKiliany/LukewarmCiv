@@ -83,6 +83,10 @@ public class GameImpl implements Game {
       unitTiles[to.getRow()][to.getColumn()]= unitTiles[from.getRow()][from.getColumn()];
       unitTiles[from.getRow()][from.getColumn()]= null;
     }
+    else if(getUnitAt(to).getOwner() != getUnitAt(from).getOwner()){
+      unitTiles[to.getRow()][to.getColumn()]= unitTiles[from.getRow()][from.getColumn()];
+      unitTiles[from.getRow()][from.getColumn()]= null;
+    }
 
 
     return false;}

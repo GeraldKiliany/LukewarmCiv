@@ -223,6 +223,28 @@ public class TestAlphaCiv {
 
   }
 
+
+  //Test unit moving only one space at a time
+
+  //Gerald
+  @Test
+  public void legionAttackingSettlerWins(){
+    Position threeTwo = new Position(3, 2);
+    Position fourThree = new Position(4, 3);
+    Position threeThree = new Position(3,3);
+    assertThat(game.getUnitAt(threeTwo).getTypeString(), is("legion"));
+    assertThat(game.getUnitAt(fourThree).getTypeString(),is("settler"));
+    game.moveUnit(threeTwo,threeThree);
+    assertThat(game.getUnitAt(threeThree).getTypeString(), is("legion"));
+    game.moveUnit(threeThree,fourThree);
+    assertThat(game.getUnitAt(fourThree).getTypeString(), is("legion"));
+
+
+  }
+
+
+  //Test for attacking units , implementation,
+  //Units for
 }
 
 //end of file
