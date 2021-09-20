@@ -41,7 +41,7 @@ public class GameImpl implements Game {
  private Tile originTile = new TileImpl("plains"); */
 
   public Tile getTileAt( Position p ) { return gameTiles[p.getRow()][p.getColumn()]; }
-  private Tile gameTiles[][] = new Tile[mapRows][mapCols];
+  private Tile[][] gameTiles = new Tile[mapRows][mapCols];
   //matt
   private CityImpl[][] cities = new CityImpl[mapRows][mapCols];
 
@@ -72,7 +72,7 @@ public class GameImpl implements Game {
 
   //Ben
   public Unit getUnitAt( Position p ) { return unitTiles[p.getRow()][p.getColumn()]; }
-  private Unit unitTiles[][] = new Unit[mapRows][mapCols];
+  private Unit[][] unitTiles = new Unit[mapRows][mapCols];
 
   //matt
   public City getCityAt( Position p ) { return cities[p.getRow()][p.getColumn()]; }
