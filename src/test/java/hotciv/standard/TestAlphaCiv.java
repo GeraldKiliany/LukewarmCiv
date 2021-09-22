@@ -225,6 +225,30 @@ public class TestAlphaCiv {
 
   }
 
+  //Ben
+  @Test
+  public void redUnitAttackingBlueUnitShouldWinAndReplace() {
+    Position origin = new Position(0, 0);
+    Position rightOrigin = new Position(0, 1);
+
+    game.getUnitAt(origin).setOwner(Player.RED);
+    game.getUnitAt(origin).setTypeString("attacker");
+    game.getUnitAt(rightOrigin).setOwner(Player.BLUE);
+    game.getUnitAt(rightOrigin).setTypeString("defender");
+
+    //red attacks blue
+    game.moveUnit(origin, rightOrigin);
+
+    //red has replaced blue's position
+    assertThat(game.getUnitAt(rightOrigin).getOwner(), is(not(Player.BLUE)));
+    assertThat(game.getUnitAt(rightOrigin).getTypeString(), is(not("defender")));
+    assertThat(game.getUnitAt(rightOrigin).getOwner(), is(Player.RED));
+    assertThat(game.getUnitAt(rightOrigin).getTypeString(), is("attacker"));
+
+    //origin is empty after red completes attack
+    assertThat(game.getUnitAt(origin), is(nullValue()));
+  }
+
   //matt
   @Test
   public void citiesProduce6ProductionPerRound(){

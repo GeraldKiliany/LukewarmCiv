@@ -68,6 +68,9 @@ public class GameImpl implements Game {
 
     unitTiles[4][3] = new UnitImpl("settler", redPlayer);
     unitTiles[3][2] = new UnitImpl("legion", bluePlayer);
+
+    unitTiles[0][0] = new UnitImpl(); //origin
+    unitTiles[0][1] = new UnitImpl(); //rightOrigin
   }
 
   //Ben
