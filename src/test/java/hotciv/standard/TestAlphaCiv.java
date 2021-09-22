@@ -261,6 +261,27 @@ public class TestAlphaCiv {
     assertThat(game.getUnitAt(origin), is(nullValue()));
   }
 
+  //Ben
+  @Test
+  public void redUnitAttackingRedUnitNeitherShouldMove() {
+    Position origin = new Position(0, 0);
+    Position rightOrigin = new Position(0, 1);
+
+    game.getUnitAt(origin).setOwner(Player.RED);
+    game.getUnitAt(origin).setTypeString("attacker");
+    game.getUnitAt(rightOrigin).setOwner(Player.RED);
+    game.getUnitAt(rightOrigin).setTypeString("defender");
+
+    //red attacks red
+    game.moveUnit(origin, rightOrigin);
+
+    //neither unit has moved
+    assertThat(game.getUnitAt(origin).getOwner(), is(Player.RED));
+    assertThat(game.getUnitAt(origin).getTypeString(), is("attacker"));
+    assertThat(game.getUnitAt(rightOrigin).getOwner(), is(Player.RED));
+    assertThat(game.getUnitAt(rightOrigin).getTypeString(), is("defender"));
+  }
+
   //matt
   @Test
   public void citiesProduce6ProductionPerRound(){
