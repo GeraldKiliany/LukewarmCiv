@@ -37,8 +37,9 @@ public class GameImpl implements Game {
   //Gerald
   int mapRows = 8, mapCols = 8; //Assume map for AlphaCiv is 8 by 8
 
- /* public Tile getTileAt(Position p) { return originTile}; //The "Fake it" version of method, used in TDD process
- private Tile originTile = new TileImpl("plains"); */
+  //public Tile getTileAt(Position p) {return null;}//Simplest version returns null
+ // public Tile getTileAt(Position p) { return originTile;} //The "Fake it" version of method, used in TDD process
+ //private Tile originTile = new TileImpl("plains");
 
   public Tile getTileAt( Position p ) { return gameTiles[p.getRow()][p.getColumn()]; }
   private Tile[][] gameTiles = new Tile[mapRows][mapCols];
@@ -46,15 +47,18 @@ public class GameImpl implements Game {
   private CityImpl[][] cities = new CityImpl[mapRows][mapCols];
 
   public GameImpl() {
+    //Setting up map as all plains by default
     for (int currRow = 0; currRow < mapRows; currRow++) {
       for (int currCol = 0; currCol < mapCols; currCol++) {
         gameTiles[currRow][currCol] = new TileImpl("plains");
       }
     }
     //Comment out adding non plains tiles to show TDD iteration
+
     gameTiles[1][0] = new TileImpl("ocean");
     gameTiles[0][1] = new TileImpl("hills");
     gameTiles[2][2] = new TileImpl("mountain");
+
     cities[1][1] = new CityImpl(Player.RED);
     cities[4][1] = new CityImpl(Player.BLUE);
 
@@ -80,9 +84,7 @@ public class GameImpl implements Game {
   //matt
   public City getCityAt( Position p ) { return cities[p.getRow()][p.getColumn()]; }
   public Player getPlayerInTurn() {return currPlayer;}
-  public Player getWinner() {
-    return (age==-3000)?Player.RED:null;
-  }
+  public Player getWinner() { return (age==-3000)?Player.RED:null; }
   public int getAge() {return age;}
 
 
@@ -108,6 +110,7 @@ public class GameImpl implements Game {
           cities[i][j].incrementTreasury(6);
       }
     }
+
     if (currPlayer == Player.RED)
       currPlayer = Player.BLUE;
     else {
@@ -116,11 +119,18 @@ public class GameImpl implements Game {
     }
 
   }
-  public void changeWorkForceFocusInCityAt( Position p, String balance ) {
-    //should create a execption if p is not a valid city
-    cities[p.getRow()][p.getColumn];
+
+  public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
+  public void changeProductionInCityAt( Position p, String unitType ) {
+    if(cities[p.getRow()][p.getColumn()].getProduction() != unitType){
+      cities[p.getRow()][p.getColumn()].setProduction(unitType);
+
+    }
+
+
+
+
   }
-  public void changeProductionInCityAt( Position p, String unitType ) {}
   public void performUnitActionAt( Position p ) {}
 
 }
