@@ -150,24 +150,26 @@ public class TestAlphaCiv {
   }
 
   //Added by Gerald
-  @Test
+/*  @Test
   public void tileAtOriginShouldBePlains() {
     Position origin = new Position(0, 0);
     assertThat(game.getTileAt(origin).getTypeString(), is("plains"));
 
   }
-
+*/
   //Gerald
   @Test
   public void multipleTilesArePlains(){
     Position origin = new Position(0,0);
-    Position thirdRow = new Position(2,0);
+   // Position thirdRow = new Position(2,0);
     Position thirdColumn = new Position(3,0 );
     assertThat(game.getTileAt(origin).getTypeString(), is("plains"));
-    assertThat(game.getTileAt(thirdRow).getTypeString(), is("plains"));
+   // assertThat(game.getTileAt(thirdRow).getTypeString(), is("plains"));
     assertThat(game.getTileAt(thirdColumn).getTypeString(), is("plains"));
 
   }
+
+
   //Gerald
   @Test
   public void tileAtRow1Col0isOcean(){
@@ -177,6 +179,8 @@ public class TestAlphaCiv {
 
 
   }
+
+
   //Gerald
   @Test
   public void tileAtRow0Col1isHills(){
@@ -184,12 +188,20 @@ public class TestAlphaCiv {
     assertThat(game.getTileAt(row0Col1).getTypeString(), is("hills"));
 
   }
+
+
+
+
+
+
   //Gerald
   @Test
   public void tileAtRow2Col2isMountains(){
     Position row2Col2 = new Position(2,2);
     assertThat(game.getTileAt(row2Col2).getTypeString(), is("mountain"));
   }
+
+
 
   //matt
   @Test
@@ -263,7 +275,34 @@ public class TestAlphaCiv {
 
   }
 
+  //Gerald
+  @Test
+  public void cityIsProducingArcher(){
+    game.changeProductionInCityAt(new Position(1,1),"archer");
+    assertThat(game.getCityAt(new Position(1,1)).getProduction(),is("archer"));
 
+
+  }
+
+  //Gerald
+  @Test
+  public void cityIsProducingLegion(){
+
+    game.changeProductionInCityAt(new Position(1,1),"legion");
+    assertThat(game.getCityAt(new Position(1,1)).getProduction(),is("legion"));
+
+  }
+
+  //Gerald
+  @Test
+  public void cityIsProducingArcherThenSettler(){
+    game.changeProductionInCityAt(new Position(1,1),"archer");
+    assertThat(game.getCityAt(new Position(1,1)).getProduction(),is("archer"));
+    game.changeProductionInCityAt(new Position(1,1),"settler");
+    assertThat(game.getCityAt(new Position(1,1)).getProduction(),is("settler"));
+
+
+  }
 
 
   //TODO: Add test for moving units works only for adjacent tiles
