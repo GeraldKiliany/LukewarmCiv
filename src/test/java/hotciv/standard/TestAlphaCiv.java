@@ -92,7 +92,8 @@ public class TestAlphaCiv {
   //matt
   @Test
   public void redWinsAt3000BC(){
-    while(game.getAge() != -3000) {
+    //20 turns until 3000BC
+    for (int turnNum=0;turnNum<20;turnNum++){
       assertNull(game.getWinner());
       game.endOfTurn();
     }
@@ -234,9 +235,6 @@ public class TestAlphaCiv {
     assertThat(game.getCityAt(new Position(1,1)).getTreasury(),is(6));
     game.endOfTurn();
     assertThat(game.getCityAt(new Position(4,1)).getTreasury(),is(6));
-
-
-
   }
 
 
