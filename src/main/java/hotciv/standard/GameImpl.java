@@ -113,7 +113,10 @@ public class GameImpl implements Game {
     }
 
   }
-  public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
+  public void changeWorkForceFocusInCityAt( Position p, String balance ) {
+    //should create a execption if p is not a valid city
+    cities[p.getRow()][p.getColumn];
+  }
   public void changeProductionInCityAt( Position p, String unitType ) {}
   public void performUnitActionAt( Position p ) {}
 
