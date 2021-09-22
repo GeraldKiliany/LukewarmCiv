@@ -31,7 +31,7 @@ import hotciv.framework.*;
 
 public class GameImpl implements Game {
   //matt
-  private Player currPlayer;//   = Player.RED;
+  private Player currPlayer = Player.RED;
   private int age = -4000;
 
   //Gerald
@@ -105,12 +105,12 @@ public class GameImpl implements Game {
           cities[i][j].incrementTreasury(6);
       }
     }
-//    if (currPlayer == Player.RED)
-//      currPlayer = Player.BLUE;
-//    else {
-//      currPlayer = Player.RED;
-//      age+=100;
-//    }
+    if (currPlayer == Player.RED)
+      currPlayer = Player.BLUE;
+    else {
+      currPlayer = Player.RED;
+      age+=100;
+    }
 
   }
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
