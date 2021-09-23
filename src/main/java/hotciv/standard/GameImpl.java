@@ -35,7 +35,7 @@ public class GameImpl implements Game {
   private int age = -4000;
 
   //Gerald
-  int mapRows = GameConstants.WORLDSIZE, mapCols = GameConstants.WORLDSIZE;
+  int mapRows = GameConstants.WORLDSIZE, mapCols = GameConstants.WORLDSIZE; //can probably be refactored to remove this var if map will always be square
 
   //public Tile getTileAt(Position p) {return null;}//Simplest version returns null
  // public Tile getTileAt(Position p) { return originTile;} //The "Fake it" version of method, used in TDD process
@@ -73,8 +73,8 @@ public class GameImpl implements Game {
     unitTiles[4][3] = new UnitImpl(GameConstants.SETTLER, redPlayer);
     unitTiles[3][2] = new UnitImpl(GameConstants.LEGION, bluePlayer);
 
-    //unitTiles[0][0] = new UnitImpl(); //origin
-    //unitTiles[0][1] = new UnitImpl(); //rightOrigin
+    unitTiles[8][0] = new UnitImpl(); //origin
+    unitTiles[8][1] = new UnitImpl(); //rightOrigin
   }
 
   //Ben
@@ -127,8 +127,9 @@ public class GameImpl implements Game {
 
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {
-    if (cities[p.getRow()][p.getColumn()].getProduction() != unitType) {
+    if(cities[p.getRow()][p.getColumn()].getProduction() != unitType){
       cities[p.getRow()][p.getColumn()].setProduction(unitType);
+
     }
   }
   public void performUnitActionAt( Position p ) {}
