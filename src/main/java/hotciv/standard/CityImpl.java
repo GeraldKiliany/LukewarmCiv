@@ -13,7 +13,7 @@ public class CityImpl implements City {
         owner = player;
         unitProduced = new UnitImpl();
         unitProduced.setOwner(player);
-        unitProduced.setTypeString("archer");
+        unitProduced.setTypeString(GameConstants.ARCHER);
     }
 
     public Player getOwner(){return owner;}

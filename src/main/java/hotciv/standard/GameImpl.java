@@ -35,7 +35,7 @@ public class GameImpl implements Game {
   private int age = -4000;
 
   //Gerald
-  int mapRows = 8, mapCols = 8; //Assume map for AlphaCiv is 8 by 8
+  int mapRows = GameConstants.WORLDSIZE, mapCols = GameConstants.WORLDSIZE;
 
   //public Tile getTileAt(Position p) {return null;}//Simplest version returns null
  // public Tile getTileAt(Position p) { return originTile;} //The "Fake it" version of method, used in TDD process
@@ -50,14 +50,14 @@ public class GameImpl implements Game {
     //Setting up map as all plains by default
     for (int currRow = 0; currRow < mapRows; currRow++) {
       for (int currCol = 0; currCol < mapCols; currCol++) {
-        gameTiles[currRow][currCol] = new TileImpl("plains");
+        gameTiles[currRow][currCol] = new TileImpl(GameConstants.PLAINS);
       }
     }
     //Comment out adding non plains tiles to show TDD iteration
 
-    gameTiles[1][0] = new TileImpl("ocean");
-    gameTiles[0][1] = new TileImpl("hills");
-    gameTiles[2][2] = new TileImpl("mountain");
+    gameTiles[1][0] = new TileImpl(GameConstants.OCEANS);
+    gameTiles[0][1] = new TileImpl(GameConstants.HILLS);
+    gameTiles[2][2] = new TileImpl(GameConstants.MOUNTAINS);
 
     cities[1][1] = new CityImpl(Player.RED);
     cities[4][1] = new CityImpl(Player.BLUE);
@@ -67,11 +67,11 @@ public class GameImpl implements Game {
 
     //unitTiles[2][0] = new UnitImpl("archer", redPlayer);
     unitTiles[2][0] = new UnitImpl();
-    unitTiles[2][0].setTypeString("archer");
+    unitTiles[2][0].setTypeString(GameConstants.ARCHER);
     unitTiles[2][0].setOwner(Player.RED);
 
-    unitTiles[4][3] = new UnitImpl("settler", redPlayer);
-    unitTiles[3][2] = new UnitImpl("legion", bluePlayer);
+    unitTiles[4][3] = new UnitImpl(GameConstants.SETTLER, redPlayer);
+    unitTiles[3][2] = new UnitImpl(GameConstants.LEGION, bluePlayer);
 
     unitTiles[0][0] = new UnitImpl(); //origin
     unitTiles[0][1] = new UnitImpl(); //rightOrigin
