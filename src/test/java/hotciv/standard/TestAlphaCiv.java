@@ -116,7 +116,7 @@ public class TestAlphaCiv {
   @Test
   public void unitAtTwoZeroShouldBeArcherRed() {
     Position twoZero = new Position(2, 0);
-    assertThat(game.getUnitAt(twoZero).getTypeString(), is("archer"));
+    assertThat(game.getUnitAt(twoZero).getTypeString(), is(GameConstants.ARCHER));
     assertThat(game.getUnitAt(twoZero).getOwner(), is(Player.RED));
   }
 
@@ -124,7 +124,7 @@ public class TestAlphaCiv {
   @Test
   public void unitAtFourThreeShouldBeSettlerRed() {
     Position fourThree = new Position(4,3);
-    assertThat(game.getUnitAt(fourThree).getTypeString(), is("settler"));
+    assertThat(game.getUnitAt(fourThree).getTypeString(), is(GameConstants.SETTLER));
     assertThat(game.getUnitAt(fourThree).getOwner(), is(Player.RED));
   }
 
@@ -132,7 +132,7 @@ public class TestAlphaCiv {
   @Test
   public void unitAtThreeTwoShouldBeLegionBlue() {
     Position threeTwo = new Position(3,2);
-    assertThat(game.getUnitAt(threeTwo).getTypeString(), is("legion"));
+    assertThat(game.getUnitAt(threeTwo).getTypeString(), is(GameConstants.LEGION));
     assertThat(game.getUnitAt(threeTwo).getOwner(), is(Player.BLUE));
   }
 
@@ -140,11 +140,11 @@ public class TestAlphaCiv {
   @Test
   public void changingUnitFromSettlerRedToLegionBlue() {
     Position twoZero = new Position(2,0);
-    assertThat(game.getUnitAt(twoZero).getTypeString(), is("archer"));
+    assertThat(game.getUnitAt(twoZero).getTypeString(), is(GameConstants.ARCHER));
     assertThat(game.getUnitAt(twoZero).getOwner(), is(Player.RED));
 
-    game.getUnitAt(twoZero).setTypeString("legion");
-    assertThat(game.getUnitAt(twoZero).getTypeString(), is("legion"));
+    game.getUnitAt(twoZero).setTypeString(GameConstants.LEGION);
+    assertThat(game.getUnitAt(twoZero).getTypeString(), is(GameConstants.LEGION));
 
     game.getUnitAt(twoZero).setOwner(Player.BLUE);
     assertThat(game.getUnitAt(twoZero).getOwner(), is(Player.BLUE));
@@ -164,9 +164,9 @@ public class TestAlphaCiv {
     Position origin = new Position(0,0);
    // Position thirdRow = new Position(2,0);
     Position thirdColumn = new Position(3,0 );
-    assertThat(game.getTileAt(origin).getTypeString(), is("plains"));
+    assertThat(game.getTileAt(origin).getTypeString(), is(GameConstants.PLAINS));
    // assertThat(game.getTileAt(thirdRow).getTypeString(), is("plains"));
-    assertThat(game.getTileAt(thirdColumn).getTypeString(), is("plains"));
+    assertThat(game.getTileAt(thirdColumn).getTypeString(), is(GameConstants.PLAINS));
 
   }
 
@@ -175,7 +175,7 @@ public class TestAlphaCiv {
   @Test
   public void tileAtRow1Col0isOcean(){
     Position row1Col0 = new Position(1,0);
-    assertThat(game.getTileAt(row1Col0).getTypeString(), is("ocean"));
+    assertThat(game.getTileAt(row1Col0).getTypeString(), is(GameConstants.OCEANS));
 
 
 
@@ -186,7 +186,7 @@ public class TestAlphaCiv {
   @Test
   public void tileAtRow0Col1isHills(){
     Position row0Col1 = new Position(0,1);
-    assertThat(game.getTileAt(row0Col1).getTypeString(), is("hills"));
+    assertThat(game.getTileAt(row0Col1).getTypeString(), is(GameConstants.HILLS));
 
   }
 
@@ -199,7 +199,7 @@ public class TestAlphaCiv {
   @Test
   public void tileAtRow2Col2isMountains(){
     Position row2Col2 = new Position(2,2);
-    assertThat(game.getTileAt(row2Col2).getTypeString(), is("mountain"));
+    assertThat(game.getTileAt(row2Col2).getTypeString(), is(GameConstants.MOUNTAINS));
   }
 
 
@@ -216,10 +216,10 @@ public class TestAlphaCiv {
   public void moveArcherFromTwoZeroToThreeZero(){
     Position twoZero = new Position(2, 0);
     Position threeZero = new Position(3, 0);
-    assertThat(game.getUnitAt(twoZero).getTypeString(), is("archer"));
+    assertThat(game.getUnitAt(twoZero).getTypeString(), is(GameConstants.ARCHER));
     assertThat(game.getUnitAt(threeZero), is(nullValue()));
     game.moveUnit(twoZero,threeZero);
-    assertThat(game.getUnitAt(threeZero).getTypeString(),is("archer"));
+    assertThat(game.getUnitAt(threeZero).getTypeString(),is(GameConstants.ARCHER));
   }
 
   //Gerald
@@ -228,35 +228,35 @@ public class TestAlphaCiv {
     Position threeTwo = new Position(3, 2);
     Position fourThree = new Position(4, 3);
     Position threeThree = new Position(3,3);
-    assertThat(game.getUnitAt(threeTwo).getTypeString(), is("legion"));
-    assertThat(game.getUnitAt(fourThree).getTypeString(),is("settler"));
+    assertThat(game.getUnitAt(threeTwo).getTypeString(), is(GameConstants.LEGION));
+    assertThat(game.getUnitAt(fourThree).getTypeString(),is(GameConstants.SETTLER));
     game.moveUnit(threeTwo,threeThree);
-    assertThat(game.getUnitAt(threeThree).getTypeString(), is("legion"));
+    assertThat(game.getUnitAt(threeThree).getTypeString(), is(GameConstants.LEGION));
     game.moveUnit(threeThree,fourThree);
-    assertThat(game.getUnitAt(fourThree).getTypeString(), is("legion"));
+    assertThat(game.getUnitAt(fourThree).getTypeString(), is(GameConstants.LEGION));
 
 
   }
 
   //Ben
   @Test
-  public void redUnitAttackingBlueUnitShouldWinAndReplace() {
+  public void redArcherAttackingBlueSettlerShouldWinAndReplace() {
     Position origin = new Position(0, 0);
     Position rightOrigin = new Position(0, 1);
 
     game.getUnitAt(origin).setOwner(Player.RED);
-    game.getUnitAt(origin).setTypeString("attacker");
+    game.getUnitAt(origin).setTypeString(GameConstants.ARCHER);
     game.getUnitAt(rightOrigin).setOwner(Player.BLUE);
-    game.getUnitAt(rightOrigin).setTypeString("defender");
+    game.getUnitAt(rightOrigin).setTypeString(GameConstants.SETTLER);
 
     //red attacks blue
     game.moveUnit(origin, rightOrigin);
 
     //red has replaced blue's position
     assertThat(game.getUnitAt(rightOrigin).getOwner(), is(not(Player.BLUE)));
-    assertThat(game.getUnitAt(rightOrigin).getTypeString(), is(not("defender")));
+    assertThat(game.getUnitAt(rightOrigin).getTypeString(), is(not(GameConstants.SETTLER)));
     assertThat(game.getUnitAt(rightOrigin).getOwner(), is(Player.RED));
-    assertThat(game.getUnitAt(rightOrigin).getTypeString(), is("attacker"));
+    assertThat(game.getUnitAt(rightOrigin).getTypeString(), is(GameConstants.ARCHER));
 
     //origin is empty after red completes attack
     assertThat(game.getUnitAt(origin), is(nullValue()));
@@ -264,23 +264,23 @@ public class TestAlphaCiv {
 
   //Ben
   @Test
-  public void redUnitAttackingRedUnitNeitherShouldMove() {
+  public void redLegionAttackingRedArcherNeitherShouldMove() {
     Position origin = new Position(0, 0);
     Position rightOrigin = new Position(0, 1);
 
     game.getUnitAt(origin).setOwner(Player.RED);
-    game.getUnitAt(origin).setTypeString("attacker");
+    game.getUnitAt(origin).setTypeString(GameConstants.LEGION);
     game.getUnitAt(rightOrigin).setOwner(Player.RED);
-    game.getUnitAt(rightOrigin).setTypeString("defender");
+    game.getUnitAt(rightOrigin).setTypeString(GameConstants.ARCHER);
 
     //red attacks red
     game.moveUnit(origin, rightOrigin);
 
     //neither unit has moved
     assertThat(game.getUnitAt(origin).getOwner(), is(Player.RED));
-    assertThat(game.getUnitAt(origin).getTypeString(), is("attacker"));
+    assertThat(game.getUnitAt(origin).getTypeString(), is(GameConstants.LEGION));
     assertThat(game.getUnitAt(rightOrigin).getOwner(), is(Player.RED));
-    assertThat(game.getUnitAt(rightOrigin).getTypeString(), is("defender"));
+    assertThat(game.getUnitAt(rightOrigin).getTypeString(), is(GameConstants.ARCHER));
   }
 
   //matt
@@ -297,8 +297,8 @@ public class TestAlphaCiv {
   //Gerald
   @Test
   public void cityIsProducingArcher(){
-    game.changeProductionInCityAt(new Position(1,1),"archer");
-    assertThat(game.getCityAt(new Position(1,1)).getProduction(),is("archer"));
+    game.changeProductionInCityAt(new Position(1,1),GameConstants.ARCHER);
+    assertThat(game.getCityAt(new Position(1,1)).getProduction(),is(GameConstants.ARCHER));
 
 
   }
@@ -307,18 +307,18 @@ public class TestAlphaCiv {
   @Test
   public void cityIsProducingLegion(){
 
-    game.changeProductionInCityAt(new Position(1,1),"legion");
-    assertThat(game.getCityAt(new Position(1,1)).getProduction(),is("legion"));
+    game.changeProductionInCityAt(new Position(1,1),GameConstants.LEGION);
+    assertThat(game.getCityAt(new Position(1,1)).getProduction(),is(GameConstants.LEGION));
 
   }
 
   //Gerald
   @Test
   public void cityIsProducingArcherThenSettler(){
-    game.changeProductionInCityAt(new Position(1,1),"archer");
-    assertThat(game.getCityAt(new Position(1,1)).getProduction(),is("archer"));
-    game.changeProductionInCityAt(new Position(1,1),"settler");
-    assertThat(game.getCityAt(new Position(1,1)).getProduction(),is("settler"));
+    game.changeProductionInCityAt(new Position(1,1),GameConstants.ARCHER);
+    assertThat(game.getCityAt(new Position(1,1)).getProduction(),is(GameConstants.ARCHER));
+    game.changeProductionInCityAt(new Position(1,1),GameConstants.SETTLER);
+    assertThat(game.getCityAt(new Position(1,1)).getProduction(),is(GameConstants.SETTLER));
 
 
   }
