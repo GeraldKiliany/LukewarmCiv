@@ -8,8 +8,10 @@ public class CityImpl implements City {
     private int size = 1;
     private int treasury = 0;
     private Unit unitProduced;
+    private Position position;
 
-    public CityImpl(Player player){
+    public CityImpl(Player player,Position p){
+        position = p;
         owner = player;
         unitProduced = new UnitImpl();
         unitProduced.setOwner(player);
@@ -25,6 +27,7 @@ public class CityImpl implements City {
         treasury += a;
     }
 
+    public Position getPosition(){return position;}
 
     public void setProduction(String unitType){this.unitProduced.setTypeString(unitType);}
 }

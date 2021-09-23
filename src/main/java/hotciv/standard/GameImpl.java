@@ -59,8 +59,8 @@ public class GameImpl implements Game {
     gameTiles[0][1] = new TileImpl(GameConstants.HILLS);
     gameTiles[2][2] = new TileImpl(GameConstants.MOUNTAINS);
 
-    cities[1][1] = new CityImpl(Player.RED);
-    cities[4][1] = new CityImpl(Player.BLUE);
+    cities[1][1] = new CityImpl(Player.RED, new Position(1,1));
+    cities[4][1] = new CityImpl(Player.BLUE, new Position(4,1));
 
     Player redPlayer = Player.RED;
     Player bluePlayer = Player.BLUE;
@@ -73,8 +73,8 @@ public class GameImpl implements Game {
     unitTiles[4][3] = new UnitImpl(GameConstants.SETTLER, redPlayer);
     unitTiles[3][2] = new UnitImpl(GameConstants.LEGION, bluePlayer);
 
-    unitTiles[0][0] = new UnitImpl(); //origin
-    unitTiles[0][1] = new UnitImpl(); //rightOrigin
+    //unitTiles[0][0] = new UnitImpl(); //origin
+    //unitTiles[0][1] = new UnitImpl(); //rightOrigin
   }
 
   //Ben
@@ -104,10 +104,14 @@ public class GameImpl implements Game {
 
   //matt
   public void endOfTurn() {
-    for (int i=0;i<mapRows;i++){
-      for (int j=0;j<mapCols;j++){
-        if (cities[i][j] != null && cities[i][j].getOwner() == currPlayer)
-          cities[i][j].incrementTreasury(6);
+    for (int i=0;i<mapRows;i++) {
+      for (int j = 0; j < mapCols; j++) {
+        if (cities[i][j] != null) {
+          if (cities[i][j].getOwner() == currPlayer) {
+            placeUnit(cities[i][j]);
+            cities[i][j].incrementTreasury(6);
+          }
+        }
       }
     }
 
@@ -118,22 +122,87 @@ public class GameImpl implements Game {
       age+=100;
     }
 
+
   }
 
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {
-    if(cities[p.getRow()][p.getColumn()].getProduction() != unitType){
+    if (cities[p.getRow()][p.getColumn()].getProduction() != unitType) {
       cities[p.getRow()][p.getColumn()].setProduction(unitType);
+    }
+  }
+  public void performUnitActionAt( Position p ) {}
 
+
+  public boolean placeUnit(CityImpl city){
+    int c = city.getPosition().getColumn();
+    int r = city.getPosition().getRow();
+
+
+    int i = 0;
+    int radius = 1;
+    int ct = c;
+    int rt = r;
+    while(unitTiles[rt][ct] != null) {
+      if (i > 7){
+        radius++;
+        i=0;
+      }
+      switch(i){
+        case 0: //north
+          ct = c;
+          rt = r - radius;
+          break;
+        case 1: //northeast
+          ct = c + radius;
+          rt = r - radius;
+          break; //east
+        case 2: //east
+          ct = c + radius;
+          rt = r;
+          break;
+        case 3: //southeast
+          ct = c + radius;
+          rt = r + radius;
+          break;
+        case 4: //south
+          ct = c;
+          rt = r + radius;
+          break;
+        case 5: //southwest
+          ct = c - radius;
+          rt = r + radius;
+          break;
+        case 6: //west
+          ct = c - radius;
+          rt = r;
+          break;
+        case 7: //northwest
+          ct = c - radius;
+          rt = r - radius;
+          break;
+      }
+      i++;
     }
 
 
 
+    //remove the cost of the unitType from the city's treasury
+    if (city.getProduction() == GameConstants.ARCHER && city.getTreasury() >= 10)
+      city.incrementTreasury(-10);
+    else if  (city.getProduction() == GameConstants.LEGION && city.getTreasury() >= 15)
+      city.incrementTreasury(-15);
+    else if (city.getProduction() == GameConstants.SETTLER && city.getTreasury() >= 30)
+      city.incrementTreasury(-30);
+    else
+      return false;
 
+    unitTiles[rt][ct] = new UnitImpl(city.getProduction(),currPlayer);
+    return true;
   }
-  public void performUnitActionAt( Position p ) {}
-
 }
+
+
 
 
 //end of file

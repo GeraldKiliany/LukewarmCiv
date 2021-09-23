@@ -9,7 +9,7 @@ public  class UnitImpl implements Unit {
     Player owner;
 
     public UnitImpl () {
-        type = "";
+        type = null;
         owner = null;
     }
 
