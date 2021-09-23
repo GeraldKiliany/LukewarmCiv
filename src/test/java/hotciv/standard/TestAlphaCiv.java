@@ -240,46 +240,46 @@ public class TestAlphaCiv {
   //Ben
   @Test
   public void redArcherAttackingBlueSettlerShouldWinAndReplace() {
-    Position origin = new Position(0, 0);
-    Position rightOrigin = new Position(0, 1);
+    Position eightZero = new Position(8, 0);
+    Position eightOne = new Position(8, 1);
 
-    game.getUnitAt(origin).setOwner(Player.RED);
-    game.getUnitAt(origin).setTypeString(GameConstants.ARCHER);
-    game.getUnitAt(rightOrigin).setOwner(Player.BLUE);
-    game.getUnitAt(rightOrigin).setTypeString(GameConstants.SETTLER);
+    game.getUnitAt(eightZero).setOwner(Player.RED);
+    game.getUnitAt(eightZero).setTypeString(GameConstants.ARCHER);
+    game.getUnitAt(eightOne).setOwner(Player.BLUE);
+    game.getUnitAt(eightOne).setTypeString(GameConstants.SETTLER);
 
     //red attacks blue
-    game.moveUnit(origin, rightOrigin);
+    game.moveUnit(eightZero, eightOne);
 
     //red has replaced blue's position
-    assertThat(game.getUnitAt(rightOrigin).getOwner(), is(not(Player.BLUE)));
-    assertThat(game.getUnitAt(rightOrigin).getTypeString(), is(not(GameConstants.SETTLER)));
-    assertThat(game.getUnitAt(rightOrigin).getOwner(), is(Player.RED));
-    assertThat(game.getUnitAt(rightOrigin).getTypeString(), is(GameConstants.ARCHER));
+    assertThat(game.getUnitAt(eightOne).getOwner(), is(not(Player.BLUE)));
+    assertThat(game.getUnitAt(eightOne).getTypeString(), is(not(GameConstants.SETTLER)));
+    assertThat(game.getUnitAt(eightOne).getOwner(), is(Player.RED));
+    assertThat(game.getUnitAt(eightOne).getTypeString(), is(GameConstants.ARCHER));
 
     //origin is empty after red completes attack
-    assertThat(game.getUnitAt(origin), is(nullValue()));
+    assertThat(game.getUnitAt(eightZero), is(nullValue()));
   }
 
   //Ben
   @Test
   public void redLegionAttackingRedArcherNeitherShouldMove() {
-    Position origin = new Position(0, 0);
-    Position rightOrigin = new Position(0, 1);
+    Position eightZero = new Position(8, 0);
+    Position eightOne = new Position(8, 1);
 
-    game.getUnitAt(origin).setOwner(Player.RED);
-    game.getUnitAt(origin).setTypeString(GameConstants.LEGION);
-    game.getUnitAt(rightOrigin).setOwner(Player.RED);
-    game.getUnitAt(rightOrigin).setTypeString(GameConstants.ARCHER);
+    game.getUnitAt(eightZero).setOwner(Player.RED);
+    game.getUnitAt(eightZero).setTypeString(GameConstants.LEGION);
+    game.getUnitAt(eightOne).setOwner(Player.RED);
+    game.getUnitAt(eightOne).setTypeString(GameConstants.ARCHER);
 
     //red attacks red
-    game.moveUnit(origin, rightOrigin);
+    game.moveUnit(eightZero, eightOne);
 
     //neither unit has moved
-    assertThat(game.getUnitAt(origin).getOwner(), is(Player.RED));
-    assertThat(game.getUnitAt(origin).getTypeString(), is(GameConstants.LEGION));
-    assertThat(game.getUnitAt(rightOrigin).getOwner(), is(Player.RED));
-    assertThat(game.getUnitAt(rightOrigin).getTypeString(), is(GameConstants.ARCHER));
+    assertThat(game.getUnitAt(eightZero).getOwner(), is(Player.RED));
+    assertThat(game.getUnitAt(eightZero).getTypeString(), is(GameConstants.LEGION));
+    assertThat(game.getUnitAt(eightOne).getOwner(), is(Player.RED));
+    assertThat(game.getUnitAt(eightOne).getTypeString(), is(GameConstants.ARCHER));
   }
 
   //matt
@@ -327,6 +327,9 @@ public class TestAlphaCiv {
 
 
   //TODO: Add test for moving units works only for adjacent tiles
+  //TODO: Utilize strategy pattern (possibly for getting unit resource cost, more)
+  //TODO: Use composition for Tile types, Unit types?
+  //TODO: Split testing suite into unit testing and integration testing
   //Units for
 }
 
