@@ -50,6 +50,7 @@ public class GameImpl implements Game {
     //Setting up map as all plains by default
     for (int currRow = 0; currRow < mapRows; currRow++) {
       for (int currCol = 0; currCol < mapCols; currCol++) {
+
         gameTiles[currRow][currCol] = new TileImpl(GameConstants.PLAINS);
       }
     }
