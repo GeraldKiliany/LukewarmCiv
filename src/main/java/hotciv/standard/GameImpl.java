@@ -27,6 +27,7 @@ import hotciv.framework.*;
    See the License for the specific language governing permissions and
    limitations under the License.
 
+  Release 2.0
 */
 
 public class GameImpl implements Game {
