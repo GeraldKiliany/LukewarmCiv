@@ -28,6 +28,7 @@ import hotciv.framework.*;
    limitations under the License.
 
   Release 2.0
+  This is the hotfix for release 2.1
 */
 
 public class GameImpl implements Game {
