@@ -84,4 +84,38 @@ public class TestGammaCiv {
         assertThat(game.getUnitAt(twoZero).getDefensiveStrength(), is(2 * 3 / 2));
         assertThat(game.getUnitAt(twoZero).getMoveCount(), is(1));
     }
+
+    @Test
+    public void FortifiedArcherCannotMove() {
+        Position twoZero = new Position(2, 0);
+        Position threeZero = new Position(3, 0);
+
+        assertThat(game.getUnitAt(twoZero).getTypeString(), is(GameConstants.ARCHER));
+        assertThat(game.getUnitAt(twoZero).getMoveCount(), is(1));
+
+        game.performUnitActionAt(twoZero);
+        assertThat(game.getUnitAt(twoZero).getMoveCount(), is(0));
+
+        game.moveUnit(twoZero, threeZero);
+        assertThat(game.getUnitAt(twoZero), is(notNullValue())); //from position still has archer
+        assertThat(game.getUnitAt(threeZero), is(nullValue()));  //to position is empty
+    }
+
+    @Test
+    public void DeFortifiedArcherCanMoveAgain() {
+        Position twoZero = new Position(2, 0);
+        Position threeZero = new Position(3, 0);
+
+        assertThat(game.getUnitAt(twoZero).getTypeString(), is(GameConstants.ARCHER));
+        assertThat(game.getUnitAt(twoZero).getMoveCount(), is(1));
+
+        game.performUnitActionAt(twoZero);
+        assertThat(game.getUnitAt(twoZero).getMoveCount(), is(0));
+        game.performUnitActionAt(twoZero);
+        assertThat(game.getUnitAt(twoZero).getMoveCount(), is(1));
+
+        game.moveUnit(twoZero, threeZero);
+        assertThat(game.getUnitAt(twoZero), is(nullValue()));      //from position is empty
+        assertThat(game.getUnitAt(threeZero), is(notNullValue())); //to position now has archer
+    }
 }

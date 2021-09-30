@@ -32,7 +32,6 @@ public class GammaCivUnitActionStrategy implements UnitActionStrategy {
             default:
                 break;
         }
-        //System.out.println(unitType);
 
         return;
     }

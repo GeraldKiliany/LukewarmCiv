@@ -93,6 +93,8 @@ public class GameImpl implements Game {
   //mutators
   public boolean moveUnit( Position from, Position to ) {
 
+    if(getUnitAt(from).getMoveCount() == 0) { return false; }
+
     if(getUnitAt(to) == null) {
       unitTiles[to.getRow()][to.getColumn()]= unitTiles[from.getRow()][from.getColumn()];
       unitTiles[from.getRow()][from.getColumn()]= null;
@@ -102,8 +104,9 @@ public class GameImpl implements Game {
       unitTiles[from.getRow()][from.getColumn()]= null;
     }
 
+    return true;
+  }
 
-    return false;}
   public void endOfTurn() {
     for (int i=0;i<mapRows;i++) {
       for (int j = 0; j < mapCols; j++) {

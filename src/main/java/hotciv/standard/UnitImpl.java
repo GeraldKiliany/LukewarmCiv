@@ -52,7 +52,32 @@ public  class UnitImpl implements Unit {
         return type;
     }
     public Player getOwner() { return owner; }
-    public void setTypeString( String unitType ) { type = unitType; }
+    public void setTypeString( String unitType ) {
+        type = unitType;
+
+        switch (unitType) {
+            case GameConstants.ARCHER:
+                moveCount = 1;
+                defensiveStrength = 3;
+                attackingStrength = 2;
+                break;
+            case GameConstants.LEGION:
+                moveCount = 1;
+                defensiveStrength = 2;
+                attackingStrength = 4;
+                break;
+            case GameConstants.SETTLER:
+                moveCount = 1;
+                defensiveStrength = 3;
+                attackingStrength = 0;
+                break;
+            default:
+                moveCount = 0;
+                defensiveStrength = 0;
+                attackingStrength = 0;
+                break;
+        }
+    }
     public void setOwner( Player newOwner ) { owner = newOwner; }
     public int getMoveCount() { return moveCount; }
     public void setMoveCount(int newMoveCount) { moveCount = newMoveCount; }
