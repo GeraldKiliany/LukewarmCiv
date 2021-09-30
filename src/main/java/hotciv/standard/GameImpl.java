@@ -72,8 +72,8 @@ public class GameImpl implements Game {
     unitTiles[2][0].setTypeString(GameConstants.ARCHER);
     unitTiles[2][0].setOwner(Player.RED);
 
-    unitTiles[4][3] = new UnitImpl(GameConstants.SETTLER, redPlayer);
-    unitTiles[3][2] = new UnitImpl(GameConstants.LEGION, bluePlayer);
+    unitTiles[4][3] = new UnitImpl(GameConstants.SETTLER, redPlayer, 0, 0);
+    unitTiles[3][2] = new UnitImpl(GameConstants.LEGION, bluePlayer, 0, 0);
 
     unitTiles[8][0] = new UnitImpl(); //origin
     unitTiles[8][1] = new UnitImpl(); //rightOrigin
@@ -191,7 +191,7 @@ public class GameImpl implements Game {
     else
       return false;
 //
-  unitTiles[rt][ct] = new UnitImpl(city.getProduction(),currPlayer);
+  unitTiles[rt][ct] = new UnitImpl(city.getProduction(),currPlayer,0,0);
   return true;
   }
 }

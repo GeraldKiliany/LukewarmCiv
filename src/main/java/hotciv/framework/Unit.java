@@ -63,12 +63,12 @@ public interface Unit {
    * a new turn starts.
    * @return the move count
    */
-  //public int getMoveCount();
+  public int getMoveCount();
   
   /** return the defensive strength of this unit
    * @return defensive strength
    */
-  //public int getDefensiveStrength();
+  public int getDefensiveStrength();
   
   /** return the attack strength of this unit
    * @return attack strength
