@@ -18,8 +18,16 @@ public class GammaCivUnitActionStrategy implements UnitActionStrategy {
                 cities[r][c] = new CityImpl(unit.getOwner(), p);
                 break;
             case GameConstants.ARCHER:
-                unit.setDefensiveStrength(unit.getDefensiveStrength()*2);
-                unit.setMoveCount(0);
+                //fortification
+                if (unit.getMoveCount() != 0) {
+                    unit.setDefensiveStrength(unit.getDefensiveStrength() * 2);
+                    unit.setMoveCount(0);
+                }
+                //de-fortification
+                else {
+                    unit.setDefensiveStrength(unit.getDefensiveStrength() / 2);
+                    unit.setMoveCount(1);
+                }
                 break;
             default:
                 break;

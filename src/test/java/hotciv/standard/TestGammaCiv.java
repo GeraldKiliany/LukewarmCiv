@@ -59,13 +59,29 @@ public class TestGammaCiv {
     }
 
     @Test
-    public void ArcherDefensiveStrengthDoublesAndMovementZero() {
+    public void ArcherFortifiesDefenseDoublesAndMovementZero() {
         Position twoZero = new Position(2, 0);
         assertThat(game.getUnitAt(twoZero).getTypeString(), is(GameConstants.ARCHER));
         assertThat(game.getUnitAt(twoZero).getDefensiveStrength(), is(3));
         assertThat(game.getUnitAt(twoZero).getMoveCount(), is(1));
         game.performUnitActionAt(twoZero);
-        assertThat(game.getUnitAt(twoZero).getDefensiveStrength(), is(2*3));
+        assertThat(game.getUnitAt(twoZero).getDefensiveStrength(), is(2 * 3));
         assertThat(game.getUnitAt(twoZero).getMoveCount(), is(0));
+    }
+
+    @Test
+    public void ArcherDeFortifiesGetsOriginalDefenseAndMovement() {
+        Position twoZero = new Position(2, 0);
+        assertThat(game.getUnitAt(twoZero).getTypeString(), is(GameConstants.ARCHER));
+        assertThat(game.getUnitAt(twoZero).getDefensiveStrength(), is(3));
+        assertThat(game.getUnitAt(twoZero).getMoveCount(), is(1));
+
+        game.performUnitActionAt(twoZero);
+        assertThat(game.getUnitAt(twoZero).getDefensiveStrength(), is(2 * 3));
+        assertThat(game.getUnitAt(twoZero).getMoveCount(), is(0));
+
+        game.performUnitActionAt(twoZero);
+        assertThat(game.getUnitAt(twoZero).getDefensiveStrength(), is(2 * 3 / 2));
+        assertThat(game.getUnitAt(twoZero).getMoveCount(), is(1));
     }
 }
