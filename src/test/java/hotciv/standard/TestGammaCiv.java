@@ -29,13 +29,15 @@ public class TestGammaCiv {
     public void SettlerAtFourThreeRemovesItselfFromWorld() {
         Position fourThree = new Position(4, 3);
         assertThat(game.getUnitAt(fourThree), is(notNullValue()));
+        assertThat(game.getUnitAt(fourThree).getTypeString(), is(GameConstants.SETTLER));
         game.performUnitActionAt(fourThree);
         assertThat(game.getUnitAt(fourThree), is(nullValue()));
     }
 
     @Test
-    public void SettlerBuildsCityAtPosition() {
+    public void SettlerBuildsCityAtFourThree() {
         Position fourThree = new Position(4, 3);
+        assertThat(game.getUnitAt(fourThree).getTypeString(), is(GameConstants.SETTLER));
         assertThat(game.getCityAt(fourThree), is(nullValue()));
         game.performUnitActionAt(fourThree);
         assertThat(game.getCityAt(fourThree), is(notNullValue()));
@@ -54,5 +56,16 @@ public class TestGammaCiv {
         Position fourThree = new Position(4, 3);
         game.performUnitActionAt(fourThree);
         assertThat(game.getCityAt(fourThree).getSize(), is(1));
+    }
+
+    @Test
+    public void ArcherDefensiveStrengthDoublesAndMovementZero() {
+        Position twoZero = new Position(2, 0);
+        assertThat(game.getUnitAt(twoZero).getTypeString(), is(GameConstants.ARCHER));
+        assertThat(game.getUnitAt(twoZero).getDefensiveStrength(), is(3));
+        assertThat(game.getUnitAt(twoZero).getMoveCount(), is(1));
+        game.performUnitActionAt(twoZero);
+        assertThat(game.getUnitAt(twoZero).getDefensiveStrength(), is(2*3));
+        assertThat(game.getUnitAt(twoZero).getMoveCount(), is(0));
     }
 }
