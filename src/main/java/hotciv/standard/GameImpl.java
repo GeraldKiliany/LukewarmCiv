@@ -2,6 +2,9 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /** Skeleton implementation of HotCiv.
  
    This source code is from the book 
@@ -41,11 +44,21 @@ public class GameImpl implements Game {
   private Tile[][] gameTiles = new TileImpl[mapRows][mapCols];
   private CityImpl[][] cities = new CityImpl[mapRows][mapCols];
   private Unit[][] unitTiles = new UnitImpl[mapRows][mapCols];
+  private MapStrategy currMapStrat;
+  private Map<Position,Tile> CivMap;
   private WinnerStrategy winnerStrategy;
   private AgingStrategy agingStrategy;
   private UnitActionStrategy unitActionStrategy;
 
   //constructor
+  public GameImpl(MapStrategy argMapStrategy) {
+    this.currMapStrat = argMapStrategy;
+    this.CivMap = currMapStrat.setMap();
+    winnerStrategy = new AlphaCivWinnerStrategy();
+    agingStrategy = new AlphaCivAgingStrategy();
+    unitActionStrategy = new AlphaCivUnitActionStrategy();
+
+/* comment out until strategy works correctly
   public GameImpl() {
     winnerStrategy = new AlphaCivWinnerStrategy();
     agingStrategy = new AlphaCivAgingStrategy();
@@ -64,7 +77,7 @@ public class GameImpl implements Game {
     gameTiles[1][0] = new TileImpl(GameConstants.OCEANS);
     gameTiles[0][1] = new TileImpl(GameConstants.HILLS);
     gameTiles[2][2] = new TileImpl(GameConstants.MOUNTAINS);
-
+*/
     cities[1][1] = new CityImpl(Player.RED, new Position(1,1));
     cities[4][1] = new CityImpl(Player.BLUE, new Position(4,1));
 
@@ -84,7 +97,7 @@ public class GameImpl implements Game {
   }
 
   //accessors
-  public Tile getTileAt( Position p ) { return gameTiles[p.getRow()][p.getColumn()]; }
+  public Tile getTileAt( Position p ) { return CivMap.get(p); }
   public Unit getUnitAt( Position p ) { return unitTiles[p.getRow()][p.getColumn()]; }
   public City getCityAt( Position p ) { return cities[p.getRow()][p.getColumn()]; }
   public Player getPlayerInTurn() {return currPlayer;}

@@ -42,7 +42,8 @@ public class TestAlphaCiv {
   /** Fixture for alphaciv testing. */
   @Before
   public void setUp() {
-    game = new GameImpl();
+    MapStrategy AlphaMapStrat = new AlphaMapStrategy();
+    game = new GameImpl(AlphaMapStrat);
   }
 
   // FRS p. 455 states that 'Red is the first player to take a turn'.
@@ -263,7 +264,7 @@ public class TestAlphaCiv {
 
   //Ben
   @Test
-  public void redLegionAttackingRedArcherNeitherShouldMove() {
+  public void redLegionAttackingRedArcherNeitherShouldMove() { //TODO refactor to use only interface methods, age world
     Position eightZero = new Position(8, 0);
     Position eightOne = new Position(8, 1);
 
