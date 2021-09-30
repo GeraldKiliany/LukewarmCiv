@@ -43,12 +43,13 @@ public class GameImpl implements Game {
   private Unit[][] unitTiles = new UnitImpl[mapRows][mapCols];
   private WinnerStrategy winnerStrategy;
   private AgingStrategy agingStrategy;
+  private UnitActionStrategy unitActionStrategy;
 
   //constructor
   public GameImpl() {
     winnerStrategy = new AlphaCivWinnerStrategy();
     agingStrategy = new AlphaCivAgingStrategy();
-
+    unitActionStrategy = new AlphaCivUnitActionStrategy();
 
 
     //Setting up map as all plains by default
@@ -131,6 +132,7 @@ public class GameImpl implements Game {
    }
   }
   public void performUnitActionAt( Position p ) {}
+
   public boolean placeUnit(CityImpl city){
     int c = city.getPosition().getColumn();
     int r = city.getPosition().getRow();
