@@ -48,7 +48,7 @@ public class TestBetaCiv {
         AgingStrategy agingStrategy = new BetaCivAgingStrategy();
         WinnerStrategy winnerStrategy = new BetaCivWinnerStrategy();
         UnitActionStrategy unitActionStrategy = new AlphaCivUnitActionStrategy();
-        game = new GameImpl(mapStrategy, winnerStrategy, agingStrategy, unitActionStrategy);
+        game = new GameImpl(mapStrategy, winnerStrategy, agingStrategy, unitActionStrategy, null);
     }
 
     @Test
