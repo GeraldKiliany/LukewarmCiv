@@ -1,5 +1,6 @@
 package hotciv.standard;
 
+import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
 import hotciv.framework.Unit;
 
@@ -9,19 +10,42 @@ public  class UnitImpl implements Unit {
     Player owner;
     int moveCount;
     int defensiveStrength;
+    int attackingStrength;
 
     public UnitImpl () {
         type = null;
         owner = null;
         moveCount = 0;
         defensiveStrength = 0;
+        attackingStrength = 0;
     }
 
-    public UnitImpl(String unitType, Player unitOwner, int unitMoveCount, int unitDefensiveStrength) {
+    public UnitImpl(String unitType, Player unitOwner) {
         type = unitType;
         owner = unitOwner;
-        moveCount = unitMoveCount;
-        defensiveStrength = unitDefensiveStrength;
+
+        switch (unitType) {
+            case GameConstants.ARCHER:
+                moveCount = 1;
+                defensiveStrength = 3;
+                attackingStrength = 2;
+                break;
+            case GameConstants.LEGION:
+                moveCount = 1;
+                defensiveStrength = 2;
+                attackingStrength = 4;
+                break;
+            case GameConstants.SETTLER:
+                moveCount = 1;
+                defensiveStrength = 3;
+                attackingStrength = 0;
+                break;
+            default:
+                moveCount = 0;
+                defensiveStrength = 0;
+                attackingStrength = 0;
+                break;
+        }
     }
 
     public String getTypeString() {
@@ -32,4 +56,6 @@ public  class UnitImpl implements Unit {
     public void setOwner( Player newOwner ) { owner = newOwner; }
     public int getMoveCount() { return moveCount; }
     public int getDefensiveStrength() { return defensiveStrength; }
+    public int getAttackingStrength() { return attackingStrength; }
+
 }
