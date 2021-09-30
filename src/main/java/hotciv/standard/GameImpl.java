@@ -49,13 +49,15 @@ public class GameImpl implements Game {
   private WinnerStrategy winnerStrategy;
   private AgingStrategy agingStrategy;
   private UnitActionStrategy unitActionStrategy;
+  private Map<Position,CityImpl> citiesMap;
 
   //constructor -  may add setMethods instead of passing the strategies as arguments
   public GameImpl(
           MapStrategy argMapStrategy,
           WinnerStrategy argWinnerStrategy,
           AgingStrategy argAgingStrategy,
-          UnitActionStrategy argUnitActionStrategy
+          UnitActionStrategy argUnitActionStrategy,
+          StartCitiesStrategy argStartCitiesStrategy
   )
   {
     this.currMapStrat = argMapStrategy;
@@ -63,6 +65,7 @@ public class GameImpl implements Game {
     this.winnerStrategy = argWinnerStrategy;
     this.agingStrategy = argAgingStrategy;
     this.unitActionStrategy = argUnitActionStrategy;
+    this.citiesMap = argStartCitiesStrategy.setStartCities();
 
     cities[1][1] = new CityImpl(Player.RED, new Position(1,1));
     cities[4][1] = new CityImpl(Player.BLUE, new Position(4,1));
@@ -84,7 +87,8 @@ public class GameImpl implements Game {
   //accessors
   public Tile getTileAt( Position p ) { return CivMap.get(p); }
   public Unit getUnitAt( Position p ) { return unitTiles[p.getRow()][p.getColumn()]; }
-  public City getCityAt( Position p ) { return cities[p.getRow()][p.getColumn()]; }
+  //public City getCityAt( Position p ) { return citiesMap.get(p); } //TODO update all functions to work with cityMap
+  public City getCityAt( Position p ) { return cities[p.getRow()][p.getColumn()] ;}
   public Player getPlayerInTurn() {return currPlayer;}
   public Player getWinner() { return winnerStrategy.getWinner(age, cities); }
   public int getAge() {return age;}

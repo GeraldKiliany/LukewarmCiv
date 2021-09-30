@@ -1,13 +1,14 @@
 package hotciv.standard;
 
 import hotciv.framework.GameConstants;
+import hotciv.framework.MapStrategy;
 import hotciv.framework.Position;
 import hotciv.framework.Tile;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class DeltaMapStrategy {
+public class DeltaMapStrategy implements MapStrategy {
     private Map<Position, Tile> DeltaMap = new HashMap<Position, Tile>();
 
     public Map<Position, Tile> setMap() {
