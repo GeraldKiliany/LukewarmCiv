@@ -50,13 +50,19 @@ public class GameImpl implements Game {
   private AgingStrategy agingStrategy;
   private UnitActionStrategy unitActionStrategy;
 
-  //constructor
-  public GameImpl(MapStrategy argMapStrategy) {
+  //constructor -  may add setMethods instead of passing the strategies as arguments
+  public GameImpl(
+          MapStrategy argMapStrategy,
+          WinnerStrategy argWinnerStrategy,
+          AgingStrategy argAgingStrategy,
+          UnitActionStrategy argUnitActionStrategy
+  )
+  {
     this.currMapStrat = argMapStrategy;
     this.CivMap = currMapStrat.setMap();
-    winnerStrategy = new AlphaCivWinnerStrategy();
-    agingStrategy = new AlphaCivAgingStrategy();
-    unitActionStrategy = new AlphaCivUnitActionStrategy();
+    this.winnerStrategy = argWinnerStrategy;
+    this.agingStrategy = argAgingStrategy;
+    this.unitActionStrategy = argUnitActionStrategy;
 
 /* comment out until strategy works correctly
   public GameImpl() {
