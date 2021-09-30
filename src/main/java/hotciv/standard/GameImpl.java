@@ -41,10 +41,11 @@ public class GameImpl implements Game {
   private Tile[][] gameTiles = new TileImpl[mapRows][mapCols];
   private CityImpl[][] cities = new CityImpl[mapRows][mapCols];
   private Unit[][] unitTiles = new UnitImpl[mapRows][mapCols];
+  private WinnerStrategy winnerStrategy;
 
   //constructor
   public GameImpl() {
-
+    winnerStrategy = new AlphaCivWinnerStrategy();
 
 
 
@@ -84,7 +85,7 @@ public class GameImpl implements Game {
   public Unit getUnitAt( Position p ) { return unitTiles[p.getRow()][p.getColumn()]; }
   public City getCityAt( Position p ) { return cities[p.getRow()][p.getColumn()]; }
   public Player getPlayerInTurn() {return currPlayer;}
-  public Player getWinner() { return (age==-3000)?Player.RED:null; }
+  public Player getWinner() { return winnerStrategy.getWinner(age, cities); }
   public int getAge() {return age;}
 
   //mutators
@@ -132,7 +133,7 @@ public class GameImpl implements Game {
     int c = city.getPosition().getColumn();
     int r = city.getPosition().getRow();
 
-
+    //finding which tile to place the unit at
     int i = 0;
     int radius = 1;
     int ct = c;
@@ -190,13 +191,8 @@ public class GameImpl implements Game {
       city.incrementTreasury(-30);
     else
       return false;
-//
+
   unitTiles[rt][ct] = new UnitImpl(city.getProduction(),currPlayer);
   return true;
   }
 }
-
-
-
-
-//end of file
