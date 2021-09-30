@@ -96,7 +96,8 @@ public class TestGammaCiv {
         game.performUnitActionAt(twoZero);
         assertThat(game.getUnitAt(twoZero).getMoveCount(), is(0));
 
-        game.moveUnit(twoZero, threeZero);
+        boolean didMove = game.moveUnit(twoZero, threeZero);
+        assertThat(didMove, is(Boolean.FALSE));
         assertThat(game.getUnitAt(twoZero), is(notNullValue())); //from position still has archer
         assertThat(game.getUnitAt(threeZero), is(nullValue()));  //to position is empty
     }
@@ -114,7 +115,8 @@ public class TestGammaCiv {
         game.performUnitActionAt(twoZero);
         assertThat(game.getUnitAt(twoZero).getMoveCount(), is(1));
 
-        game.moveUnit(twoZero, threeZero);
+        boolean didMove = game.moveUnit(twoZero, threeZero);
+        assertThat(didMove, is(Boolean.TRUE));
         assertThat(game.getUnitAt(twoZero), is(nullValue()));      //from position is empty
         assertThat(game.getUnitAt(threeZero), is(notNullValue())); //to position now has archer
     }
