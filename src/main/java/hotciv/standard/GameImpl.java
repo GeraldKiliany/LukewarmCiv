@@ -134,7 +134,7 @@ public class GameImpl implements Game {
    }
   }
   public void performUnitActionAt( Position p ) {
-
+    unitActionStrategy.performUnitActionAt(p, cities, unitTiles);
   }
 
   public boolean placeUnit(CityImpl city){
