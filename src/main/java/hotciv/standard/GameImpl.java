@@ -42,10 +42,12 @@ public class GameImpl implements Game {
   private CityImpl[][] cities = new CityImpl[mapRows][mapCols];
   private Unit[][] unitTiles = new UnitImpl[mapRows][mapCols];
   private WinnerStrategy winnerStrategy;
+  private AgingStrategy agingStrategy;
 
   //constructor
   public GameImpl() {
     winnerStrategy = new AlphaCivWinnerStrategy();
+    agingStrategy = new AlphaCivAgingStrategy();
 
 
 
@@ -118,7 +120,7 @@ public class GameImpl implements Game {
       currPlayer = Player.BLUE;
     else {
       currPlayer = Player.RED;
-      age+=100;
+      age = agingStrategy.getNewAge(age);
     }
   }
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
