@@ -4,10 +4,18 @@ import hotciv.framework.*;
 
 public class GammaCivUnitActionStrategy implements UnitActionStrategy {
     public void performUnitActionAt(Position p, CityImpl[][] cities, Unit[][] unitTiles) {
-        String unitType = unitTiles[p.getRow()][p.getColumn()].getTypeString();
+        int r = p.getRow();
+        int c = p.getColumn();
+        Unit unit = unitTiles[r][c];
+
+        if (unit == null) { return; } //does nothing if there is no unit
+
+        String unitType = unit.getTypeString();
 
         switch (unitType) {
             case GameConstants.SETTLER:
+                unitTiles[r][c] = null;
+                cities[r][c] = new CityImpl(unit.getOwner(), p);
                 break;
             case GameConstants.ARCHER:
                 break;

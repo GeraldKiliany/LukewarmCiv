@@ -20,8 +20,39 @@ public class TestGammaCiv {
     }
 
     @Test
-    public void GammaCivKnowsArcherAtTwoZero() {
-        Position twoZero = new Position(2, 0);
-        game.performUnitActionAt(twoZero);
+    public void DoesNothingIfThereIsNoUnit() {
+        Position fiveZero = new Position(5, 0);
+        game.performUnitActionAt(fiveZero);
+    }
+
+    @Test
+    public void SettlerAtFourThreeRemovesItselfFromWorld() {
+        Position fourThree = new Position(4, 3);
+        assertThat(game.getUnitAt(fourThree), is(notNullValue()));
+        game.performUnitActionAt(fourThree);
+        assertThat(game.getUnitAt(fourThree), is(nullValue()));
+    }
+
+    @Test
+    public void SettlerBuildsCityAtPosition() {
+        Position fourThree = new Position(4, 3);
+        assertThat(game.getCityAt(fourThree), is(nullValue()));
+        game.performUnitActionAt(fourThree);
+        assertThat(game.getCityAt(fourThree), is(notNullValue()));
+    }
+
+    @Test
+    public void NewCityAndSettlerHaveSameOwner() {
+        Position fourThree = new Position(4, 3);
+        Player settlerOwner = game.getUnitAt(fourThree).getOwner();
+        game.performUnitActionAt(fourThree);
+        assertThat(game.getCityAt(fourThree).getOwner(), is(settlerOwner));
+    }
+
+    @Test
+    public void NewCityHasPopulationSizeOne() {
+        Position fourThree = new Position(4, 3);
+        game.performUnitActionAt(fourThree);
+        assertThat(game.getCityAt(fourThree).getSize(), is(1));
     }
 }
