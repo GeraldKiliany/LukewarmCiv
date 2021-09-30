@@ -32,23 +32,22 @@ import hotciv.framework.*;
 */
 
 public class GameImpl implements Game {
-  //matt
+
+  //Object Fields
+  private int mapRows = GameConstants.WORLDSIZE;
+  private int mapCols = GameConstants.WORLDSIZE;
   private Player currPlayer = Player.RED;
   private int age = -4000;
-
-  //Gerald
-  int mapRows = GameConstants.WORLDSIZE, mapCols = GameConstants.WORLDSIZE; //can probably be refactored to remove this var if map will always be square
-
-  //public Tile getTileAt(Position p) {return null;}//Simplest version returns null
- // public Tile getTileAt(Position p) { return originTile;} //The "Fake it" version of method, used in TDD process
- //private Tile originTile = new TileImpl("plains");
-
-  public Tile getTileAt( Position p ) { return gameTiles[p.getRow()][p.getColumn()]; }
-  private Tile[][] gameTiles = new Tile[mapRows][mapCols];
-  //matt
+  private Tile[][] gameTiles = new TileImpl[mapRows][mapCols];
   private CityImpl[][] cities = new CityImpl[mapRows][mapCols];
+  private Unit[][] unitTiles = new UnitImpl[mapRows][mapCols];
 
+  //constructor
   public GameImpl() {
+
+
+
+
     //Setting up map as all plains by default
     for (int currRow = 0; currRow < mapRows; currRow++) {
       for (int currCol = 0; currCol < mapCols; currCol++) {
@@ -80,17 +79,15 @@ public class GameImpl implements Game {
     unitTiles[8][1] = new UnitImpl(); //rightOrigin
   }
 
-  //Ben
+  //accessors
+  public Tile getTileAt( Position p ) { return gameTiles[p.getRow()][p.getColumn()]; }
   public Unit getUnitAt( Position p ) { return unitTiles[p.getRow()][p.getColumn()]; }
-  private Unit[][] unitTiles = new Unit[mapRows][mapCols];
-
-  //matt
   public City getCityAt( Position p ) { return cities[p.getRow()][p.getColumn()]; }
   public Player getPlayerInTurn() {return currPlayer;}
   public Player getWinner() { return (age==-3000)?Player.RED:null; }
   public int getAge() {return age;}
 
-
+  //mutators
   public boolean moveUnit( Position from, Position to ) {
 
     if(getUnitAt(to) == null) {
@@ -104,8 +101,6 @@ public class GameImpl implements Game {
 
 
     return false;}
-
-  //matt
   public void endOfTurn() {
     for (int i=0;i<mapRows;i++) {
       for (int j = 0; j < mapCols; j++) {
@@ -124,20 +119,15 @@ public class GameImpl implements Game {
       currPlayer = Player.RED;
       age+=100;
     }
-
-
   }
-
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {
     if(cities[p.getRow()][p.getColumn()].getProduction() != unitType){
       cities[p.getRow()][p.getColumn()].setProduction(unitType);
 
-    }
+   }
   }
   public void performUnitActionAt( Position p ) {}
-
-
   public boolean placeUnit(CityImpl city){
     int c = city.getPosition().getColumn();
     int r = city.getPosition().getRow();
@@ -200,9 +190,9 @@ public class GameImpl implements Game {
       city.incrementTreasury(-30);
     else
       return false;
-
-    unitTiles[rt][ct] = new UnitImpl(city.getProduction(),currPlayer);
-    return true;
+//
+  unitTiles[rt][ct] = new UnitImpl(city.getProduction(),currPlayer);
+  return true;
   }
 }
 

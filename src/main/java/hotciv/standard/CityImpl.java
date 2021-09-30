@@ -21,7 +21,9 @@ public class CityImpl implements City {
     public Player getOwner(){return owner;}
     public int getSize(){return size;}
     public int getTreasury(){return treasury;}
-    public String getProduction(){return unitProduced.getTypeString();}
+    public String getProduction(){
+        return unitProduced.getTypeString();
+    }
     public String getWorkforceFocus(){return null;}
     public void incrementTreasury(int a){
         treasury += a;

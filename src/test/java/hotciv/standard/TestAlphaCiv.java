@@ -301,19 +301,15 @@ public class TestAlphaCiv {
   public void cityIsProducingArcher(){
     game.changeProductionInCityAt(new Position(1,1),GameConstants.ARCHER);
     assertThat(game.getCityAt(new Position(1,1)).getProduction(),is(GameConstants.ARCHER));
-
-
   }
 
-  //Gerald
+//  //Gerald
   @Test
   public void cityIsProducingLegion(){
-
     game.changeProductionInCityAt(new Position(1,1),GameConstants.LEGION);
     assertThat(game.getCityAt(new Position(1,1)).getProduction(),is(GameConstants.LEGION));
-
   }
-
+//
   //Gerald
   @Test
   public void cityIsProducingArcherThenSettler(){
@@ -321,12 +317,10 @@ public class TestAlphaCiv {
     assertThat(game.getCityAt(new Position(1,1)).getProduction(),is(GameConstants.ARCHER));
     game.changeProductionInCityAt(new Position(1,1),GameConstants.SETTLER);
     assertThat(game.getCityAt(new Position(1,1)).getProduction(),is(GameConstants.SETTLER));
-
-
   }
-
+//
   //matt
- /* @Test
+  @Test
   public void shouldPlaceUnit(){
     assertNull(game.getUnitAt(new Position(1,1)));
     assertNull(game.getUnitAt (new Position(4,1)));
@@ -342,38 +336,37 @@ public class TestAlphaCiv {
     assertThat(game.getUnitAt(new Position(1,1)).getTypeString(),is(GameConstants.ARCHER));
     assertThat(game.getCityAt(new Position(1,1)).getTreasury(),is(12 - 10 + 6));
 
-    //unit on blue city
-    assertThat(game.getCityAt(new Position(4,1)).getTreasury(),is(12));
-    game.endOfTurn();
-    assertThat(game.getUnitAt(new Position(4,1)).getTypeString(),is(GameConstants.ARCHER));
-    assertThat(game.getCityAt(new Position(4,1)).getTreasury(),is(12 - 10 + 6));
-
-    game.endOfTurn();
-    game.endOfTurn();
-
-    //unit on north red city
-    game.endOfTurn();
-    assertThat(game.getUnitAt(new Position(0,1)).getTypeString(),is(GameConstants.ARCHER));
-    assertThat(game.getCityAt(new Position(1,1)).getTreasury(),is(12 - 10  + 6 + 6 - 10 + 6));
-
-    //unit on north blue city
-    game.endOfTurn();
-    assertThat(game.getUnitAt(new Position(3,1)).getTypeString(),is(GameConstants.ARCHER));
-    assertThat(game.getCityAt(new Position(4,1)).getTreasury(),is(12 - 10  + 6 + 6 - 10 + 6));
-
-    //unit northeast red city
-    game.endOfTurn();
-    assertThat(game.getUnitAt(new Position(0,2)).getTypeString(),is(GameConstants.ARCHER));
-    assertThat(game.getCityAt(new Position(1,1)).getTreasury(),is(12 - 10  + 6 + 6 - 10 + 6 - 10 + 6));
-
-    //legion northeast of blue, unit east of blue
-    game.endOfTurn();
-    assertThat(game.getUnitAt(new Position(4,2)).getTypeString(),is(GameConstants.ARCHER));
-    assertThat(game.getCityAt(new Position(4,1)).getTreasury(),is(12 - 10  + 6 + 6 - 10 + 6 - 10 + 6));
+//    //unit on blue city
+      assertThat(game.getCityAt(new Position(4,1)).getTreasury(),is(12));
+      game.endOfTurn();
+      assertThat(game.getUnitAt(new Position(4,1)).getTypeString(),is(GameConstants.ARCHER));
+       assertThat(game.getCityAt(new Position(4,1)).getTreasury(),is(12 - 10 + 6));
+//
+//    game.endOfTurn();
+//    game.endOfTurn();
+//
+//    //unit on north red city
+//    game.endOfTurn();
+//    assertThat(game.getUnitAt(new Position(0,1)).getTypeString(),is(GameConstants.ARCHER));
+//    assertThat(game.getCityAt(new Position(1,1)).getTreasury(),is(12 - 10  + 6 + 6 - 10 + 6));
+//
+//    //unit on north blue city
+//    game.endOfTurn();
+//    assertThat(game.getUnitAt(new Position(3,1)).getTypeString(),is(GameConstants.ARCHER));
+//    assertThat(game.getCityAt(new Position(4,1)).getTreasury(),is(12 - 10  + 6 + 6 - 10 + 6));
+//
+//    //unit northeast red city
+//    game.endOfTurn();
+//    assertThat(game.getUnitAt(new Position(0,2)).getTypeString(),is(GameConstants.ARCHER));
+//    assertThat(game.getCityAt(new Position(1,1)).getTreasury(),is(12 - 10  + 6 + 6 - 10 + 6 - 10 + 6));
+//
+//    //legion northeast of blue, unit east of blue
+//    game.endOfTurn();
+//    assertThat(game.getUnitAt(new Position(4,2)).getTypeString(),is(GameConstants.ARCHER));
+//    assertThat(game.getCityAt(new Position(4,1)).getTreasury(),is(12 - 10  + 6 + 6 - 10 + 6 - 10 + 6));
   }
-*/
-
-  @Test
+//
+//  @Test
   public void citiesShouldProduceArcherOnCityTileAfter3Rounds(){
     assertNull(game.getUnitAt(new Position(1,1)));
     assertNull(game.getUnitAt (new Position(4,1)));
@@ -395,10 +388,9 @@ public class TestAlphaCiv {
     assertThat(game.getUnitAt(new Position(4,1)).getTypeString(),is(GameConstants.ARCHER));
     assertThat(game.getCityAt(new Position(4,1)).getTreasury(),is(12 - 10 + 6));
   }
-
-
-
-@Test
+//
+//
+  @Test
   public void citiesShouldProduceArcherOnNorthTileAfter5Rounds(){
 
     assertNull(game.getUnitAt(new Position(1,1)));
@@ -424,8 +416,8 @@ public class TestAlphaCiv {
     assertThat(game.getCityAt(new Position(4,1)).getTreasury(),is(12 - 10  + 6 + 6 - 10 + 6));
 
   }
-
-@Test
+//
+  @Test
   public void citiesProduceArcherOnCorrectTileAfter6Rounds(){
     assertNull(game.getUnitAt(new Position(1,1)));
     assertNull(game.getUnitAt (new Position(4,1)));
@@ -455,6 +447,8 @@ public class TestAlphaCiv {
 
 
   }
+
+
   //TODO: Add test for moving units works only for adjacent tiles
   //TODO: Utilize strategy pattern (possibly for getting unit resource cost, more)
   //TODO: Use composition for Tile types, Unit types?
