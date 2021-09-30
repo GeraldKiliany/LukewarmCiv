@@ -64,11 +64,21 @@ public interface Unit {
    * @return the move count
    */
   public int getMoveCount();
+
+  /** change the moveCount of the unit
+   * @param newMoveCount the new move count of the unit
+   */
+  public void setMoveCount( int newMoveCount );
   
   /** return the defensive strength of this unit
    * @return defensive strength
    */
   public int getDefensiveStrength();
+
+  /** change the defensiveStrength of the unit
+   * @param newDefensiveStrength the new defensive strength of the unit
+   */
+  public void setDefensiveStrength( int newDefensiveStrength );
   
   /** return the attack strength of this unit
    * @return attack strength

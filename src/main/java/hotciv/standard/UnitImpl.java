@@ -55,7 +55,9 @@ public  class UnitImpl implements Unit {
     public void setTypeString( String unitType ) { type = unitType; }
     public void setOwner( Player newOwner ) { owner = newOwner; }
     public int getMoveCount() { return moveCount; }
+    public void setMoveCount(int newMoveCount) { moveCount = newMoveCount; }
     public int getDefensiveStrength() { return defensiveStrength; }
+    public void setDefensiveStrength(int newDefensiveStrength) { defensiveStrength = newDefensiveStrength; }
     public int getAttackingStrength() { return attackingStrength; }
 
 

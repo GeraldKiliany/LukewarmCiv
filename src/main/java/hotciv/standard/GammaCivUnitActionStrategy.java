@@ -18,6 +18,7 @@ public class GammaCivUnitActionStrategy implements UnitActionStrategy {
                 cities[r][c] = new CityImpl(unit.getOwner(), p);
                 break;
             case GameConstants.ARCHER:
+
                 break;
             default:
                 break;
