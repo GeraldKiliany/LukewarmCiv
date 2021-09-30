@@ -64,33 +64,12 @@ public class GameImpl implements Game {
     this.agingStrategy = argAgingStrategy;
     this.unitActionStrategy = argUnitActionStrategy;
 
-/* comment out until strategy works correctly
-  public GameImpl() {
-    winnerStrategy = new AlphaCivWinnerStrategy();
-    agingStrategy = new AlphaCivAgingStrategy();
-    unitActionStrategy = new AlphaCivUnitActionStrategy();
-
-
-    //Setting up map as all plains by default
-    for (int currRow = 0; currRow < mapRows; currRow++) {
-      for (int currCol = 0; currCol < mapCols; currCol++) {
-
-        gameTiles[currRow][currCol] = new TileImpl(GameConstants.PLAINS);
-      }
-    }
-    //Comment out adding non plains tiles to show TDD iteration
-
-    gameTiles[1][0] = new TileImpl(GameConstants.OCEANS);
-    gameTiles[0][1] = new TileImpl(GameConstants.HILLS);
-    gameTiles[2][2] = new TileImpl(GameConstants.MOUNTAINS);
-*/
     cities[1][1] = new CityImpl(Player.RED, new Position(1,1));
     cities[4][1] = new CityImpl(Player.BLUE, new Position(4,1));
 
     Player redPlayer = Player.RED;
     Player bluePlayer = Player.BLUE;
 
-    //unitTiles[2][0] = new UnitImpl("archer", redPlayer);
     unitTiles[2][0] = new UnitImpl();
     unitTiles[2][0].setTypeString(GameConstants.ARCHER);
     unitTiles[2][0].setOwner(Player.RED);
@@ -150,7 +129,9 @@ public class GameImpl implements Game {
 
    }
   }
-  public void performUnitActionAt( Position p ) {}
+  public void performUnitActionAt( Position p ) {
+
+  }
 
   public boolean placeUnit(CityImpl city){
     int c = city.getPosition().getColumn();
@@ -161,6 +142,7 @@ public class GameImpl implements Game {
     int radius = 1;
     int ct = c;
     int rt = r;
+    int tilesChecked = 0;
     while(unitTiles[rt][ct] != null) {
       if (i > 7){
         radius++;
@@ -200,7 +182,14 @@ public class GameImpl implements Game {
           rt = r - radius;
           break;
       }
+      if (rt < 0 || ct < 0 || rt >=16 || ct >= 16){
+        rt = 0;
+        ct = 0;
+      }
       i++;
+      tilesChecked++;
+      if (tilesChecked > GameConstants.WORLDSIZE*GameConstants.WORLDSIZE+2)
+        return false;
     }
 
 
