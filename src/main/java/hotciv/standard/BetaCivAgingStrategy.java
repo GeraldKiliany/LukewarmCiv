@@ -21,5 +21,4 @@ public class BetaCivAgingStrategy implements AgingStrategy{
         else
             return age + 1;
     }
-
 }

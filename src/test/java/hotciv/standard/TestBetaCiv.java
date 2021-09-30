@@ -46,7 +46,7 @@ public class TestBetaCiv {
     public void setUp() {
         MapStrategy mapStrategy = new AlphaMapStrategy();
         AgingStrategy agingStrategy = new BetaCivAgingStrategy();
-        WinnerStrategy winnerStrategy = new AlphaCivWinnerStrategy();
+        WinnerStrategy winnerStrategy = new BetaCivWinnerStrategy();
         UnitActionStrategy unitActionStrategy = new AlphaCivUnitActionStrategy();
         game = new GameImpl(mapStrategy, winnerStrategy, agingStrategy, unitActionStrategy);
     }
@@ -157,6 +157,11 @@ public class TestBetaCiv {
         game.endOfTurn();
         game.endOfTurn();
         assertThat(game.getAge(), is(1970+1+1+1+1));
-
     }
+
+    @Test
+    public void noWinnerWhenCitiesAreOwnedByBothPlayers(){
+        assertNull(game.getWinner());
+    }
+
 }
