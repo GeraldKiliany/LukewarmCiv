@@ -3,6 +3,7 @@ package hotciv.standard;
 import hotciv.framework.*;
 
 import java.util.HashMap;
+//Release 3.0
 import java.util.Map;
 
 /** Skeleton implementation of HotCiv.
