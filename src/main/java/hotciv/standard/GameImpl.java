@@ -41,8 +41,6 @@ public class GameImpl implements Game {
   private int mapCols = GameConstants.WORLDSIZE;
   private Player currPlayer = Player.RED;
   private int age = -4000;
-  private Tile[][] gameTiles = new TileImpl[mapRows][mapCols];
-  private CityImpl[][] cities = new CityImpl[mapRows][mapCols];
   private Unit[][] unitTiles = new UnitImpl[mapRows][mapCols];
   private MapStrategy currMapStrat;
   private Map<Position,Tile> CivMap;
@@ -51,7 +49,18 @@ public class GameImpl implements Game {
   private UnitActionStrategy unitActionStrategy;
   private Map<Position,CityImpl> citiesMap;
 
-  //constructor -  may add setMethods instead of passing the strategies as arguments
+  //default Constructor
+  public GameImpl(){
+    this.currMapStrat = new AlphaMapStrategy();
+    this.CivMap = currMapStrat.setMap();
+    this.winnerStrategy = new AlphaCivWinnerStrategy();
+    this.agingStrategy = new AlphaCivAgingStrategy();
+    this.unitActionStrategy = new AlphaCivUnitActionStrategy();
+    this.citiesMap = new AlphaStartCitiesStrategy().setStartCities();
+
+
+
+  }
   public GameImpl(
           MapStrategy argMapStrategy,
           WinnerStrategy argWinnerStrategy,
@@ -67,9 +76,6 @@ public class GameImpl implements Game {
     this.unitActionStrategy = argUnitActionStrategy;
     this.citiesMap = argStartCitiesStrategy.setStartCities();
 
-    cities[1][1] = new CityImpl(Player.RED, new Position(1,1));
-    cities[4][1] = new CityImpl(Player.BLUE, new Position(4,1));
-
     Player redPlayer = Player.RED;
     Player bluePlayer = Player.BLUE;
 
@@ -77,17 +83,16 @@ public class GameImpl implements Game {
     unitTiles[4][3] = new UnitImpl(GameConstants.SETTLER, redPlayer);
     unitTiles[3][2] = new UnitImpl(GameConstants.LEGION, bluePlayer);
 
-    unitTiles[8][0] = new UnitImpl(); //origin
+    //unitTiles[8][0] = new UnitImpl(); //origin
     unitTiles[8][1] = new UnitImpl(); //rightOrigin
   }
 
   //accessors
   public Tile getTileAt( Position p ) { return CivMap.get(p); }
   public Unit getUnitAt( Position p ) { return unitTiles[p.getRow()][p.getColumn()]; }
-  //public City getCityAt( Position p ) { return citiesMap.get(p); } //TODO update all functions to work with cityMap
-  public City getCityAt( Position p ) { return cities[p.getRow()][p.getColumn()] ;}
+  public City getCityAt( Position p ) { return citiesMap.get(p); } //TODO update all functions to work with cityMap
   public Player getPlayerInTurn() {return currPlayer;}
-  public Player getWinner() { return winnerStrategy.getWinner(age, cities); }
+  public Player getWinner() { return winnerStrategy.getWinner(age, citiesMap); }
   public int getAge() {return age;}
 
   //mutators
@@ -110,10 +115,10 @@ public class GameImpl implements Game {
   public void endOfTurn() {
     for (int i=0;i<mapRows;i++) {
       for (int j = 0; j < mapCols; j++) {
-        if (cities[i][j] != null) {
-          if (cities[i][j].getOwner() == currPlayer) {
-            placeUnit(cities[i][j]);
-            cities[i][j].incrementTreasury(6);
+        if (citiesMap.get(new Position(i,j)) != null) {
+          if (citiesMap.get(new Position(i,j)).getOwner() == currPlayer) {
+            placeUnit(citiesMap.get(new Position(i,j)));
+            citiesMap.get(new Position(i,j)).incrementTreasury(6);
           }
         }
       }
@@ -128,13 +133,13 @@ public class GameImpl implements Game {
   }
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {
-    if(cities[p.getRow()][p.getColumn()].getProduction() != unitType){
-      cities[p.getRow()][p.getColumn()].setProduction(unitType);
+    if(!citiesMap.get(p).equals(unitType)){
+      citiesMap.get(p).setProduction(unitType);
 
    }
   }
   public void performUnitActionAt( Position p ) {
-    unitActionStrategy.performUnitActionAt(p, cities, unitTiles);
+    unitActionStrategy.performUnitActionAt(p, citiesMap, unitTiles);
   }
 
   public boolean placeUnit(CityImpl city){

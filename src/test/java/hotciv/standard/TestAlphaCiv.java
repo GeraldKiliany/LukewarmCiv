@@ -48,6 +48,7 @@ public class TestAlphaCiv {
     UnitActionStrategy unitActionStrategy = new AlphaCivUnitActionStrategy();
     StartCitiesStrategy startCitiesStrategy = new AlphaStartCitiesStrategy();
     game = new GameImpl(mapStrategy,winnerStrategy, agingStrategy, unitActionStrategy, startCitiesStrategy);
+    //game = new GameImpl();
   }
 
   // FRS p. 455 states that 'Red is the first player to take a turn'.
@@ -154,23 +155,13 @@ public class TestAlphaCiv {
     assertThat(game.getUnitAt(twoZero).getOwner(), is(Player.BLUE));
   }
 
-  //Added by Gerald
-/*  @Test
-  public void tileAtOriginShouldBePlains() {
-    Position origin = new Position(0, 0);
-    assertThat(game.getTileAt(origin).getTypeString(), is("plains"));
-
-  }
-*/
   //Gerald
   @Test
   public void multipleTilesArePlains(){
-    Position origin = new Position(0,0);
-   // Position thirdRow = new Position(2,0);
-    Position thirdColumn = new Position(3,0 );
-    assertThat(game.getTileAt(origin).getTypeString(), is(GameConstants.PLAINS));
-   // assertThat(game.getTileAt(thirdRow).getTypeString(), is("plains"));
-    assertThat(game.getTileAt(thirdColumn).getTypeString(), is(GameConstants.PLAINS));
+    Position zeroZero = new Position(0,0);
+    Position threeZero = new Position(3,0 );
+    assertThat(game.getTileAt(zeroZero).getTypeString(), is(GameConstants.PLAINS));
+    assertThat(game.getTileAt(threeZero).getTypeString(), is(GameConstants.PLAINS));
 
   }
 
@@ -238,53 +229,44 @@ public class TestAlphaCiv {
     assertThat(game.getUnitAt(threeThree).getTypeString(), is(GameConstants.LEGION));
     game.moveUnit(threeThree,fourThree);
     assertThat(game.getUnitAt(fourThree).getTypeString(), is(GameConstants.LEGION));
+    assertThat(game.getUnitAt(threeThree), is(nullValue()));
 
-
-  }
-
-  //Ben
-  @Test
-  public void redArcherAttackingBlueSettlerShouldWinAndReplace() {
-    Position eightZero = new Position(8, 0);
-    Position eightOne = new Position(8, 1);
-
-    game.getUnitAt(eightZero).setOwner(Player.RED);
-    game.getUnitAt(eightZero).setTypeString(GameConstants.ARCHER);
-    game.getUnitAt(eightOne).setOwner(Player.BLUE);
-    game.getUnitAt(eightOne).setTypeString(GameConstants.SETTLER);
-
-    //red attacks blue
-    game.moveUnit(eightZero, eightOne);
-
-    //red has replaced blue's position
-    assertThat(game.getUnitAt(eightOne).getOwner(), is(not(Player.BLUE)));
-    assertThat(game.getUnitAt(eightOne).getTypeString(), is(not(GameConstants.SETTLER)));
-    assertThat(game.getUnitAt(eightOne).getOwner(), is(Player.RED));
-    assertThat(game.getUnitAt(eightOne).getTypeString(), is(GameConstants.ARCHER));
-
-    //origin is empty after red completes attack
-    assertThat(game.getUnitAt(eightZero), is(nullValue()));
   }
 
   //Ben
   @Test
   public void redLegionAttackingRedArcherNeitherShouldMove() { //TODO refactor to use only interface methods, age world
-    Position eightZero = new Position(8, 0);
-    Position eightOne = new Position(8, 1);
 
-    game.getUnitAt(eightZero).setOwner(Player.RED);
-    game.getUnitAt(eightZero).setTypeString(GameConstants.LEGION);
-    game.getUnitAt(eightOne).setOwner(Player.RED);
-    game.getUnitAt(eightOne).setTypeString(GameConstants.ARCHER);
+    //Show there are no units on these tiles at start
+    Position oneOne = new Position(1,1);
+    Position zeroOne = new Position(0,1);
+    assertThat(game.getUnitAt(oneOne), is(nullValue()));
+    assertThat(game.getUnitAt(zeroOne), is(nullValue()));
 
-    //red attacks red
-    game.moveUnit(eightZero, eightOne);
 
-    //neither unit has moved
-    assertThat(game.getUnitAt(eightZero).getOwner(), is(Player.RED));
-    assertThat(game.getUnitAt(eightZero).getTypeString(), is(GameConstants.LEGION));
-    assertThat(game.getUnitAt(eightOne).getOwner(), is(Player.RED));
-    assertThat(game.getUnitAt(eightOne).getTypeString(), is(GameConstants.ARCHER));
+    //Age world five rounds so there are two units owned by Red next to each other
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+
+
+    assertThat(game.getUnitAt(oneOne).getTypeString(), is(GameConstants.ARCHER));
+    assertThat(game.getUnitAt(zeroOne).getTypeString(), is(GameConstants.ARCHER));
+    assertThat(game.getUnitAt(oneOne).getOwner(), is(Player.RED));
+    assertThat(game.getUnitAt(zeroOne).getOwner(), is(Player.RED));
+
+    game.moveUnit(zeroOne,oneOne);
+    assertThat(game.getUnitAt(oneOne).getTypeString(), is(GameConstants.ARCHER));
+    assertThat(game.getUnitAt(zeroOne).getTypeString(), is(GameConstants.ARCHER));
+
+
   }
 
   //matt
@@ -341,37 +323,14 @@ public class TestAlphaCiv {
     assertThat(game.getUnitAt(new Position(1,1)).getTypeString(),is(GameConstants.ARCHER));
     assertThat(game.getCityAt(new Position(1,1)).getTreasury(),is(12 - 10 + 6));
 
-//    //unit on blue city
-      assertThat(game.getCityAt(new Position(4,1)).getTreasury(),is(12));
-      game.endOfTurn();
-      assertThat(game.getUnitAt(new Position(4,1)).getTypeString(),is(GameConstants.ARCHER));
-       assertThat(game.getCityAt(new Position(4,1)).getTreasury(),is(12 - 10 + 6));
-//
-//    game.endOfTurn();
-//    game.endOfTurn();
-//
-//    //unit on north red city
-//    game.endOfTurn();
-//    assertThat(game.getUnitAt(new Position(0,1)).getTypeString(),is(GameConstants.ARCHER));
-//    assertThat(game.getCityAt(new Position(1,1)).getTreasury(),is(12 - 10  + 6 + 6 - 10 + 6));
-//
-//    //unit on north blue city
-//    game.endOfTurn();
-//    assertThat(game.getUnitAt(new Position(3,1)).getTypeString(),is(GameConstants.ARCHER));
-//    assertThat(game.getCityAt(new Position(4,1)).getTreasury(),is(12 - 10  + 6 + 6 - 10 + 6));
-//
-//    //unit northeast red city
-//    game.endOfTurn();
-//    assertThat(game.getUnitAt(new Position(0,2)).getTypeString(),is(GameConstants.ARCHER));
-//    assertThat(game.getCityAt(new Position(1,1)).getTreasury(),is(12 - 10  + 6 + 6 - 10 + 6 - 10 + 6));
-//
-//    //legion northeast of blue, unit east of blue
-//    game.endOfTurn();
-//    assertThat(game.getUnitAt(new Position(4,2)).getTypeString(),is(GameConstants.ARCHER));
-//    assertThat(game.getCityAt(new Position(4,1)).getTreasury(),is(12 - 10  + 6 + 6 - 10 + 6 - 10 + 6));
+    //unit on blue city
+    assertThat(game.getCityAt(new Position(4,1)).getTreasury(),is(12));
+    game.endOfTurn();
+    assertThat(game.getUnitAt(new Position(4,1)).getTypeString(),is(GameConstants.ARCHER));
+    assertThat(game.getCityAt(new Position(4,1)).getTreasury(),is(12 - 10 + 6));
   }
-//
-//  @Test
+
+  @Test
   public void citiesShouldProduceArcherOnCityTileAfter3Rounds(){
     assertNull(game.getUnitAt(new Position(1,1)));
     assertNull(game.getUnitAt (new Position(4,1)));
@@ -393,8 +352,7 @@ public class TestAlphaCiv {
     assertThat(game.getUnitAt(new Position(4,1)).getTypeString(),is(GameConstants.ARCHER));
     assertThat(game.getCityAt(new Position(4,1)).getTreasury(),is(12 - 10 + 6));
   }
-//
-//
+
   @Test
   public void citiesShouldProduceArcherOnNorthTileAfter5Rounds(){
 

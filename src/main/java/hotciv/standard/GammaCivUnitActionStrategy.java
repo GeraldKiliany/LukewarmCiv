@@ -2,11 +2,14 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 
+import java.util.Map;
+
 public class GammaCivUnitActionStrategy implements UnitActionStrategy {
-    public void performUnitActionAt(Position p, CityImpl[][] cities, Unit[][] unitTiles) {
+    public void performUnitActionAt(Position p, Map<Position,CityImpl> argCitiesMap, Unit[][] unitTiles) {
         int r = p.getRow();
         int c = p.getColumn();
         Unit unit = unitTiles[r][c];
+        Map<Position, CityImpl> citiesMap = argCitiesMap;
 
         if (unit == null) { return; } //does nothing if there is no unit
 
@@ -15,7 +18,7 @@ public class GammaCivUnitActionStrategy implements UnitActionStrategy {
         switch (unitType) {
             case GameConstants.SETTLER:
                 unitTiles[r][c] = null;
-                cities[r][c] = new CityImpl(unit.getOwner(), p);
+                citiesMap.put(p, new CityImpl(unit.getOwner(), p));
                 break;
             case GameConstants.ARCHER:
                 //fortification
