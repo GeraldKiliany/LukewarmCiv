@@ -83,8 +83,6 @@ public class GameImpl implements Game {
     unitTiles[4][3] = new UnitImpl(GameConstants.SETTLER, redPlayer);
     unitTiles[3][2] = new UnitImpl(GameConstants.LEGION, bluePlayer);
 
-    //unitTiles[8][0] = new UnitImpl(); //origin
-    unitTiles[8][1] = new UnitImpl(); //rightOrigin
   }
 
   //accessors
