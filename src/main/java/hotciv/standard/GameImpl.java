@@ -131,7 +131,7 @@ public class GameImpl implements Game {
   }
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {
-    if(!citiesMap.get(p).equals(unitType)){
+    if(!citiesMap.get(p).getProduction().equals(unitType)){
       citiesMap.get(p).setProduction(unitType);
 
    }
@@ -150,12 +150,12 @@ public class GameImpl implements Game {
     int ct = c;
     int rt = r;
     int tilesChecked = 0;
-    while(unitTiles[rt][ct] != null) {
+    while(unitTiles[rt][ct] != null) { //TODO iterate over map using iterator for loop
       if (i > 7){
         radius++;
         i=0;
       }
-      switch(i){
+      switch(i){ //TODO possibly use utility for checking neighbors
         case 0: //north
           ct = c;
           rt = r - radius;
@@ -202,7 +202,7 @@ public class GameImpl implements Game {
 
 
     //remove the cost of the unitType from the city's treasury
-    if (city.getProduction() == GameConstants.ARCHER && city.getTreasury() >= 10)
+    if (city.getProduction() == GameConstants.ARCHER && city.getTreasury() >= 10) //TODO use.equals for strings
       city.incrementTreasury(-10);
     else if  (city.getProduction() == GameConstants.LEGION && city.getTreasury() >= 15)
       city.incrementTreasury(-15);
