@@ -37,8 +37,6 @@ import java.util.Map;
 public class GameImpl implements Game {
 
   //Object Fields
-  private int mapRows = GameConstants.WORLDSIZE;
-  private int mapCols = GameConstants.WORLDSIZE;
   private Player currPlayer = Player.RED;
   private int age = -4000;
   private Map<Position, Unit> units = new HashMap<Position, Unit>();
@@ -57,12 +55,10 @@ public class GameImpl implements Game {
     this.agingStrategy = new AlphaCivAgingStrategy();
     this.unitActionStrategy = new AlphaCivUnitActionStrategy();
     this.citiesMap = new AlphaStartCitiesStrategy().setStartCities();
-    Player redPlayer = Player.RED;
-    Player bluePlayer = Player.BLUE;
-    units.put(new Position(2,0), new UnitImpl(GameConstants.ARCHER, redPlayer));
-    units.put(new Position(4,3), new UnitImpl(GameConstants.SETTLER, redPlayer));
-    units.put(new Position(3,2), new UnitImpl(GameConstants.LEGION, bluePlayer));
 
+    units.put(new Position(2,0), new UnitImpl(GameConstants.ARCHER, Player.RED));
+    units.put(new Position(4,3), new UnitImpl(GameConstants.SETTLER, Player.RED));
+    units.put(new Position(3,2), new UnitImpl(GameConstants.LEGION, Player.BLUE));
   }
   public GameImpl(
           MapStrategy argMapStrategy,
@@ -79,13 +75,9 @@ public class GameImpl implements Game {
     this.unitActionStrategy = argUnitActionStrategy;
     this.citiesMap = argStartCitiesStrategy.setStartCities();
 
-    Player redPlayer = Player.RED;
-    Player bluePlayer = Player.BLUE;
-
-    units.put(new Position(2,0), new UnitImpl(GameConstants.ARCHER, redPlayer));
-    units.put(new Position(4,3), new UnitImpl(GameConstants.SETTLER, redPlayer));
-    units.put(new Position(3,2), new UnitImpl(GameConstants.LEGION, bluePlayer));
-
+    units.put(new Position(2,0), new UnitImpl(GameConstants.ARCHER, Player.RED));
+    units.put(new Position(4,3), new UnitImpl(GameConstants.SETTLER, Player.RED));
+    units.put(new Position(3,2), new UnitImpl(GameConstants.LEGION, Player.BLUE));
   }
 
   //accessors
@@ -117,14 +109,11 @@ public class GameImpl implements Game {
 
 
   public void endOfTurn() {
-    for (int i=0;i<mapRows;i++) {
-      for (int j = 0; j < mapCols; j++) {
-        if (citiesMap.get(new Position(i,j)) != null) {
-          if (citiesMap.get(new Position(i,j)).getOwner() == currPlayer) {
-            placeUnit(citiesMap.get(new Position(i,j)));
-            citiesMap.get(new Position(i,j)).incrementTreasury(6);
-          }
-        }
+    for(Position p : citiesMap.keySet()) {
+      CityImpl currCity = citiesMap.get(p);
+      if (currCity.getOwner() == currPlayer) {
+        placeUnit(currCity);
+        currCity.incrementTreasury(6);
       }
     }
 
