@@ -55,89 +55,69 @@ public class TestBetaCiv {
     @Test
     public void shouldAge100BetweenBefore100BC(){
         assertThat(game.getAge(),is(-4000));
-        game.endOfTurn();
-        game.endOfTurn();
+        game.advanceTurns(2);
         assertThat(game.getAge(),is(-4000+100));
-        game.endOfTurn();
-        game.endOfTurn();
+        game.advanceTurns(2);
         assertThat(game.getAge(),is(-4000+200));
-        game.endOfTurn();
-        game.endOfTurn();
+        game.advanceTurns(2);
         assertThat(game.getAge(),is(-4000+300));
-        game.endOfTurn();
-        game.endOfTurn();
+        game.advanceTurns(2);
         assertThat(game.getAge(),is(-4000+400));
     }
 
     @Test
     public void shouldAg50BetweenAfter50ADBefore1750(){
         while(game.getAge() != 1)
-            game.endOfTurn();
-        game.endOfTurn();
-        game.endOfTurn();
+            game.advanceTurns(1);
+        game.advanceTurns(2);
         assertThat(game.getAge(), is(50));
-        game.endOfTurn();
-        game.endOfTurn();
+        game.advanceTurns(2);
         assertThat(game.getAge(), is(50+50));
-        game.endOfTurn();
-        game.endOfTurn();
+        game.advanceTurns(2);
         assertThat(game.getAge(), is(50+50+50));
-        game.endOfTurn();
-        game.endOfTurn();
+        game.advanceTurns(2);
         assertThat(game.getAge(), is(50+50+50+50));
     }
 
     @Test
     public void shouldAg25BetweenAfter1750ADBefore1900(){
         while(game.getAge() != 1750)
-            game.endOfTurn();
-        game.endOfTurn();
-        game.endOfTurn();
+            game.advanceTurns(1);
+        game.advanceTurns(2);
         assertThat(game.getAge(), is(1750+25));
-        game.endOfTurn();
-        game.endOfTurn();
+        game.advanceTurns(2);
         assertThat(game.getAge(), is(1750+25+25));
-        game.endOfTurn();
-        game.endOfTurn();
+        game.advanceTurns(2);
         assertThat(game.getAge(), is(1750+25+25+25));
-        game.endOfTurn();
-        game.endOfTurn();
+        game.advanceTurns(2);
         assertThat(game.getAge(), is(1750+25+25+25+25));
     }
 
     @Test
     public void gameAgeSequenceBirthOfChrist(){
         while(game.getAge() < -200)
-            game.endOfTurn();
-        game.endOfTurn();
-        game.endOfTurn();
+            game.advanceTurns(1);
+        game.advanceTurns(2);
         assertThat(game.getAge(), is(-100));
-        game.endOfTurn();
-        game.endOfTurn();
+        game.advanceTurns(2);
         assertThat(game.getAge(), is(-1));
-        game.endOfTurn();
-        game.endOfTurn();
+        game.advanceTurns(2);
         assertThat(game.getAge(), is(1));
-        game.endOfTurn();
-        game.endOfTurn();
+        game.advanceTurns(2);
         assertThat(game.getAge(), is(50));
     }
 
     @Test
     public void gameShouldAge5After1900Before1970(){
         while(game.getAge() != 1900)
-            game.endOfTurn();
-        game.endOfTurn();
-        game.endOfTurn();
+            game.advanceTurns(1);
+        game.advanceTurns(2);
         assertThat(game.getAge(), is(1900+5));
-        game.endOfTurn();
-        game.endOfTurn();
+        game.advanceTurns(2);
         assertThat(game.getAge(), is(1900+5+5));
-        game.endOfTurn();
-        game.endOfTurn();
+        game.advanceTurns(2);
         assertThat(game.getAge(), is(1900+5+5+5));
-        game.endOfTurn();
-        game.endOfTurn();
+        game.advanceTurns(2);
         assertThat(game.getAge(), is(1900+5+5+5+5));
 
     }
@@ -145,18 +125,14 @@ public class TestBetaCiv {
     @Test
     public void gameShouldAge1After1970(){
         while(game.getAge() != 1970)
-            game.endOfTurn();
-        game.endOfTurn();
-        game.endOfTurn();
+            game.advanceTurns(1);
+        game.advanceTurns(2);
         assertThat(game.getAge(), is(1970+1));
-        game.endOfTurn();
-        game.endOfTurn();
+        game.advanceTurns(2);
         assertThat(game.getAge(), is(1970+1+1));
-        game.endOfTurn();
-        game.endOfTurn();
+        game.advanceTurns(2);
         assertThat(game.getAge(), is(1970+1+1+1));
-        game.endOfTurn();
-        game.endOfTurn();
+        game.advanceTurns(2);
         assertThat(game.getAge(), is(1970+1+1+1+1));
     }
 
