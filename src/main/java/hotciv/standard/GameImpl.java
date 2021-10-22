@@ -203,11 +203,11 @@ public class GameImpl implements Game {
 
     //remove the cost of the unitType from the city's treasury
     if (city.getProduction() == GameConstants.ARCHER && city.getTreasury() >= 10) //TODO use.equals for strings
-      city.incrementTreasury(-10);
+      city.decrementTreasury(10);
     else if  (city.getProduction() == GameConstants.LEGION && city.getTreasury() >= 15)
-      city.incrementTreasury(-15);
+      city.decrementTreasury(15);
     else if (city.getProduction() == GameConstants.SETTLER && city.getTreasury() >= 30)
-      city.incrementTreasury(-30);
+      city.decrementTreasury(30);
     else
       return false;
 

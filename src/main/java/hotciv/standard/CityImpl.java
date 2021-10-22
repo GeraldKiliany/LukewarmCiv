@@ -28,6 +28,7 @@ public class CityImpl implements City {
     public void incrementTreasury(int a){
         treasury += a;
     }
+    public void decrementTreasury(int a) { treasury -= a; }
 
     public Position getPosition(){return position;}
 
