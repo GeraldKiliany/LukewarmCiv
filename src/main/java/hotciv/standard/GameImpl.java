@@ -41,7 +41,7 @@ public class GameImpl implements Game {
   private int mapCols = GameConstants.WORLDSIZE;
   private Player currPlayer = Player.RED;
   private int age = -4000;
-  private Unit[][] unitTiles = new UnitImpl[mapRows][mapCols];
+  private Map<Position, Unit> units = new HashMap<Position, Unit>();
   private MapStrategy currMapStrat;
   private Map<Position,Tile> CivMap;
   private WinnerStrategy winnerStrategy;
@@ -57,8 +57,11 @@ public class GameImpl implements Game {
     this.agingStrategy = new AlphaCivAgingStrategy();
     this.unitActionStrategy = new AlphaCivUnitActionStrategy();
     this.citiesMap = new AlphaStartCitiesStrategy().setStartCities();
-
-
+    Player redPlayer = Player.RED;
+    Player bluePlayer = Player.BLUE;
+    units.put(new Position(2,0), new UnitImpl(GameConstants.ARCHER, redPlayer));
+    units.put(new Position(4,3), new UnitImpl(GameConstants.SETTLER, redPlayer));
+    units.put(new Position(3,2), new UnitImpl(GameConstants.LEGION, bluePlayer));
 
   }
   public GameImpl(
@@ -79,15 +82,15 @@ public class GameImpl implements Game {
     Player redPlayer = Player.RED;
     Player bluePlayer = Player.BLUE;
 
-    unitTiles[2][0] = new UnitImpl(GameConstants.ARCHER, redPlayer);
-    unitTiles[4][3] = new UnitImpl(GameConstants.SETTLER, redPlayer);
-    unitTiles[3][2] = new UnitImpl(GameConstants.LEGION, bluePlayer);
+    units.put(new Position(2,0), new UnitImpl(GameConstants.ARCHER, redPlayer));
+    units.put(new Position(4,3), new UnitImpl(GameConstants.SETTLER, redPlayer));
+    units.put(new Position(3,2), new UnitImpl(GameConstants.LEGION, bluePlayer));
 
   }
 
   //accessors
   public Tile getTileAt( Position p ) { return CivMap.get(p); }
-  public Unit getUnitAt( Position p ) { return unitTiles[p.getRow()][p.getColumn()]; }
+  public Unit getUnitAt( Position p ) { return units.get(p); }
   public City getCityAt( Position p ) { return citiesMap.get(p); } //TODO update all functions to work with cityMap
   public Player getPlayerInTurn() {return currPlayer;}
   public Player getWinner() { return winnerStrategy.getWinner(age, citiesMap); }
@@ -99,17 +102,16 @@ public class GameImpl implements Game {
     if(getUnitAt(from).getMoveCount() == 0) { return false; }
 
     if(getUnitAt(to) == null) {
-      unitTiles[to.getRow()][to.getColumn()]= unitTiles[from.getRow()][from.getColumn()];
-      unitTiles[from.getRow()][from.getColumn()]= null;
+      units.put(to,units.get(from));
+      units.put(from, null);
     }
     else if(getUnitAt(to).getOwner() != getUnitAt(from).getOwner()){
-      unitTiles[to.getRow()][to.getColumn()]= unitTiles[from.getRow()][from.getColumn()];
-      unitTiles[from.getRow()][from.getColumn()]= null;
+      units.put(to, units.get(from));
+      units.put(from,null);
     }
 
     return true;
   }
-
   public void endOfTurn() {
     for (int i=0;i<mapRows;i++) {
       for (int j = 0; j < mapCols; j++) {
@@ -137,12 +139,12 @@ public class GameImpl implements Game {
    }
   }
   public void performUnitActionAt( Position p ) {
-    unitActionStrategy.performUnitActionAt(p, citiesMap, unitTiles);
+    unitActionStrategy.performUnitActionAt(p, citiesMap, units);
   }
-
   public boolean placeUnit(CityImpl city){
     int c = city.getPosition().getColumn();
     int r = city.getPosition().getRow();
+    Position p = new Position(r,c);
 
     //finding which tile to place the unit at
     int i = 0;
@@ -150,7 +152,7 @@ public class GameImpl implements Game {
     int ct = c;
     int rt = r;
     int tilesChecked = 0;
-    while(unitTiles[rt][ct] != null) { //TODO iterate over map using iterator for loop
+    while(units.get(p) != null) { //TODO iterate over map using iterator for loop
       if (i > 7){
         radius++;
         i=0;
@@ -195,6 +197,7 @@ public class GameImpl implements Game {
       }
       i++;
       tilesChecked++;
+      p = new Position(rt,ct);
       if (tilesChecked > GameConstants.WORLDSIZE*GameConstants.WORLDSIZE+2)
         return false;
     }
@@ -211,7 +214,7 @@ public class GameImpl implements Game {
     else
       return false;
 
-  unitTiles[rt][ct] = new UnitImpl(city.getProduction(),currPlayer);
+  units.put(new Position(rt,ct),new UnitImpl(city.getProduction(),currPlayer));
   return true;
   }
 

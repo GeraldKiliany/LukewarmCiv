@@ -5,5 +5,5 @@ import hotciv.standard.CityImpl;
 import java.util.Map;
 
 public interface UnitActionStrategy {
-    public void performUnitActionAt(Position p, Map<Position,CityImpl> argCitiesMap, Unit[][] unitTiles);
+    public void performUnitActionAt(Position p, Map<Position,CityImpl> argCitiesMap, Map<Position,Unit> unitTiles);
 }
