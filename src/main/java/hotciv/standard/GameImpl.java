@@ -112,7 +112,7 @@ public class GameImpl implements Game {
     for(Position p : citiesMap.keySet()) {
       CityImpl currCity = citiesMap.get(p);
       if (currCity.getOwner() == currPlayer) {
-        placeUnit(currCity);
+        placeUnit(currCity, p);
         currCity.incrementTreasury(6);
       }
     }
@@ -134,10 +134,10 @@ public class GameImpl implements Game {
   public void performUnitActionAt( Position p ) {
     unitActionStrategy.performUnitActionAt(p, this);
   }
-  public boolean placeUnit(CityImpl city){
+ public boolean placeUnit(CityImpl city, Position p){
     int c = city.getPosition().getColumn();
     int r = city.getPosition().getRow();
-    Position p = new Position(r,c);
+    p = new Position(r,c);
 
     //finding which tile to place the unit at
     int i = 0;
@@ -197,6 +197,8 @@ public class GameImpl implements Game {
 
 
 
+
+
     //remove the cost of the unitType from the city's treasury
     if (city.getProduction() == GameConstants.ARCHER && city.getTreasury() >= 10) //TODO use.equals for strings
       city.decrementTreasury(10);
@@ -209,6 +211,43 @@ public class GameImpl implements Game {
 
   units.put(new Position(rt,ct),new UnitImpl(city.getProduction(),currPlayer));
   return true;
+  }
+
+  /*
+  public boolean placeUnit(CityImpl city, Position p){
+    String currUnit = city.getProduction();
+    int currUnitCost = unitCost(currUnit);
+    boolean sufficientTreasury = (city.getTreasury() > currUnitCost);
+    if(sufficientTreasury){
+      if(units.get(p) == null) {
+        city.decrementTreasury(currUnitCost);
+        units.put(p, new UnitImpl(currUnit,currPlayer));
+        return true;
+      }
+      for(Position neighbors : Utility.get8neighborhoodOf(p)) {
+        if (!units.containsKey(neighbors)){
+          //remove the cost of the unitType from the city's treasury
+          city.decrementTreasury(currUnitCost);
+          units.put(neighbors, new UnitImpl(currUnit, currPlayer));
+          return true;
+
+        }
+      }
+    }
+    return false;
+
+
+
+  }
+*/
+  private int unitCost(String unitType) {
+    if (unitType.equals(GameConstants.ARCHER)) {
+      return 10;
+    }
+    else if (unitType.equals(GameConstants.LEGION)) {
+      return 15;
+    }
+    else return 30;
   }
 
   public void advanceTurns( int numberOfTurns ) {

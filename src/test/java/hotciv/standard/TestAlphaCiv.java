@@ -374,8 +374,6 @@ public class TestAlphaCiv {
     assertThat(game.getCityAt(new Position(4,1)).getTreasury(),is(12 - 10  + 6 + 6 - 10 + 6 - 10 + 6));
 
 
-
-
   }
 
 
