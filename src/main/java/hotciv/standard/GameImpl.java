@@ -110,17 +110,17 @@ public class GameImpl implements Game {
     return true;
   }
 
+
+
+
   public void endOfTurn() {
-    for (int i=0;i<mapRows;i++) {
-      for (int j = 0; j < mapCols; j++) {
-        if (citiesMap.get(new Position(i,j)) != null) {
-          if (citiesMap.get(new Position(i,j)).getOwner() == currPlayer) {
-            placeUnit(citiesMap.get(new Position(i,j)));
-            citiesMap.get(new Position(i,j)).incrementTreasury(6);
+        for(Position p : citiesMap.keySet()) {
+          CityImpl currCity = citiesMap.get(p);
+          if (currCity.getOwner() == currPlayer) {
+            placeUnit(currCity);
+            currCity.incrementTreasury(6);
           }
         }
-      }
-    }
 
     if (currPlayer == Player.RED)
       currPlayer = Player.BLUE;
