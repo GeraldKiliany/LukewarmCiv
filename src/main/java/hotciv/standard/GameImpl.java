@@ -132,7 +132,7 @@ public class GameImpl implements Game {
    }
   }
   public void performUnitActionAt( Position p ) {
-    unitActionStrategy.performUnitActionAt(p, units, this);
+    unitActionStrategy.performUnitActionAt(p, this);
   }
   public boolean placeUnit(CityImpl city){
     int c = city.getPosition().getColumn();
@@ -216,7 +216,6 @@ public class GameImpl implements Game {
       { endOfTurn(); }
   }
 
-  public void placeCity( Position p, Player owner ) {
-    citiesMap.put(p, new CityImpl(owner, p));
-  }
+  public void placeCity( Position p, Player owner ) { citiesMap.put(p, new CityImpl(owner, p)); }
+  public void removeUnit( Position p ) { units.remove(p); }
 }

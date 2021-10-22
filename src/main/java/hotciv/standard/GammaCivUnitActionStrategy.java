@@ -5,17 +5,17 @@ import hotciv.framework.*;
 import java.util.Map;
 
 public class GammaCivUnitActionStrategy implements UnitActionStrategy {
-    public void performUnitActionAt(Position p, Map<Position, Unit> units, GameImpl game) {
+    public void performUnitActionAt(Position p, GameImpl game) {
         int r = p.getRow();
         int c = p.getColumn();
-        Unit unit = units.get(p);
+        Unit unit = game.getUnitAt(p);
 
         if (unit != null) {
             String unitType = unit.getTypeString();
 
             switch (unitType) {
                 case GameConstants.SETTLER:
-                    units.remove(p);
+                    game.removeUnit(p);
                     game.placeCity(p, unit.getOwner());
                     break;
                 case GameConstants.ARCHER:
