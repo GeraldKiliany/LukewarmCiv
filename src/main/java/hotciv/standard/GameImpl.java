@@ -214,4 +214,9 @@ public class GameImpl implements Game {
   unitTiles[rt][ct] = new UnitImpl(city.getProduction(),currPlayer);
   return true;
   }
+
+  public void advanceTurns( int numberOfTurns ) {
+    for (int enfOfTurnsCalled=0; enfOfTurnsCalled<numberOfTurns; enfOfTurnsCalled++)
+      { endOfTurn(); }
+  }
 }

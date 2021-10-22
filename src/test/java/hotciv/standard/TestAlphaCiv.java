@@ -63,11 +63,11 @@ public class TestAlphaCiv {
   @Test
   public void turnsShouldAlternate(){
     assertThat(game.getPlayerInTurn(), is(Player.RED));
-    game.endOfTurn();
+    game.advanceTurns(1);
     assertThat(game.getPlayerInTurn(), is(Player.BLUE));
-    game.endOfTurn();
+    game.advanceTurns(1);
     assertThat(game.getPlayerInTurn(), is(Player.RED));
-    game.endOfTurn();
+    game.advanceTurns(1);
     assertThat(game.getPlayerInTurn(), is(Player.BLUE));
   }
 
@@ -81,11 +81,9 @@ public class TestAlphaCiv {
   @Test
   public void gameAges100YearsPerRound(){
     assertThat(game.getAge(),is(-4000));
-    game.endOfTurn();
-    game.endOfTurn();
+    game.advanceTurns(2);
     assertThat(game.getAge(),is(-4000+100));
-    game.endOfTurn();
-    game.endOfTurn();
+    game.advanceTurns(2);
     assertThat(game.getAge(),is(-4000+200));
   }
 
@@ -100,7 +98,7 @@ public class TestAlphaCiv {
   public void redWinsAt3000BC(){
     while(game.getAge() != -3000) {
       assertNull(game.getWinner());
-      game.endOfTurn();
+      game.advanceTurns(1);
     }
     assertThat(game.getAge(),is(-3000));
     assertThat(game.getWinner(), is(Player.RED));
@@ -245,16 +243,7 @@ public class TestAlphaCiv {
 
 
     //Age world five rounds so there are two units owned by Red next to each other
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
+    game.advanceTurns(10);
 
 
     assertThat(game.getUnitAt(oneOne).getTypeString(), is(GameConstants.ARCHER));
@@ -274,9 +263,9 @@ public class TestAlphaCiv {
   public void citiesProduce6ProductionPerRound(){
     assertThat(game.getCityAt(new Position(1,1)).getTreasury(),is(0));
     assertThat(game.getCityAt(new Position(4,1)).getTreasury(),is(0));
-    game.endOfTurn();
+    game.advanceTurns(1);
     assertThat(game.getCityAt(new Position(1,1)).getTreasury(),is(6));
-    game.endOfTurn();
+    game.advanceTurns(1);
     assertThat(game.getCityAt(new Position(4,1)).getTreasury(),is(6));
 
 
@@ -312,20 +301,17 @@ public class TestAlphaCiv {
     assertNull(game.getUnitAt(new Position(1,1)));
     assertNull(game.getUnitAt (new Position(4,1)));
 
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
+    game.advanceTurns(4);
 
     //unit on red city
     assertThat(game.getCityAt(new Position(1,1)).getTreasury(),is(12));
-    game.endOfTurn();
+    game.advanceTurns(1);
     assertThat(game.getUnitAt(new Position(1,1)).getTypeString(),is(GameConstants.ARCHER));
     assertThat(game.getCityAt(new Position(1,1)).getTreasury(),is(12 - 10 + 6));
 
     //unit on blue city
     assertThat(game.getCityAt(new Position(4,1)).getTreasury(),is(12));
-    game.endOfTurn();
+    game.advanceTurns(1);
     assertThat(game.getUnitAt(new Position(4,1)).getTypeString(),is(GameConstants.ARCHER));
     assertThat(game.getCityAt(new Position(4,1)).getTreasury(),is(12 - 10 + 6));
   }
@@ -335,20 +321,17 @@ public class TestAlphaCiv {
     assertNull(game.getUnitAt(new Position(1,1)));
     assertNull(game.getUnitAt (new Position(4,1)));
 
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
+    game.advanceTurns(4);
 
     //unit on red city
     assertThat(game.getCityAt(new Position(1,1)).getTreasury(),is(12));
-    game.endOfTurn();
+    game.advanceTurns(1);
     assertThat(game.getUnitAt(new Position(1,1)).getTypeString(),is(GameConstants.ARCHER));
     assertThat(game.getCityAt(new Position(1,1)).getTreasury(),is(12 - 10 + 6));
 
     //unit on blue city
     assertThat(game.getCityAt(new Position(4,1)).getTreasury(),is(12));
-    game.endOfTurn();
+    game.advanceTurns(1);
     assertThat(game.getUnitAt(new Position(4,1)).getTypeString(),is(GameConstants.ARCHER));
     assertThat(game.getCityAt(new Position(4,1)).getTreasury(),is(12 - 10 + 6));
   }
@@ -359,22 +342,15 @@ public class TestAlphaCiv {
     assertNull(game.getUnitAt(new Position(1,1)));
     assertNull(game.getUnitAt (new Position(4,1)));
 
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
+    game.advanceTurns(8);
 
     //unit on north red city
-    game.endOfTurn();
+    game.advanceTurns(1);
     assertThat(game.getUnitAt(new Position(0,1)).getTypeString(),is(GameConstants.ARCHER));
     assertThat(game.getCityAt(new Position(1,1)).getTreasury(),is(12 - 10  + 6 + 6 - 10 + 6));
 
     //unit on north blue city
-    game.endOfTurn();
+    game.advanceTurns(1);
     assertThat(game.getUnitAt(new Position(3,1)).getTypeString(),is(GameConstants.ARCHER));
     assertThat(game.getCityAt(new Position(4,1)).getTreasury(),is(12 - 10  + 6 + 6 - 10 + 6));
 
@@ -385,23 +361,14 @@ public class TestAlphaCiv {
     assertNull(game.getUnitAt(new Position(1,1)));
     assertNull(game.getUnitAt (new Position(4,1)));
 
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
+    game.advanceTurns(10);
     //unit northeast red city
-    game.endOfTurn();
+    game.advanceTurns(1);
     assertThat(game.getUnitAt(new Position(0,2)).getTypeString(),is(GameConstants.ARCHER));
     assertThat(game.getCityAt(new Position(1,1)).getTreasury(),is(12 - 10  + 6 + 6 - 10 + 6 - 10 + 6));
 
     //legion northeast of blue, unit east of blue
-    game.endOfTurn();
+    game.advanceTurns(1);
     assertThat(game.getUnitAt(new Position(4,2)).getTypeString(),is(GameConstants.ARCHER));
     assertThat(game.getUnitAt(new Position(3,2)).getTypeString(),is(GameConstants.LEGION));
     assertThat(game.getCityAt(new Position(4,1)).getTreasury(),is(12 - 10  + 6 + 6 - 10 + 6 - 10 + 6));
