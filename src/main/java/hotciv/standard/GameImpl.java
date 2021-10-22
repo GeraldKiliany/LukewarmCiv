@@ -112,6 +112,10 @@ public class GameImpl implements Game {
 
     return true;
   }
+
+
+
+
   public void endOfTurn() {
     for (int i=0;i<mapRows;i++) {
       for (int j = 0; j < mapCols; j++) {
