@@ -47,7 +47,8 @@ public class TestAlphaCiv {
     WinnerStrategy winnerStrategy = new AlphaCivWinnerStrategy();
     UnitActionStrategy unitActionStrategy = new AlphaCivUnitActionStrategy();
     StartCitiesStrategy startCitiesStrategy = new AlphaStartCitiesStrategy();
-    game = new GameImpl(mapStrategy,winnerStrategy, agingStrategy, unitActionStrategy, startCitiesStrategy);
+    StartUnitsStrategy startUnitsStrategy = new AlphaCivStartUnitsStrategy();
+    game = new GameImpl(mapStrategy,winnerStrategy, agingStrategy, unitActionStrategy, startCitiesStrategy, startUnitsStrategy);
     //game = new GameImpl();
   }
 

@@ -14,7 +14,8 @@ public class TestDeltaCiv {
     public void setUp() {
         MapStrategy DeltaMapStrat = new DeltaMapStrategy();
         StartCitiesStrategy DeltaStartCitiesStrategy = new DeltaStartCitiesStrategy();
-        game = new GameImpl(DeltaMapStrat,null,null,null,DeltaStartCitiesStrategy);
+        StartUnitsStrategy startUnitsStrategy = new AlphaCivStartUnitsStrategy();
+        game = new GameImpl(DeltaMapStrat,null,null,null,DeltaStartCitiesStrategy,startUnitsStrategy);
     }
 
 

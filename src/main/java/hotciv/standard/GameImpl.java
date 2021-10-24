@@ -55,17 +55,16 @@ public class GameImpl implements Game {
     this.agingStrategy = new AlphaCivAgingStrategy();
     this.unitActionStrategy = new AlphaCivUnitActionStrategy();
     this.cities = new AlphaStartCitiesStrategy().setStartCities();
+    this.units = new AlphaCivStartUnitsStrategy().setStartUnits();
 
-    units.put(new Position(2,0), new UnitImpl(GameConstants.ARCHER, Player.RED));
-    units.put(new Position(4,3), new UnitImpl(GameConstants.SETTLER, Player.RED));
-    units.put(new Position(3,2), new UnitImpl(GameConstants.LEGION, Player.BLUE));
   }
   public GameImpl(
           MapStrategy argMapStrategy,
           WinnerStrategy argWinnerStrategy,
           AgingStrategy argAgingStrategy,
           UnitActionStrategy argUnitActionStrategy,
-          StartCitiesStrategy argStartCitiesStrategy
+          StartCitiesStrategy argStartCitiesStrategy,
+          StartUnitsStrategy argStartUnitsStrategy
   )
   {
     this.mapStrategy = argMapStrategy;
@@ -74,10 +73,7 @@ public class GameImpl implements Game {
     this.agingStrategy = argAgingStrategy;
     this.unitActionStrategy = argUnitActionStrategy;
     this.cities = argStartCitiesStrategy.setStartCities();
-
-    units.put(new Position(2,0), new UnitImpl(GameConstants.ARCHER, Player.RED));
-    units.put(new Position(4,3), new UnitImpl(GameConstants.SETTLER, Player.RED));
-    units.put(new Position(3,2), new UnitImpl(GameConstants.LEGION, Player.BLUE));
+    this.units = argStartUnitsStrategy.setStartUnits();
   }
 
   //accessors

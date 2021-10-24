@@ -16,7 +16,8 @@ public class TestGammaCiv {
         WinnerStrategy winnerStrategy = new AlphaCivWinnerStrategy();
         UnitActionStrategy unitActionStrategy = new GammaCivUnitActionStrategy();
         StartCitiesStrategy startCitiesStrategy = new AlphaStartCitiesStrategy();
-        game = new GameImpl(mapStrategy,winnerStrategy, agingStrategy, unitActionStrategy, startCitiesStrategy);
+        StartUnitsStrategy startUnitsStrategy = new AlphaCivStartUnitsStrategy();
+        game = new GameImpl(mapStrategy,winnerStrategy, agingStrategy, unitActionStrategy, startCitiesStrategy, startUnitsStrategy);
     }
 
     @Test
