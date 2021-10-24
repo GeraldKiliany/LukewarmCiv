@@ -49,12 +49,12 @@ public class GameImpl implements Game {
 
   //default Constructor
   public GameImpl(){
-    this.mapStrategy = new AlphaMapStrategy();
+    this.mapStrategy = new AlphaCivMapStrategy();
     this.tiles = mapStrategy.setMap();
     this.winnerStrategy = new AlphaCivWinnerStrategy();
     this.agingStrategy = new AlphaCivAgingStrategy();
     this.unitActionStrategy = new AlphaCivUnitActionStrategy();
-    this.cities = new AlphaStartCitiesStrategy().setStartCities();
+    this.cities = new AlphaCivStartCitiesStrategy().setStartCities();
     this.units = new AlphaCivStartUnitsStrategy().setStartUnits();
 
   }

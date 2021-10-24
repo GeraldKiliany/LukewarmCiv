@@ -11,11 +11,11 @@ public class TestGammaCiv {
     /** Fixture for GammaCiv testing. */
     @Before
     public void setUp() {
-        MapStrategy mapStrategy = new AlphaMapStrategy();
+        MapStrategy mapStrategy = new AlphaCivMapStrategy();
         AgingStrategy agingStrategy = new AlphaCivAgingStrategy();
         WinnerStrategy winnerStrategy = new AlphaCivWinnerStrategy();
         UnitActionStrategy unitActionStrategy = new GammaCivUnitActionStrategy();
-        StartCitiesStrategy startCitiesStrategy = new AlphaStartCitiesStrategy();
+        StartCitiesStrategy startCitiesStrategy = new AlphaCivStartCitiesStrategy();
         StartUnitsStrategy startUnitsStrategy = new AlphaCivStartUnitsStrategy();
         game = new GameImpl(mapStrategy,winnerStrategy, agingStrategy, unitActionStrategy, startCitiesStrategy, startUnitsStrategy);
     }
