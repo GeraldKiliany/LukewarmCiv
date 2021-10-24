@@ -134,90 +134,12 @@ public class GameImpl implements Game {
   public void performUnitActionAt( Position p ) {
     unitActionStrategy.performUnitActionAt(p, this);
   }
- public boolean placeUnit(CityImpl city, Position p){
-    int c = city.getPosition().getColumn();
-    int r = city.getPosition().getRow();
-    p = new Position(r,c);
-
-    //finding which tile to place the unit at
-    int i = 0;
-    int radius = 1;
-    int ct = c;
-    int rt = r;
-    int tilesChecked = 0;
-    while(units.get(p) != null) { //TODO iterate over map using iterator for loop
-      if (i > 7){
-        radius++;
-        i=0;
-      }
-      switch(i){ //TODO possibly use utility for checking neighbors
-        case 0: //north
-          ct = c;
-          rt = r - radius;
-          break;
-        case 1: //northeast
-          ct = c + radius;
-          rt = r - radius;
-          break; //east
-        case 2: //east
-          ct = c + radius;
-          rt = r;
-          break;
-        case 3: //southeast
-          ct = c + radius;
-          rt = r + radius;
-          break;
-        case 4: //south
-          ct = c;
-          rt = r + radius;
-          break;
-        case 5: //southwest
-          ct = c - radius;
-          rt = r + radius;
-          break;
-        case 6: //west
-          ct = c - radius;
-          rt = r;
-          break;
-        case 7: //northwest
-          ct = c - radius;
-          rt = r - radius;
-          break;
-      }
-      if (rt < 0 || ct < 0 || rt >=16 || ct >= 16){
-        rt = 0;
-        ct = 0;
-      }
-      i++;
-      tilesChecked++;
-      p = new Position(rt,ct);
-      if (tilesChecked > GameConstants.WORLDSIZE*GameConstants.WORLDSIZE+2)
-        return false;
-    }
 
 
-
-
-
-    //remove the cost of the unitType from the city's treasury
-    if (city.getProduction() == GameConstants.ARCHER && city.getTreasury() >= 10) //TODO use.equals for strings
-      city.decrementTreasury(10);
-    else if  (city.getProduction() == GameConstants.LEGION && city.getTreasury() >= 15)
-      city.decrementTreasury(15);
-    else if (city.getProduction() == GameConstants.SETTLER && city.getTreasury() >= 30)
-      city.decrementTreasury(30);
-    else
-      return false;
-
-  units.put(new Position(rt,ct),new UnitImpl(city.getProduction(),currPlayer));
-  return true;
-  }
-
-  /*
   public boolean placeUnit(CityImpl city, Position p){
     String currUnit = city.getProduction();
     int currUnitCost = unitCost(currUnit);
-    boolean sufficientTreasury = (city.getTreasury() > currUnitCost);
+    boolean sufficientTreasury = (city.getTreasury() >= currUnitCost);
     if(sufficientTreasury){
       if(units.get(p) == null) {
         city.decrementTreasury(currUnitCost);
@@ -235,11 +157,10 @@ public class GameImpl implements Game {
       }
     }
     return false;
-
-
-
   }
-*/
+
+
+
   private int unitCost(String unitType) {
     if (unitType.equals(GameConstants.ARCHER)) {
       return 10;
