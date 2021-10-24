@@ -39,7 +39,7 @@ public class GameImpl implements Game {
   //Object Fields
   private Player currPlayer = Player.RED;
   private int age = -4000;
-  private MapStrategy currMapStrat;
+  private MapStrategy mapStrategy;
   private WinnerStrategy winnerStrategy;
   private AgingStrategy agingStrategy;
   private UnitActionStrategy unitActionStrategy;
@@ -49,8 +49,8 @@ public class GameImpl implements Game {
 
   //default Constructor
   public GameImpl(){
-    this.currMapStrat = new AlphaMapStrategy();
-    this.tiles = currMapStrat.setMap();
+    this.mapStrategy = new AlphaMapStrategy();
+    this.tiles = mapStrategy.setMap();
     this.winnerStrategy = new AlphaCivWinnerStrategy();
     this.agingStrategy = new AlphaCivAgingStrategy();
     this.unitActionStrategy = new AlphaCivUnitActionStrategy();
@@ -68,8 +68,8 @@ public class GameImpl implements Game {
           StartCitiesStrategy argStartCitiesStrategy
   )
   {
-    this.currMapStrat = argMapStrategy;
-    this.tiles = currMapStrat.setMap();
+    this.mapStrategy = argMapStrategy;
+    this.tiles = mapStrategy.setMap();
     this.winnerStrategy = argWinnerStrategy;
     this.agingStrategy = argAgingStrategy;
     this.unitActionStrategy = argUnitActionStrategy;
