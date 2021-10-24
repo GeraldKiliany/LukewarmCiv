@@ -6,8 +6,6 @@ import java.util.Map;
 
 public class GammaCivUnitActionStrategy implements UnitActionStrategy {
     public void performUnitActionAt(Position p, GameImpl game) {
-        int r = p.getRow();
-        int c = p.getColumn();
         Unit unit = game.getUnitAt(p);
 
         if (unit != null) {
