@@ -39,22 +39,22 @@ public class GameImpl implements Game {
   //Object Fields
   private Player currPlayer = Player.RED;
   private int age = -4000;
-  private Map<Position, Unit> units = new HashMap<Position, Unit>();
   private MapStrategy currMapStrat;
-  private Map<Position,Tile> CivMap;
   private WinnerStrategy winnerStrategy;
   private AgingStrategy agingStrategy;
   private UnitActionStrategy unitActionStrategy;
-  private Map<Position,CityImpl> citiesMap;
+  private Map<Position,CityImpl> cities;
+  private Map<Position, Unit> units = new HashMap<Position, Unit>();
+  private Map<Position,Tile> tiles;
 
   //default Constructor
   public GameImpl(){
     this.currMapStrat = new AlphaMapStrategy();
-    this.CivMap = currMapStrat.setMap();
+    this.tiles = currMapStrat.setMap();
     this.winnerStrategy = new AlphaCivWinnerStrategy();
     this.agingStrategy = new AlphaCivAgingStrategy();
     this.unitActionStrategy = new AlphaCivUnitActionStrategy();
-    this.citiesMap = new AlphaStartCitiesStrategy().setStartCities();
+    this.cities = new AlphaStartCitiesStrategy().setStartCities();
 
     units.put(new Position(2,0), new UnitImpl(GameConstants.ARCHER, Player.RED));
     units.put(new Position(4,3), new UnitImpl(GameConstants.SETTLER, Player.RED));
@@ -69,11 +69,11 @@ public class GameImpl implements Game {
   )
   {
     this.currMapStrat = argMapStrategy;
-    this.CivMap = currMapStrat.setMap();
+    this.tiles = currMapStrat.setMap();
     this.winnerStrategy = argWinnerStrategy;
     this.agingStrategy = argAgingStrategy;
     this.unitActionStrategy = argUnitActionStrategy;
-    this.citiesMap = argStartCitiesStrategy.setStartCities();
+    this.cities = argStartCitiesStrategy.setStartCities();
 
     units.put(new Position(2,0), new UnitImpl(GameConstants.ARCHER, Player.RED));
     units.put(new Position(4,3), new UnitImpl(GameConstants.SETTLER, Player.RED));
@@ -81,12 +81,21 @@ public class GameImpl implements Game {
   }
 
   //accessors
-  public Tile getTileAt( Position p ) { return CivMap.get(p); }
+  public Tile getTileAt( Position p ) { return tiles.get(p); }
   public Unit getUnitAt( Position p ) { return units.get(p); }
-  public City getCityAt( Position p ) { return citiesMap.get(p); } //TODO update all functions to work with cityMap
+  public City getCityAt( Position p ) { return cities.get(p); } //TODO update all functions to work with cityMap
   public Player getPlayerInTurn() {return currPlayer;}
-  public Player getWinner() { return winnerStrategy.getWinner(age, citiesMap); }
+  public Player getWinner() { return winnerStrategy.getWinner(age, cities); }
   public int getAge() {return age;}
+  private int unitCost(String unitType) {
+    if (unitType.equals(GameConstants.ARCHER)) {
+      return 10;
+    }
+    else if (unitType.equals(GameConstants.LEGION)) {
+      return 15;
+    }
+    else return 30;
+  }
 
   //mutators
   public boolean moveUnit( Position from, Position to ) {
@@ -104,13 +113,9 @@ public class GameImpl implements Game {
 
     return true;
   }
-
-
-
-
   public void endOfTurn() {
-    for(Position p : citiesMap.keySet()) {
-      CityImpl currCity = citiesMap.get(p);
+    for(Position p : cities.keySet()) {
+      CityImpl currCity = cities.get(p);
       if (currCity.getOwner() == currPlayer) {
         placeUnit(currCity, p);
         currCity.incrementTreasury(6);
@@ -126,16 +131,14 @@ public class GameImpl implements Game {
   }
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {
-    if(!citiesMap.get(p).getProduction().equals(unitType)){
-      citiesMap.get(p).setProduction(unitType);
+    if(!cities.get(p).getProduction().equals(unitType)){
+      cities.get(p).setProduction(unitType);
 
    }
   }
   public void performUnitActionAt( Position p ) {
     unitActionStrategy.performUnitActionAt(p, this);
   }
-
-
   public boolean placeUnit(CityImpl city, Position p){
     String currUnit = city.getProduction();
     int currUnitCost = unitCost(currUnit);
@@ -158,24 +161,10 @@ public class GameImpl implements Game {
     }
     return false;
   }
-
-
-
-  private int unitCost(String unitType) {
-    if (unitType.equals(GameConstants.ARCHER)) {
-      return 10;
-    }
-    else if (unitType.equals(GameConstants.LEGION)) {
-      return 15;
-    }
-    else return 30;
-  }
-
   public void advanceTurns( int numberOfTurns ) {
     for (int enfOfTurnsCalled=0; enfOfTurnsCalled<numberOfTurns; enfOfTurnsCalled++)
       { endOfTurn(); }
   }
-
-  public void placeCity( Position p, Player owner ) { citiesMap.put(p, new CityImpl(owner, p)); }
+  public void placeCity( Position p, Player owner ) { cities.put(p, new CityImpl(owner, p)); }
   public void removeUnit( Position p ) { units.remove(p); }
 }
