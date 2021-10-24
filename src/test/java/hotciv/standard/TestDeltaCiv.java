@@ -13,7 +13,7 @@ public class TestDeltaCiv {
     @Before
     public void setUp() {
         MapStrategy DeltaMapStrat = new DeltaMapStrategy();
-        StartCitiesStrategy DeltaStartCitiesStrategy = new DeltaStartCitiesStrategy();
+        StartCitiesStrategy DeltaStartCitiesStrategy = new DeltaCivStartCitiesStrategy();
         StartUnitsStrategy startUnitsStrategy = new AlphaCivStartUnitsStrategy();
         game = new GameImpl(DeltaMapStrat,null,null,null,DeltaStartCitiesStrategy,startUnitsStrategy);
     }

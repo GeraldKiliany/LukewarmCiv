@@ -5,7 +5,7 @@ import java.util.*;
 
 
 
-public class DeltaStartCitiesStrategy implements StartCitiesStrategy{
+public class DeltaCivStartCitiesStrategy implements StartCitiesStrategy{
 
     Map<Position,CityImpl> startCitiesMap = new HashMap<Position, CityImpl>();
     public Map<Position,CityImpl> setStartCities(){
