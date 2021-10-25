@@ -135,4 +135,8 @@ public interface Game{
    */
   public void performUnitActionAt( Position p );
 
+  /** advance the game specified number of turns
+   * @param numberOfTurns the number of turns to advance the game
+   */
+  public void advanceTurns( int numberOfTurns );
 }

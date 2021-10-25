@@ -38,28 +38,25 @@ import java.util.Map;
 public class GameImpl implements Game {
 
   //Object Fields
-  private int mapRows = GameConstants.WORLDSIZE;
-  private int mapCols = GameConstants.WORLDSIZE;
   private Player currPlayer = Player.RED;
   private int age = -4000;
-  private Unit[][] unitTiles = new UnitImpl[mapRows][mapCols];
-  private MapStrategy currMapStrat;
-  private Map<Position,Tile> CivMap;
+  private MapStrategy mapStrategy;
   private WinnerStrategy winnerStrategy;
   private AgingStrategy agingStrategy;
   private UnitActionStrategy unitActionStrategy;
-  private Map<Position,CityImpl> citiesMap;
+  private Map<Position,CityImpl> cities;
+  private Map<Position, Unit> units = new HashMap<Position, Unit>();
+  private Map<Position,Tile> tiles;
 
   //default Constructor
   public GameImpl(){
-    this.currMapStrat = new AlphaMapStrategy();
-    this.CivMap = currMapStrat.setMap();
+    this.mapStrategy = new AlphaCivMapStrategy();
+    this.tiles = mapStrategy.setMap();
     this.winnerStrategy = new AlphaCivWinnerStrategy();
     this.agingStrategy = new AlphaCivAgingStrategy();
     this.unitActionStrategy = new AlphaCivUnitActionStrategy();
-    this.citiesMap = new AlphaStartCitiesStrategy().setStartCities();
-
-
+    this.cities = new AlphaCivStartCitiesStrategy().setStartCities();
+    this.units = new AlphaCivStartUnitsStrategy().setStartUnits();
 
   }
   public GameImpl(
@@ -67,32 +64,35 @@ public class GameImpl implements Game {
           WinnerStrategy argWinnerStrategy,
           AgingStrategy argAgingStrategy,
           UnitActionStrategy argUnitActionStrategy,
-          StartCitiesStrategy argStartCitiesStrategy
+          StartCitiesStrategy argStartCitiesStrategy,
+          StartUnitsStrategy argStartUnitsStrategy
   )
   {
-    this.currMapStrat = argMapStrategy;
-    this.CivMap = currMapStrat.setMap();
+    this.mapStrategy = argMapStrategy;
+    this.tiles = mapStrategy.setMap();
     this.winnerStrategy = argWinnerStrategy;
     this.agingStrategy = argAgingStrategy;
     this.unitActionStrategy = argUnitActionStrategy;
-    this.citiesMap = argStartCitiesStrategy.setStartCities();
-
-    Player redPlayer = Player.RED;
-    Player bluePlayer = Player.BLUE;
-
-    unitTiles[2][0] = new UnitImpl(GameConstants.ARCHER, redPlayer);
-    unitTiles[4][3] = new UnitImpl(GameConstants.SETTLER, redPlayer);
-    unitTiles[3][2] = new UnitImpl(GameConstants.LEGION, bluePlayer);
-
+    this.cities = argStartCitiesStrategy.setStartCities();
+    this.units = argStartUnitsStrategy.setStartUnits();
   }
 
   //accessors
-  public Tile getTileAt( Position p ) { return CivMap.get(p); }
-  public Unit getUnitAt( Position p ) { return unitTiles[p.getRow()][p.getColumn()]; }
-  public City getCityAt( Position p ) { return citiesMap.get(p); } //TODO update all functions to work with cityMap
+  public Tile getTileAt( Position p ) { return tiles.get(p); }
+  public Unit getUnitAt( Position p ) { return units.get(p); }
+  public City getCityAt( Position p ) { return cities.get(p); } //TODO update all functions to work with cityMap
   public Player getPlayerInTurn() {return currPlayer;}
-  public Player getWinner() { return winnerStrategy.getWinner(age, citiesMap); }
+  public Player getWinner() { return winnerStrategy.getWinner(age, cities); }
   public int getAge() {return age;}
+  private int unitCost(String unitType) {
+    if (unitType.equals(GameConstants.ARCHER)) {
+      return 10;
+    }
+    else if (unitType.equals(GameConstants.LEGION)) {
+      return 15;
+    }
+    else return 30;
+  }
 
   //mutators
   public boolean moveUnit( Position from, Position to ) {
@@ -100,26 +100,22 @@ public class GameImpl implements Game {
     if(getUnitAt(from).getMoveCount() == 0) { return false; }
 
     if(getUnitAt(to) == null) {
-      unitTiles[to.getRow()][to.getColumn()]= unitTiles[from.getRow()][from.getColumn()];
-      unitTiles[from.getRow()][from.getColumn()]= null;
+      units.put(to,units.get(from));
+      units.put(from, null);
     }
     else if(getUnitAt(to).getOwner() != getUnitAt(from).getOwner()){
-      unitTiles[to.getRow()][to.getColumn()]= unitTiles[from.getRow()][from.getColumn()];
-      unitTiles[from.getRow()][from.getColumn()]= null;
+      units.put(to, units.get(from));
+      units.put(from,null);
     }
 
     return true;
   }
-
   public void endOfTurn() {
-    for (int i=0;i<mapRows;i++) {
-      for (int j = 0; j < mapCols; j++) {
-        if (citiesMap.get(new Position(i,j)) != null) {
-          if (citiesMap.get(new Position(i,j)).getOwner() == currPlayer) {
-            placeUnit(citiesMap.get(new Position(i,j)));
-            citiesMap.get(new Position(i,j)).incrementTreasury(6);
-          }
-        }
+    for(Position p : cities.keySet()) {
+      CityImpl currCity = cities.get(p);
+      if (currCity.getOwner() == currPlayer) {
+        placeUnit(currCity, p);
+        currCity.incrementTreasury(6);
       }
     }
 
@@ -132,87 +128,40 @@ public class GameImpl implements Game {
   }
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {
-    if(!citiesMap.get(p).equals(unitType)){
-      citiesMap.get(p).setProduction(unitType);
+    if(!cities.get(p).getProduction().equals(unitType)){
+      cities.get(p).setProduction(unitType);
 
    }
   }
   public void performUnitActionAt( Position p ) {
-    unitActionStrategy.performUnitActionAt(p, citiesMap, unitTiles);
+    unitActionStrategy.performUnitActionAt(p, this);
   }
+  public boolean placeUnit(CityImpl city, Position p){
+    String currUnit = city.getProduction();
+    int currUnitCost = unitCost(currUnit);
+    boolean sufficientTreasury = (city.getTreasury() >= currUnitCost);
+    if(sufficientTreasury){
+      if(units.get(p) == null) {
+        city.decrementTreasury(currUnitCost);
+        units.put(p, new UnitImpl(currUnit,currPlayer));
+        return true;
+      }
+      for(Position neighbors : Utility.get8neighborhoodOf(p)) {
+        if (!units.containsKey(neighbors)){
+          //remove the cost of the unitType from the city's treasury
+          city.decrementTreasury(currUnitCost);
+          units.put(neighbors, new UnitImpl(currUnit, currPlayer));
+          return true;
 
-  public boolean placeUnit(CityImpl city){
-    int c = city.getPosition().getColumn();
-    int r = city.getPosition().getRow();
-
-    //finding which tile to place the unit at
-    int i = 0;
-    int radius = 1;
-    int ct = c;
-    int rt = r;
-    int tilesChecked = 0;
-    while(unitTiles[rt][ct] != null) {
-      if (i > 7){
-        radius++;
-        i=0;
+        }
       }
-      switch(i){
-        case 0: //north
-          ct = c;
-          rt = r - radius;
-          break;
-        case 1: //northeast
-          ct = c + radius;
-          rt = r - radius;
-          break; //east
-        case 2: //east
-          ct = c + radius;
-          rt = r;
-          break;
-        case 3: //southeast
-          ct = c + radius;
-          rt = r + radius;
-          break;
-        case 4: //south
-          ct = c;
-          rt = r + radius;
-          break;
-        case 5: //southwest
-          ct = c - radius;
-          rt = r + radius;
-          break;
-        case 6: //west
-          ct = c - radius;
-          rt = r;
-          break;
-        case 7: //northwest
-          ct = c - radius;
-          rt = r - radius;
-          break;
-      }
-      if (rt < 0 || ct < 0 || rt >=16 || ct >= 16){
-        rt = 0;
-        ct = 0;
-      }
-      i++;
-      tilesChecked++;
-      if (tilesChecked > GameConstants.WORLDSIZE*GameConstants.WORLDSIZE+2)
-        return false;
     }
-
-
-
-    //remove the cost of the unitType from the city's treasury
-    if (city.getProduction() == GameConstants.ARCHER && city.getTreasury() >= 10)
-      city.incrementTreasury(-10);
-    else if  (city.getProduction() == GameConstants.LEGION && city.getTreasury() >= 15)
-      city.incrementTreasury(-15);
-    else if (city.getProduction() == GameConstants.SETTLER && city.getTreasury() >= 30)
-      city.incrementTreasury(-30);
-    else
-      return false;
-
-  unitTiles[rt][ct] = new UnitImpl(city.getProduction(),currPlayer);
-  return true;
+    return false;
   }
+  public void advanceTurns( int numberOfTurns ) {
+    for (int enfOfTurnsCalled=0; enfOfTurnsCalled<numberOfTurns; enfOfTurnsCalled++)
+      { endOfTurn(); }
+  }
+  public void placeCity( Position p, Player owner ) { cities.put(p, new CityImpl(owner, p)); }
+  public void removeUnit( Position p ) { units.remove(p); }
 }

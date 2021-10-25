@@ -6,7 +6,7 @@ import hotciv.framework.Tile;
 
 import java.nio.channels.FileChannel;
 import java.util.*;
-public class AlphaMapStrategy implements MapStrategy {
+public class AlphaCivMapStrategy implements MapStrategy {
     private Map<Position,Tile> AlphaMap = new HashMap<Position, Tile>();
 
     public Map<Position, Tile> setMap(){
