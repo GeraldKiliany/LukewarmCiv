@@ -54,6 +54,7 @@ public class GameImpl implements Game {
   static public int redAttacksWon = 0;
   static public int blueAttacksWon = 0;
 
+  static public int numberOfRoundsPassed = 0;
 
   //default Constructor
   /*public GameImpl(){
