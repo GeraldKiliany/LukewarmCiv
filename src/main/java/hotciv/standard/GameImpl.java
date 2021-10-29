@@ -49,6 +49,9 @@ public class GameImpl implements Game {
 
   private GameFactory factory;
 
+  static public int redAttacksWon = 0;
+  static public int blueAttacksWon = 0;
+
   //default Constructor
   /*public GameImpl(){
     this.mapStrategy = new AlphaCivMapStrategy();
