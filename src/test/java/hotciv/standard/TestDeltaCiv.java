@@ -5,17 +5,22 @@ import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
-
 public class TestDeltaCiv {
 
     private Game game;
 
-    @Before
+    /** Fixture for DeltaCiv testing. */
+    /*@Before
     public void setUp() {
         MapStrategy DeltaMapStrat = new DeltaCivMapStrategy();
         StartCitiesStrategy DeltaStartCitiesStrategy = new DeltaCivStartCitiesStrategy();
         StartUnitsStrategy startUnitsStrategy = new AlphaCivStartUnitsStrategy();
         game = new GameImpl(DeltaMapStrat,null,null,null,DeltaStartCitiesStrategy,startUnitsStrategy);
+    }*/
+
+    @Before
+    public void setUp() {
+        game = new GameImpl( new DeltaCivFactory() );
     }
 
 

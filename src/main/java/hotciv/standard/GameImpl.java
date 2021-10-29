@@ -47,8 +47,10 @@ public class GameImpl implements Game {
   private Map<Position, Unit> units = new HashMap<Position, Unit>();
   private Map<Position,Tile> tiles;
 
+  private GameFactory factory;
+
   //default Constructor
-  public GameImpl(){
+  /*public GameImpl(){
     this.mapStrategy = new AlphaCivMapStrategy();
     this.tiles = mapStrategy.setMap();
     this.winnerStrategy = new AlphaCivWinnerStrategy();
@@ -57,8 +59,30 @@ public class GameImpl implements Game {
     this.cities = new AlphaCivStartCitiesStrategy().setStartCities();
     this.units = new AlphaCivStartUnitsStrategy().setStartUnits();
 
+  }*/
+  //default Constructor
+  public GameImpl(){
+    this.factory = new AlphaCivFactory();
+    this.mapStrategy = factory.createMapStrategy();
+    this.tiles = mapStrategy.setMap();
+    this.winnerStrategy = factory.createWinnerStrategy();
+    this.agingStrategy = factory.createAgingStrategy();;
+    this.unitActionStrategy = factory.createUnitActionStrategy();
+    this.cities = factory.createStartCitiesStrategy().setStartCities();
+    this.units = factory.createStartUnitsStrategy().setStartUnits();
   }
-  public GameImpl(
+
+  public GameImpl( GameFactory factory ) {
+    this.factory = factory;
+    this.mapStrategy = factory.createMapStrategy();
+    this.tiles = mapStrategy.setMap();
+    this.winnerStrategy = factory.createWinnerStrategy();
+    this.agingStrategy = factory.createAgingStrategy();;
+    this.unitActionStrategy = factory.createUnitActionStrategy();
+    this.cities = factory.createStartCitiesStrategy().setStartCities();
+    this.units = factory.createStartUnitsStrategy().setStartUnits();
+  }
+  /*public GameImpl(
           MapStrategy argMapStrategy,
           WinnerStrategy argWinnerStrategy,
           AgingStrategy argAgingStrategy,
@@ -74,7 +98,7 @@ public class GameImpl implements Game {
     this.unitActionStrategy = argUnitActionStrategy;
     this.cities = argStartCitiesStrategy.setStartCities();
     this.units = argStartUnitsStrategy.setStartUnits();
-  }
+  }*/
 
   //accessors
   public Tile getTileAt( Position p ) { return tiles.get(p); }

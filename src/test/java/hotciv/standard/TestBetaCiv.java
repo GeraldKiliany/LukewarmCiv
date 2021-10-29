@@ -39,10 +39,8 @@ import java.util.*;
 public class TestBetaCiv {
     private Game game;
 
-    /**
-     * Fixture for alphaciv testing.
-     */
-    @Before
+    /** Fixture for BetaCiv testing. */
+    /*@Before
     public void setUp() {
         MapStrategy mapStrategy = new AlphaCivMapStrategy();
         AgingStrategy agingStrategy = new BetaCivAgingStrategy();
@@ -51,6 +49,11 @@ public class TestBetaCiv {
         StartCitiesStrategy startCitiesStrategy = new AlphaCivStartCitiesStrategy();
         StartUnitsStrategy startUnitsStrategy = new AlphaCivStartUnitsStrategy();
         game = new GameImpl(mapStrategy, winnerStrategy, agingStrategy, unitActionStrategy,startCitiesStrategy,startUnitsStrategy);
+    }*/
+
+    @Before
+    public void setUp() {
+        game = new GameImpl( new BetaCivFactory() );
     }
 
     @Test

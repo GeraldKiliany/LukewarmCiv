@@ -39,8 +39,8 @@ import java.util.*;
 public class TestAlphaCiv {
   private Game game;
 
-  /** Fixture for alphaciv testing. */
-  @Before
+  /** Fixture for AlphaCiv testing. */
+  /*@Before
   public void setUp() {
     MapStrategy mapStrategy = new AlphaCivMapStrategy();
     AgingStrategy agingStrategy = new AlphaCivAgingStrategy();
@@ -50,6 +50,11 @@ public class TestAlphaCiv {
     StartUnitsStrategy startUnitsStrategy = new AlphaCivStartUnitsStrategy();
     game = new GameImpl(mapStrategy,winnerStrategy, agingStrategy, unitActionStrategy, startCitiesStrategy, startUnitsStrategy);
     //game = new GameImpl();
+  }*/
+
+  @Before
+  public void setUp() {
+    game = new GameImpl( new AlphaCivFactory() );
   }
 
   // FRS p. 455 states that 'Red is the first player to take a turn'.
