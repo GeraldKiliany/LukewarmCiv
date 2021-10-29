@@ -9,4 +9,5 @@ public class GammaCivFactory implements GameFactory  {
     public UnitActionStrategy createUnitActionStrategy() { return new GammaCivUnitActionStrategy(); }
     public StartCitiesStrategy createStartCitiesStrategy() { return new AlphaCivStartCitiesStrategy(); }
     public StartUnitsStrategy createStartUnitsStrategy() { return new AlphaCivStartUnitsStrategy(); }
+    public AttackingStrategy createAttackingStrategy() { return new AlphaCivAttackingStrategy(); }
 }

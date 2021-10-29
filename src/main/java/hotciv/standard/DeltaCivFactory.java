@@ -9,4 +9,5 @@ public class DeltaCivFactory implements GameFactory  {
     public UnitActionStrategy createUnitActionStrategy() { return null; }
     public StartCitiesStrategy createStartCitiesStrategy() { return new DeltaCivStartCitiesStrategy(); }
     public StartUnitsStrategy createStartUnitsStrategy() { return new AlphaCivStartUnitsStrategy(); }
+    public AttackingStrategy createAttackingStrategy() { return new AlphaCivAttackingStrategy(); }
 }

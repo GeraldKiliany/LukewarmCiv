@@ -4,6 +4,7 @@ import hotciv.framework.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 /** Skeleton implementation of HotCiv.
  
@@ -46,11 +47,13 @@ public class GameImpl implements Game {
   private Map<Position,CityImpl> cities;
   private Map<Position, Unit> units = new HashMap<Position, Unit>();
   private Map<Position,Tile> tiles;
+  private AttackingStrategy attackStrategy;
 
   private GameFactory factory;
 
   static public int redAttacksWon = 0;
   static public int blueAttacksWon = 0;
+
 
   //default Constructor
   /*public GameImpl(){
@@ -84,6 +87,7 @@ public class GameImpl implements Game {
     this.unitActionStrategy = factory.createUnitActionStrategy();
     this.cities = factory.createStartCitiesStrategy().setStartCities();
     this.units = factory.createStartUnitsStrategy().setStartUnits();
+    this.attackStrategy = factory.createAttackingStrategy();
   }
   /*public GameImpl(
           MapStrategy argMapStrategy,
@@ -122,7 +126,7 @@ public class GameImpl implements Game {
 
   //mutators
   public boolean moveUnit( Position from, Position to ) {
-
+//TODO: Refactor to use variable for units
     if(getUnitAt(from).getMoveCount() == 0) { return false; }
 
     if(getUnitAt(to) == null) {
@@ -130,8 +134,11 @@ public class GameImpl implements Game {
       units.put(from, null);
     }
     else if(getUnitAt(to).getOwner() != getUnitAt(from).getOwner()){
-      units.put(to, units.get(from));
-      units.put(from,null);
+      boolean successfulAttack = attackStrategy.attack(getUnitAt(from),getUnitAt(to));
+      if(successfulAttack) {
+        units.put(to, units.get(from));
+        units.put(from, null);
+      }
     }
 
     return true;
@@ -190,4 +197,6 @@ public class GameImpl implements Game {
   }
   public void placeCity( Position p, Player owner ) { cities.put(p, new CityImpl(owner, p)); }
   public void removeUnit( Position p ) { units.remove(p); }
+
+  public int rollDie(){ return (int) Math.random()*6;}
 }

@@ -9,4 +9,5 @@ public class BetaCivFactory implements GameFactory  {
     public UnitActionStrategy createUnitActionStrategy() { return new AlphaCivUnitActionStrategy(); }
     public StartCitiesStrategy createStartCitiesStrategy() { return new AlphaCivStartCitiesStrategy(); }
     public StartUnitsStrategy createStartUnitsStrategy() { return new AlphaCivStartUnitsStrategy(); }
+    public AttackingStrategy createAttackingStrategy() { return new AlphaCivAttackingStrategy(); }
 }
