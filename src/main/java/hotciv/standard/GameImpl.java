@@ -4,7 +4,7 @@ import hotciv.framework.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
+
 
 /** Skeleton implementation of HotCiv.
  
@@ -135,7 +135,7 @@ public class GameImpl implements Game {
       units.put(from, null);
     }
     else if(getUnitAt(to).getOwner() != getUnitAt(from).getOwner()){
-      boolean successfulAttack = attackStrategy.attack(getUnitAt(from),getUnitAt(to));
+      boolean successfulAttack = attackStrategy.attack(this, from, to);
       if(successfulAttack) {
         if (getUnitAt(from).getOwner() == Player.RED) {
           redAttacksWon++;
@@ -205,5 +205,4 @@ public class GameImpl implements Game {
   public void placeCity( Position p, Player owner ) { cities.put(p, new CityImpl(owner, p)); }
   public void removeUnit( Position p ) { units.remove(p); }
 
-  public int rollDie(){ return (int) (Math.random() * 6);}
 }
