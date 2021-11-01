@@ -8,7 +8,7 @@ import hotciv.framework.Tile;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DeltaMapStrategy implements MapStrategy {
+public class DeltaCivMapStrategy implements MapStrategy {
     private Map<Position, Tile> DeltaMap = new HashMap<Position, Tile>();
 
     public Map<Position, Tile> setMap() {

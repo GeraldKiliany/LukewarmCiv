@@ -5,7 +5,7 @@ import hotciv.framework.*;
 import java.util.Map;
 
 public class BetaCivWinnerStrategy implements WinnerStrategy{
-    public Player getWinner(int age, Map<Position, CityImpl> cities){
+    public Player getWinner(int age, Map<Position, CityImpl> cities, GameImpl game){
         Boolean allCitiesSameOwner = false;
         Player potentialWinner = null;
         for(Position p : cities.keySet()) {

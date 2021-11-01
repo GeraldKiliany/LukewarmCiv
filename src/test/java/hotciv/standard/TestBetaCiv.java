@@ -39,10 +39,8 @@ import java.util.*;
 public class TestBetaCiv {
     private Game game;
 
-    /**
-     * Fixture for alphaciv testing.
-     */
-    @Before
+    /** Fixture for BetaCiv testing. */
+    /*@Before
     public void setUp() {
         MapStrategy mapStrategy = new AlphaCivMapStrategy();
         AgingStrategy agingStrategy = new BetaCivAgingStrategy();
@@ -51,6 +49,11 @@ public class TestBetaCiv {
         StartCitiesStrategy startCitiesStrategy = new AlphaCivStartCitiesStrategy();
         StartUnitsStrategy startUnitsStrategy = new AlphaCivStartUnitsStrategy();
         game = new GameImpl(mapStrategy, winnerStrategy, agingStrategy, unitActionStrategy,startCitiesStrategy,startUnitsStrategy);
+    }*/
+
+    @Before
+    public void setUp() {
+        game = new GameImpl( new BetaCivFactory() );
     }
 
     @Test
@@ -142,4 +145,43 @@ public class TestBetaCiv {
         assertNull(game.getWinner());
     }
 
+    @Test
+    public void redUnitConquersDefenselessBlueCity() {
+        assertThat(game.getUnitAt(new Position(4,3)).getOwner(), is(Player.RED));
+        assertThat(game.getCityAt(new Position(4,1)).getOwner(), is(Player.BLUE));
+
+        game.moveUnit(new Position(4,3), new Position(4,2));
+        game.moveUnit(new Position(4,2), new Position(4,1));
+
+        //red unit moves into blue city, blue city becomes red city
+        assertThat(game.getCityAt(new Position(4,1)).getOwner(), is(Player.RED));
+    }
+
+    @Test
+    public void redUnitDefeatsBlueUnitAndConquersBlueCity() {
+        game.advanceTurns(6);
+        assertThat(game.getUnitAt(new Position(4,3)).getOwner(), is(Player.RED));
+        assertThat(game.getCityAt(new Position(4,1)).getOwner(), is(Player.BLUE));
+        assertThat(game.getUnitAt(new Position(4,1)).getOwner(), is(Player.BLUE));
+
+        game.moveUnit(new Position(4,3), new Position(4,2));
+        game.moveUnit(new Position(4,2), new Position(4,1));
+
+        //red unit defeats blue unit, blue city becomes red city
+        assertThat(game.getUnitAt(new Position(4,1)).getOwner(), is(Player.RED));
+        assertThat(game.getCityAt(new Position(4,1)).getOwner(), is(Player.RED));
+    }
+
+    @Test
+    public void redUnitConquersAllCitiesAndBecomesWinner() {
+        assertThat(game.getUnitAt(new Position(4,3)).getOwner(), is(Player.RED));
+        assertThat(game.getCityAt(new Position(4,1)).getOwner(), is(Player.BLUE));
+
+        assertThat(game.getWinner(), is(nullValue()));
+
+        game.moveUnit(new Position(4,3), new Position(4,2));
+        game.moveUnit(new Position(4,2), new Position(4,1));
+
+        assertThat(game.getWinner(), is(Player.RED));
+    }
 }

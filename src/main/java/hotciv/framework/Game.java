@@ -139,4 +139,11 @@ public interface Game{
    * @param numberOfTurns the number of turns to advance the game
    */
   public void advanceTurns( int numberOfTurns );
+
+  /** place a unit on the map manually for testing
+   * @param p the position to place the unit on
+   * @param unitType the type of unit being placed
+   * @param owner the owner of the unit being placed
+   */
+  public void placeUnitManually( Position p, String unitType, Player owner );
 }

@@ -5,6 +5,8 @@ import hotciv.framework.*;
 import java.util.HashMap;
 //Release 3.0
 import java.util.Map;
+import java.util.Objects;
+
 
 /** Skeleton implementation of HotCiv.
  
@@ -47,9 +49,16 @@ public class GameImpl implements Game {
   private Map<Position,CityImpl> cities;
   private Map<Position, Unit> units = new HashMap<Position, Unit>();
   private Map<Position,Tile> tiles;
+  private AttackingStrategy attackStrategy;
+
+  private GameFactory factory;
+
+  private int redAttacksWon = 0;
+  private int blueAttacksWon = 0;
+  private int numberOfRoundsPassed = 0;
 
   //default Constructor
-  public GameImpl(){
+  /*public GameImpl(){
     this.mapStrategy = new AlphaCivMapStrategy();
     this.tiles = mapStrategy.setMap();
     this.winnerStrategy = new AlphaCivWinnerStrategy();
@@ -58,8 +67,31 @@ public class GameImpl implements Game {
     this.cities = new AlphaCivStartCitiesStrategy().setStartCities();
     this.units = new AlphaCivStartUnitsStrategy().setStartUnits();
 
+  }*/
+  //default Constructor
+  public GameImpl(){
+    this.factory = new AlphaCivFactory();
+    this.mapStrategy = factory.createMapStrategy();
+    this.tiles = mapStrategy.setMap();
+    this.winnerStrategy = factory.createWinnerStrategy();
+    this.agingStrategy = factory.createAgingStrategy();;
+    this.unitActionStrategy = factory.createUnitActionStrategy();
+    this.cities = factory.createStartCitiesStrategy().setStartCities();
+    this.units = factory.createStartUnitsStrategy().setStartUnits();
   }
-  public GameImpl(
+
+  public GameImpl( GameFactory factory ) {
+    this.factory = factory;
+    this.mapStrategy = factory.createMapStrategy();
+    this.tiles = mapStrategy.setMap();
+    this.winnerStrategy = factory.createWinnerStrategy();
+    this.agingStrategy = factory.createAgingStrategy();;
+    this.unitActionStrategy = factory.createUnitActionStrategy();
+    this.cities = factory.createStartCitiesStrategy().setStartCities();
+    this.units = factory.createStartUnitsStrategy().setStartUnits();
+    this.attackStrategy = factory.createAttackingStrategy();
+  }
+  /*public GameImpl(
           MapStrategy argMapStrategy,
           WinnerStrategy argWinnerStrategy,
           AgingStrategy argAgingStrategy,
@@ -75,14 +107,14 @@ public class GameImpl implements Game {
     this.unitActionStrategy = argUnitActionStrategy;
     this.cities = argStartCitiesStrategy.setStartCities();
     this.units = argStartUnitsStrategy.setStartUnits();
-  }
+  }*/
 
   //accessors
   public Tile getTileAt( Position p ) { return tiles.get(p); }
   public Unit getUnitAt( Position p ) { return units.get(p); }
   public City getCityAt( Position p ) { return cities.get(p); } //TODO update all functions to work with cityMap
   public Player getPlayerInTurn() {return currPlayer;}
-  public Player getWinner() { return winnerStrategy.getWinner(age, cities); }
+  public Player getWinner() { return winnerStrategy.getWinner(age, cities, this); }
   public int getAge() {return age;}
   private int unitCost(String unitType) {
     if (unitType.equals(GameConstants.ARCHER)) {
@@ -96,16 +128,44 @@ public class GameImpl implements Game {
 
   //mutators
   public boolean moveUnit( Position from, Position to ) {
+//TODO: Refactor to use variable for units
+    if(getUnitAt(from) == null) { return false; }
 
     if(getUnitAt(from).getMoveCount() == 0) { return false; }
 
     if(getUnitAt(to) == null) {
+      if (getCityAt(to) != null) {
+        getCityAt(to).setOwner(getUnitAt(from).getOwner());
+      }
       units.put(to,units.get(from));
-      units.put(from, null);
+      units.remove(from);
     }
     else if(getUnitAt(to).getOwner() != getUnitAt(from).getOwner()){
-      units.put(to, units.get(from));
-      units.put(from,null);
+      boolean successfulAttack = attackStrategy.attack(this, from, to);
+      if(successfulAttack) {
+        if (getCityAt(to) != null) {
+          getCityAt(to).setOwner(getUnitAt(from).getOwner());
+        }
+
+        if (factory.factoryType().equals("ZetaCivFactory")) {
+          if (numberOfRoundsPassed > 20) {
+            if (getUnitAt(from).getOwner() == Player.RED) {
+              redAttacksWon++;
+            } else if (getUnitAt(from).getOwner() == Player.BLUE) {
+              blueAttacksWon++;
+            }
+          }
+        } else {
+          if (getUnitAt(from).getOwner() == Player.RED) {
+            redAttacksWon++;
+          } else if (getUnitAt(from).getOwner() == Player.BLUE) {
+            blueAttacksWon++;
+          }
+        }
+
+        units.put(to, units.get(from));
+        units.remove(from);
+      }
     }
 
     return true;
@@ -124,6 +184,7 @@ public class GameImpl implements Game {
     else {
       currPlayer = Player.RED;
       age = agingStrategy.getNewAge(age);
+      numberOfRoundsPassed++;
     }
   }
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
@@ -163,5 +224,12 @@ public class GameImpl implements Game {
       { endOfTurn(); }
   }
   public void placeCity( Position p, Player owner ) { cities.put(p, new CityImpl(owner, p)); }
+  public void placeUnitManually ( Position p, String unitType, Player owner ) {
+    units.put(p, new UnitImpl(unitType, owner));
+  }
   public void removeUnit( Position p ) { units.remove(p); }
+
+  public int getRedAttacksWon() { return redAttacksWon; }
+  public int getBlueAttacksWon() { return blueAttacksWon; }
+  public int getNumberOfRoundsPassed() { return numberOfRoundsPassed; }
 }

@@ -9,7 +9,7 @@ public class TestGammaCiv {
     private Game game;
 
     /** Fixture for GammaCiv testing. */
-    @Before
+    /*@Before
     public void setUp() {
         MapStrategy mapStrategy = new AlphaCivMapStrategy();
         AgingStrategy agingStrategy = new AlphaCivAgingStrategy();
@@ -18,6 +18,11 @@ public class TestGammaCiv {
         StartCitiesStrategy startCitiesStrategy = new AlphaCivStartCitiesStrategy();
         StartUnitsStrategy startUnitsStrategy = new AlphaCivStartUnitsStrategy();
         game = new GameImpl(mapStrategy,winnerStrategy, agingStrategy, unitActionStrategy, startCitiesStrategy, startUnitsStrategy);
+    }*/
+
+    @Before
+    public void setUp() {
+        game = new GameImpl( new GammaCivFactory() );
     }
 
     @Test

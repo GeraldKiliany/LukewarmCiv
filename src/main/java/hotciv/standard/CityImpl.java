@@ -19,6 +19,7 @@ public class CityImpl implements City {
     }
 
     public Player getOwner(){return owner;}
+    public void setOwner(Player newOwner){owner = newOwner;}
     public int getSize(){return size;}
     public int getTreasury(){return treasury;}
     public String getProduction(){
