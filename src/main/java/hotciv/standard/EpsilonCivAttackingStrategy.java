@@ -39,7 +39,7 @@ public class EpsilonCivAttackingStrategy implements AttackingStrategy {
         defenderStrength = (defender.getDefensiveStrength()+defenderSupport)*defenderTerrain;
 
 
-
+        //roll die, change with stub
         boolean outcome = (attackerStrength*rollDie() > (defenderStrength*rollDie()));
         return outcome;
     }

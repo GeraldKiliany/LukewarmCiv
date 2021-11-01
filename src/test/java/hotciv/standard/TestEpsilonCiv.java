@@ -145,6 +145,6 @@ class TestEpsilonCivAttackingStub implements AttackingStrategy{
     //public boolean strongerAttacker() { return attackerStrength > defenderStrength; }
     public int rollDie(){ return (int) (Math.random()*6);}
 }
-
+//next test
 
 
