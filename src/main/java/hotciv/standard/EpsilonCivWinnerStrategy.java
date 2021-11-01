@@ -6,13 +6,10 @@ import hotciv.framework.WinnerStrategy;
 
 import java.util.Map;
 
-import static hotciv.standard.GameImpl.blueAttacksWon;
-import static hotciv.standard.GameImpl.redAttacksWon;
-
 public class EpsilonCivWinnerStrategy implements WinnerStrategy {
-    public Player getWinner(int age, Map<Position, CityImpl> cities) {
-        if (redAttacksWon >= 3) { return Player.RED; }
-        if (blueAttacksWon >= 3) { return Player.BLUE; }
+    public Player getWinner(int age, Map<Position, CityImpl> cities, GameImpl game) {
+        if (game.getRedAttacksWon() >= 3) { return Player.RED; }
+        if (game.getBlueAttacksWon() >= 3) { return Player.BLUE; }
 
         return null;
     }

@@ -61,8 +61,38 @@ public class TestZetaCiv {
         assertThat(game.getWinner(), is(Player.RED));
     }
 
-    /*@Test
-    public void test() {
+    @Test
+    public void redUnitConquersAllCitiesButDoesNotBecomeWinnerAfter20Rounds() {
+        assertThat(game.getUnitAt(new Position(4,3)).getOwner(), is(Player.RED));
+        assertThat(game.getUnitAt(new Position(4,1)), is(nullValue()));
+        assertThat(game.getCityAt(new Position(4,1)).getOwner(), is(Player.BLUE));
 
+        game.advanceTurns(2*20 + 2);
+        assertThat(game.getUnitAt(new Position(4,3)).getOwner(), is(Player.RED));
+        assertThat(game.getUnitAt(new Position(4,1)).getOwner(), is(Player.BLUE));
+        assertThat(game.getCityAt(new Position(4,1)).getOwner(), is(Player.BLUE));
+
+        assertThat(game.getWinner(), is(nullValue()));
+
+        //conquering
+        game.moveUnit(new Position(4,3), new Position(4,2));
+        game.moveUnit(new Position(4,2), new Position(4,1));
+        assertThat(game.getUnitAt(new Position(4,1)).getOwner(), is(Player.RED));
+        assertThat(game.getCityAt(new Position(4,1)).getOwner(), is(Player.RED));
+
+        assertThat(game.getWinner(), is(nullValue()));
+    }
+
+    /*@Test
+    public void redUnitWinsThreeAttacksAfter20RoundsAndBecomesWinner() {
+        game.advanceTurns(2*20 + 2);
+        assertThat(game.getUnitAt(new Position(4,3)).getOwner(), is(Player.RED));
+        assertThat(game.getUnitAt(new Position(4,1)).getOwner(), is(Player.BLUE));
+
+
+
+        assertThat(game.getWinner(), is(nullValue()));
+
+        assertThat(game.getWinner(), is(Player.RED));
     }*/
 }

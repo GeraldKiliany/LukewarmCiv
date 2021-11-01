@@ -52,10 +52,9 @@ public class GameImpl implements Game {
 
   private GameFactory factory;
 
-  static public int redAttacksWon = 0;
-  static public int blueAttacksWon = 0;
-
-  static public int numberOfRoundsPassed = 0;
+  private int redAttacksWon = 0;
+  private int blueAttacksWon = 0;
+  private int numberOfRoundsPassed = 0;
 
   //default Constructor
   /*public GameImpl(){
@@ -114,7 +113,7 @@ public class GameImpl implements Game {
   public Unit getUnitAt( Position p ) { return units.get(p); }
   public City getCityAt( Position p ) { return cities.get(p); } //TODO update all functions to work with cityMap
   public Player getPlayerInTurn() {return currPlayer;}
-  public Player getWinner() { return winnerStrategy.getWinner(age, cities); }
+  public Player getWinner() { return winnerStrategy.getWinner(age, cities, this); }
   public int getAge() {return age;}
   private int unitCost(String unitType) {
     if (unitType.equals(GameConstants.ARCHER)) {
@@ -185,6 +184,7 @@ public class GameImpl implements Game {
       currPlayer = Player.RED;
       age = agingStrategy.getNewAge(age);
       numberOfRoundsPassed++;
+      //System.out.println("Number of Rounds: " + numberOfRoundsPassed);
     }
   }
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
@@ -224,6 +224,10 @@ public class GameImpl implements Game {
       { endOfTurn(); }
   }
   public void placeCity( Position p, Player owner ) { cities.put(p, new CityImpl(owner, p)); }
+  //public void placeUnitManually ( String p, Player owner ) { units.put(p, new UnitImpl(owner, p)); }
   public void removeUnit( Position p ) { units.remove(p); }
 
+  public int getRedAttacksWon() { return redAttacksWon; }
+  public int getBlueAttacksWon() { return blueAttacksWon; }
+  public int getNumberOfRoundsPassed() { return numberOfRoundsPassed; }
 }

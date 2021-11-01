@@ -1,12 +1,11 @@
 package hotciv.standard;
 
+import hotciv.framework.Game;
 import hotciv.framework.Player;
 import hotciv.framework.Position;
 import hotciv.framework.WinnerStrategy;
 
 import java.util.Map;
-
-import static hotciv.standard.GameImpl.numberOfRoundsPassed;
 
 public class ZetaCivWinnerStrategy implements WinnerStrategy {
     private WinnerStrategy BetaCivWinnerStrategy, EpsilonCivWinnerStrategy, currentState;
@@ -14,20 +13,15 @@ public class ZetaCivWinnerStrategy implements WinnerStrategy {
     public ZetaCivWinnerStrategy( WinnerStrategy BetaCivWinnerStrategy, WinnerStrategy EpsilonCivWinnerStrategy ) {
         this.BetaCivWinnerStrategy = BetaCivWinnerStrategy;
         this.EpsilonCivWinnerStrategy = EpsilonCivWinnerStrategy;
-        this.currentState = null;
+        this.currentState = EpsilonCivWinnerStrategy;
     }
 
-    public Player getWinner(int age, Map<Position, CityImpl> cities) {
-        if ( moreThan20Rounds() ) {
-            //redAttacksWon = 0;
-            //blueAttacksWon = 0;
-
+    public Player getWinner(int age, Map<Position, CityImpl> cities, GameImpl game) {
+        if ( game.getNumberOfRoundsPassed() > 20 ) {
             currentState = EpsilonCivWinnerStrategy;
         } else {
             currentState = BetaCivWinnerStrategy;
         }
-        return currentState.getWinner(age, cities);
+        return currentState.getWinner(age, cities, game);
     }
-
-    private boolean moreThan20Rounds() { return numberOfRoundsPassed > 20; }
 }
