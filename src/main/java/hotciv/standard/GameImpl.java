@@ -131,12 +131,19 @@ public class GameImpl implements Game {
     if(getUnitAt(from).getMoveCount() == 0) { return false; }
 
     if(getUnitAt(to) == null) {
+      if (getCityAt(to) != null) {
+        getCityAt(to).setOwner(getUnitAt(from).getOwner());
+      }
       units.put(to,units.get(from));
-      units.put(from, null);
+      units.remove(from);
     }
     else if(getUnitAt(to).getOwner() != getUnitAt(from).getOwner()){
       boolean successfulAttack = attackStrategy.attack(this, from, to);
       if(successfulAttack) {
+        if (getCityAt(to) != null) {
+          getCityAt(to).setOwner(getUnitAt(from).getOwner());
+        }
+
         if (getUnitAt(from).getOwner() == Player.RED) {
           redAttacksWon++;
         } else if (getUnitAt(to).getOwner() == Player.BLUE) {
@@ -144,7 +151,7 @@ public class GameImpl implements Game {
         }
 
         units.put(to, units.get(from));
-        units.put(from, null);
+        units.remove(from);
       }
     }
 
