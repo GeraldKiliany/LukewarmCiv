@@ -205,5 +205,5 @@ public class GameImpl implements Game {
   public void placeCity( Position p, Player owner ) { cities.put(p, new CityImpl(owner, p)); }
   public void removeUnit( Position p ) { units.remove(p); }
 
-  public int rollDie(){ return (int) Math.random()*6;}
+  public int rollDie(){ return (int) (Math.random() * 6);}
 }
