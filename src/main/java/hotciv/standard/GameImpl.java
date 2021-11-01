@@ -4,6 +4,7 @@ import hotciv.framework.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 
 /** Skeleton implementation of HotCiv.
@@ -146,10 +147,20 @@ public class GameImpl implements Game {
           getCityAt(to).setOwner(getUnitAt(from).getOwner());
         }
 
-        if (getUnitAt(from).getOwner() == Player.RED) {
-          redAttacksWon++;
-        } else if (getUnitAt(to).getOwner() == Player.BLUE) {
-          blueAttacksWon++;
+        if (factory.factoryType().equals("ZetaCivFactory")) {
+          if (numberOfRoundsPassed > 20) {
+            if (getUnitAt(from).getOwner() == Player.RED) {
+              redAttacksWon++;
+            } else if (getUnitAt(to).getOwner() == Player.BLUE) {
+              blueAttacksWon++;
+            }
+          }
+        } else {
+          if (getUnitAt(from).getOwner() == Player.RED) {
+            redAttacksWon++;
+          } else if (getUnitAt(to).getOwner() == Player.BLUE) {
+            blueAttacksWon++;
+          }
         }
 
         units.put(to, units.get(from));

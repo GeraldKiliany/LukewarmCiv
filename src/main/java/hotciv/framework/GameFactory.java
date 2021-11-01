@@ -13,4 +13,5 @@ public interface GameFactory {
     public StartCitiesStrategy createStartCitiesStrategy();
     public StartUnitsStrategy createStartUnitsStrategy();
     public AttackingStrategy createAttackingStrategy();
+    public String factoryType();
 }

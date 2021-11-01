@@ -19,6 +19,9 @@ public class ZetaCivWinnerStrategy implements WinnerStrategy {
 
     public Player getWinner(int age, Map<Position, CityImpl> cities) {
         if ( moreThan20Rounds() ) {
+            //redAttacksWon = 0;
+            //blueAttacksWon = 0;
+
             currentState = EpsilonCivWinnerStrategy;
         } else {
             currentState = BetaCivWinnerStrategy;

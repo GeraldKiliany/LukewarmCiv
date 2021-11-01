@@ -10,4 +10,5 @@ public class AlphaCivFactory implements GameFactory  {
     public StartCitiesStrategy createStartCitiesStrategy() { return new AlphaCivStartCitiesStrategy(); }
     public StartUnitsStrategy createStartUnitsStrategy() { return new AlphaCivStartUnitsStrategy(); }
     public AttackingStrategy createAttackingStrategy(){ return new AlphaCivAttackingStrategy(); }
+    public String factoryType() { return "AlphaCivFactory"; }
 }
