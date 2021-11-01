@@ -137,6 +137,12 @@ public class GameImpl implements Game {
     else if(getUnitAt(to).getOwner() != getUnitAt(from).getOwner()){
       boolean successfulAttack = attackStrategy.attack(getUnitAt(from),getUnitAt(to));
       if(successfulAttack) {
+        if (getUnitAt(from).getOwner() == Player.RED) {
+          redAttacksWon++;
+        } else if (getUnitAt(to).getOwner() == Player.BLUE) {
+          blueAttacksWon++;
+        }
+
         units.put(to, units.get(from));
         units.put(from, null);
       }
