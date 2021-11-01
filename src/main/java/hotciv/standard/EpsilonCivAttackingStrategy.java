@@ -9,11 +9,14 @@ public class EpsilonCivAttackingStrategy implements AttackingStrategy {
     int defenderTerrain;
     int attackerStrength;
     int defenderStrength;
-    Game gameVar = null;
-    Position fromVar = null;
-    Position toVar = null;
+
+    AttackDecisionStrategy attackWinnerStrategy;
+
+
 
     public boolean attack(Game game, Position from, Position to) {
+
+        //return attackWinnerStrategy.determineWinner(game, from, to);
 
         attackerSupport = Utility2.getFriendlySupport(game,from,game.getUnitAt(from).getOwner());
         defenderSupport = Utility2.getFriendlySupport(game,to,game.getUnitAt(to).getOwner());
@@ -25,6 +28,8 @@ public class EpsilonCivAttackingStrategy implements AttackingStrategy {
 
         attackerStrength = (attacker.getAttackingStrength()+attackerSupport)*attackerTerrain;
         defenderStrength = (defender.getDefensiveStrength()+defenderSupport)*defenderTerrain;
+
+
 
         boolean outcome = (attackerStrength*rollDie() > (defenderStrength*rollDie()));
         return outcome;

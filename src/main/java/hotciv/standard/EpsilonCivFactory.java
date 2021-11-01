@@ -3,6 +3,10 @@ package hotciv.standard;
 import hotciv.framework.*;
 
 public class EpsilonCivFactory implements GameFactory  {
+    boolean useTestStub;
+    public EpsilonCivFactory(boolean useTestStub) {this.useTestStub = useTestStub;}
+    public EpsilonCivFactory() {this.useTestStub = true;}
+    public boolean getUseTestStub(){return useTestStub;}
     public MapStrategy createMapStrategy() { return new AlphaCivMapStrategy(); }
     public WinnerStrategy createWinnerStrategy() { return new EpsilonCivWinnerStrategy(); }
     public AgingStrategy createAgingStrategy() { return new AlphaCivAgingStrategy(); }

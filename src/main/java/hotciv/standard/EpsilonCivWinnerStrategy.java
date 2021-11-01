@@ -14,6 +14,7 @@ public class EpsilonCivWinnerStrategy implements WinnerStrategy {
         if (redAttacksWon == 3) { return Player.RED; }
         if (blueAttacksWon == 3) { return Player.BLUE; }
 
+
         return null;
     }
 }
