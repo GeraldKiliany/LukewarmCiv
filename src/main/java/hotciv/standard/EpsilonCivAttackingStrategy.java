@@ -12,8 +12,17 @@ public class EpsilonCivAttackingStrategy implements AttackingStrategy {
 
     AttackDecisionStrategy attackWinnerStrategy;
 
-
-
+    public EpsilonCivAttackingStrategy(){
+        attackWinnerStrategy = new EpsilonCivFixedAttackDecisionStrategy();
+    }
+    public EpsilonCivAttackingStrategy(boolean useTestStub){
+        if (useTestStub){
+            attackWinnerStrategy = new EpsilonCivFixedAttackDecisionStrategy();
+        }
+        else{
+            attackWinnerStrategy = new EpsilonCivRandomAttackDecisionStrategy();
+        }
+    }
     public boolean attack(Game game, Position from, Position to) {
 
         //return attackWinnerStrategy.determineWinner(game, from, to);
