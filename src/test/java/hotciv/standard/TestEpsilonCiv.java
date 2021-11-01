@@ -53,7 +53,7 @@ public class TestEpsilonCiv {
 
     @Before
     public void setUp() {
-        game = new GameImpl( new EpsilonCivFactory() );
+        game = new GameImpl( new EpsilonCivFactoryStub() );
     }
 
     @Test
@@ -105,6 +105,27 @@ public class TestEpsilonCiv {
         assertThat(game.getUnitAt(fourThree).getTypeString(),is(GameConstants.SETTLER));
         game.moveUnit(threeTwo,threeThree);
         assertThat(game.getUnitAt(threeThree).getTypeString(), is(GameConstants.LEGION));
+        game.moveUnit(threeThree,fourThree);
+        assertThat(game.getUnitAt(fourThree).getTypeString(), is(GameConstants.LEGION));
+        assertThat(game.getUnitAt(threeThree), is(nullValue()));
+
+
+
+
+    }
+
+    public void legionAttackingSettlerFailsWithSettlerRoll2(){
+        Position threeTwo = new Position(3, 2);
+        Position fourThree = new Position(4, 3);
+        Position threeThree = new Position(3,3);
+        assertThat(game.getUnitAt(threeTwo).getTypeString(), is(GameConstants.LEGION));
+        assertThat(game.getUnitAt(fourThree).getTypeString(),is(GameConstants.SETTLER));
+        game.moveUnit(threeTwo,threeThree);
+        assertThat(game.getUnitAt(threeThree).getTypeString(), is(GameConstants.LEGION));
+
+        TestEpsilonCivAttackingStub testStrategy = new TestEpsilonCivAttackingStub();
+        testStrategy.setCurrentAttack(game,threeThree,fourThree);
+
         game.moveUnit(threeThree,fourThree);
         assertThat(game.getUnitAt(fourThree).getTypeString(), is(GameConstants.LEGION));
         assertThat(game.getUnitAt(threeThree), is(nullValue()));
@@ -170,3 +191,17 @@ class TestEpsilonCivAttackingStub implements AttackingStrategy{
     public void setDie2(){die2 = 2;}
 }
 
+    class EpsilonCivFactoryStub implements GameFactory  {
+    boolean useTestStub;
+    public EpsilonCivFactoryStub(boolean useTestStub) {this.useTestStub = useTestStub;}
+    public EpsilonCivFactoryStub() {this.useTestStub = true;}
+    public boolean getUseTestStub(){return useTestStub;}
+    public MapStrategy createMapStrategy() { return new AlphaCivMapStrategy(); }
+    public WinnerStrategy createWinnerStrategy() { return new EpsilonCivWinnerStrategy(); }
+    public AgingStrategy createAgingStrategy() { return new AlphaCivAgingStrategy(); }
+    public UnitActionStrategy createUnitActionStrategy() { return new AlphaCivUnitActionStrategy(); }
+    public StartCitiesStrategy createStartCitiesStrategy() { return new AlphaCivStartCitiesStrategy(); }
+    public StartUnitsStrategy createStartUnitsStrategy() { return new AlphaCivStartUnitsStrategy(); }
+    public AttackingStrategy createAttackingStrategy(){ return new TestEpsilonCivAttackingStub(); }
+        public String factoryType() { return "EpsilonCivFactory"; }
+}
