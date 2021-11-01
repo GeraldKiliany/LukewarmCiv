@@ -39,18 +39,7 @@ import java.util.*;
 public class TestEpsilonCiv {
     private Game game;
 
-    /** Fixture for BetaCiv testing. */
-    /*@Before
-    public void setUp() {
-        MapStrategy mapStrategy = new AlphaCivMapStrategy();
-        AgingStrategy agingStrategy = new BetaCivAgingStrategy();
-        WinnerStrategy winnerStrategy = new BetaCivWinnerStrategy();
-        UnitActionStrategy unitActionStrategy = new AlphaCivUnitActionStrategy();
-        StartCitiesStrategy startCitiesStrategy = new AlphaCivStartCitiesStrategy();
-        StartUnitsStrategy startUnitsStrategy = new AlphaCivStartUnitsStrategy();
-        game = new GameImpl(mapStrategy, winnerStrategy, agingStrategy, unitActionStrategy,startCitiesStrategy,startUnitsStrategy);
-    }*/
-
+    /** Fixture for EpsilonCiv testing. */
     @Before
     public void setUp() {
         game = new GameImpl( new EpsilonCivFactoryStub() );
@@ -114,6 +103,7 @@ public class TestEpsilonCiv {
 
     }
 
+    @Test
     public void legionAttackingSettlerFailsWithSettlerRoll2(){
         Position threeTwo = new Position(3, 2);
         Position fourThree = new Position(4, 3);
@@ -133,6 +123,34 @@ public class TestEpsilonCiv {
 
 
 
+    }
+
+    @Test
+    public void redWinsThreeAttacksAfter20RoundsBecomesWinner() {
+        assertThat(game.getWinner(), is(nullValue()));
+
+        //red wins first attack
+        game.placeUnitManually(new Position(8,8), GameConstants.LEGION, Player.RED);
+        game.placeUnitManually(new Position(8,7), GameConstants.SETTLER, Player.BLUE);
+        game.moveUnit(new Position(8,8), new Position(8,7));
+        assertThat(game.getUnitAt(new Position(8,7)).getOwner(), is(Player.RED));
+
+        assertThat(game.getWinner(), is(nullValue()));
+
+        //red wins second attack
+        game.placeUnitManually(new Position(8,6), GameConstants.SETTLER, Player.BLUE);
+        game.moveUnit(new Position(8,7), new Position(8,6));
+        assertThat(game.getUnitAt(new Position(8,6)).getOwner(), is(Player.RED));
+
+        assertThat(game.getWinner(), is(nullValue()));
+
+        //red wins third attack
+        game.placeUnitManually(new Position(8,5), GameConstants.SETTLER, Player.BLUE);
+        game.moveUnit(new Position(8,6), new Position(8,5));
+        assertThat(game.getUnitAt(new Position(8,5)).getOwner(), is(Player.RED));
+
+        //red is winner
+        assertThat(game.getWinner(), is(Player.RED));
     }
 
 
