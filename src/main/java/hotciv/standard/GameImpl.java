@@ -128,6 +128,8 @@ public class GameImpl implements Game {
   //mutators
   public boolean moveUnit( Position from, Position to ) {
 //TODO: Refactor to use variable for units
+    if(getUnitAt(from) == null) { return false; }
+
     if(getUnitAt(from).getMoveCount() == 0) { return false; }
 
     if(getUnitAt(to) == null) {
