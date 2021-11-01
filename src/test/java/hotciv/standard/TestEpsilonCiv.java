@@ -96,6 +96,25 @@ public class TestEpsilonCiv {
     }
 
 
+    @Test
+    public void legionAttackingSettlerWinsWith1Rolls(){
+        Position threeTwo = new Position(3, 2);
+        Position fourThree = new Position(4, 3);
+        Position threeThree = new Position(3,3);
+        assertThat(game.getUnitAt(threeTwo).getTypeString(), is(GameConstants.LEGION));
+        assertThat(game.getUnitAt(fourThree).getTypeString(),is(GameConstants.SETTLER));
+        game.moveUnit(threeTwo,threeThree);
+        assertThat(game.getUnitAt(threeThree).getTypeString(), is(GameConstants.LEGION));
+        game.moveUnit(threeThree,fourThree);
+        assertThat(game.getUnitAt(fourThree).getTypeString(), is(GameConstants.LEGION));
+        assertThat(game.getUnitAt(threeThree), is(nullValue()));
+
+
+
+
+    }
+
+
    }
 class TestEpsilonCivAttackingStub implements AttackingStrategy{
     int attackerSupport;
@@ -109,6 +128,7 @@ class TestEpsilonCivAttackingStub implements AttackingStrategy{
     Position fromVar = null;
     Position toVar = null;
 
+    int die2 = 1;
     public boolean attack(Game game, Position from, Position to) {
 
         attackerSupport = Utility2.getFriendlySupport(game,from,game.getUnitAt(from).getOwner());
@@ -122,7 +142,7 @@ class TestEpsilonCivAttackingStub implements AttackingStrategy{
         attackerStrength = (attacker.getAttackingStrength()+attackerSupport)*attackerTerrain;
         defenderStrength = (defender.getDefensiveStrength()+defenderSupport)*defenderTerrain;
 
-        boolean outcome = (attackerStrength*rollDie() > (defenderStrength*rollDie()));
+        boolean outcome = (attackerStrength*rollDie1() > (defenderStrength*rollDie2()));
         return outcome;
     }
 
@@ -142,9 +162,11 @@ class TestEpsilonCivAttackingStub implements AttackingStrategy{
     public int getDefenderStrength() {
         Unit defender = gameVar.getUnitAt(toVar);
         return ((defender.getDefensiveStrength()+getDefenderSupport())*getDefenderTerrain()); }
-    //public boolean strongerAttacker() { return attackerStrength > defenderStrength; }
-    public int rollDie(){ return (int) (Math.random()*6);}
-}
-//next test
 
+
+    //remove randomness by making die return constant value
+    public int rollDie1(){ return 1;}
+    public int rollDie2(){return die2;}
+    public void setDie2(){die2 = 2;}
+}
 
