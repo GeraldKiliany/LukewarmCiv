@@ -46,7 +46,7 @@ public class TestZetaCiv {
     }
 
     @Test
-    public void redUnitConquersAllCitiesAndBecomesWinnerBefore20Rounds() {
+    public void redConquersAllCitiesBefore20RoundsBecomesWinner() {
         assertThat(game.getUnitAt(new Position(4,3)).getOwner(), is(Player.RED));
         assertThat(game.getCityAt(new Position(4,1)).getOwner(), is(Player.BLUE));
 
@@ -62,7 +62,7 @@ public class TestZetaCiv {
     }
 
     @Test
-    public void redUnitConquersAllCitiesButDoesNotBecomeWinnerAfter20Rounds() {
+    public void redConquersAllCitiesAfter20RoundsDoesNotBecomeWinner() {
         assertThat(game.getUnitAt(new Position(4,3)).getOwner(), is(Player.RED));
         assertThat(game.getUnitAt(new Position(4,1)), is(nullValue()));
         assertThat(game.getCityAt(new Position(4,1)).getOwner(), is(Player.BLUE));
@@ -83,16 +83,129 @@ public class TestZetaCiv {
         assertThat(game.getWinner(), is(nullValue()));
     }
 
-    /*@Test
-    public void redUnitWinsThreeAttacksAfter20RoundsAndBecomesWinner() {
-        game.advanceTurns(2*20 + 2);
-        assertThat(game.getUnitAt(new Position(4,3)).getOwner(), is(Player.RED));
-        assertThat(game.getUnitAt(new Position(4,1)).getOwner(), is(Player.BLUE));
-
-
+    @Test
+    public void redWinsThreeAttacksBefore20RoundsDoesNotBecomeWinner() {
+        //red wins first attack (before 20)
+        game.placeUnitManually(new Position(8,8), GameConstants.ARCHER, Player.RED);
+        game.placeUnitManually(new Position(8,7), GameConstants.SETTLER, Player.BLUE);
+        game.moveUnit(new Position(8,8), new Position(8,7));
+        assertThat(game.getUnitAt(new Position(8,7)).getOwner(), is(Player.RED));
 
         assertThat(game.getWinner(), is(nullValue()));
 
+        //red wins second attack (before 20)
+        game.placeUnitManually(new Position(8,6), GameConstants.SETTLER, Player.BLUE);
+        game.moveUnit(new Position(8,7), new Position(8,6));
+        assertThat(game.getUnitAt(new Position(8,6)).getOwner(), is(Player.RED));
+
+        assertThat(game.getWinner(), is(nullValue()));
+
+        //red wins third attack (before 20)
+        game.placeUnitManually(new Position(8,5), GameConstants.SETTLER, Player.BLUE);
+        game.moveUnit(new Position(8,6), new Position(8,5));
+        assertThat(game.getUnitAt(new Position(8,5)).getOwner(), is(Player.RED));
+
+        //red is not winner
+        assertThat(game.getWinner(), is(nullValue()));
+    }
+
+    @Test
+    public void redWinsThreeAttacksAfter20RoundsBecomesWinner() {
+        game.advanceTurns(2*20 + 2);
+        assertThat(game.getWinner(), is(nullValue()));
+
+        //red wins first attack (after 20)
+        game.placeUnitManually(new Position(8,8), GameConstants.ARCHER, Player.RED);
+        game.placeUnitManually(new Position(8,7), GameConstants.SETTLER, Player.BLUE);
+        game.moveUnit(new Position(8,8), new Position(8,7));
+        assertThat(game.getUnitAt(new Position(8,7)).getOwner(), is(Player.RED));
+
+        assertThat(game.getWinner(), is(nullValue()));
+
+        //red wins second attack (after 20)
+        game.placeUnitManually(new Position(8,6), GameConstants.SETTLER, Player.BLUE);
+        game.moveUnit(new Position(8,7), new Position(8,6));
+        assertThat(game.getUnitAt(new Position(8,6)).getOwner(), is(Player.RED));
+
+        assertThat(game.getWinner(), is(nullValue()));
+
+        //red wins third attack (after 20)
+        game.placeUnitManually(new Position(8,5), GameConstants.SETTLER, Player.BLUE);
+        game.moveUnit(new Position(8,6), new Position(8,5));
+        assertThat(game.getUnitAt(new Position(8,5)).getOwner(), is(Player.RED));
+
+        //red is winner
         assertThat(game.getWinner(), is(Player.RED));
-    }*/
+    }
+
+    @Test
+    public void redWinsTwoAttacksBefore20RoundsOneAttackAfter20RoundsDoesNotBecomeWinner() {
+        game.advanceTurns(2*10);
+        assertThat(game.getWinner(), is(nullValue()));
+
+        //red wins first attack
+        game.placeUnitManually(new Position(8,8), GameConstants.ARCHER, Player.RED);
+        game.placeUnitManually(new Position(8,7), GameConstants.SETTLER, Player.BLUE);
+        game.moveUnit(new Position(8,8), new Position(8,7));
+        assertThat(game.getUnitAt(new Position(8,7)).getOwner(), is(Player.RED));
+
+        assertThat(game.getWinner(), is(nullValue()));
+
+        //red wins second attack
+        game.placeUnitManually(new Position(8,6), GameConstants.SETTLER, Player.BLUE);
+        game.moveUnit(new Position(8,7), new Position(8,6));
+        assertThat(game.getUnitAt(new Position(8,6)).getOwner(), is(Player.RED));
+
+        assertThat(game.getWinner(), is(nullValue()));
+
+        game.advanceTurns(2*10 + 2);
+
+        //red wins third attack
+        game.placeUnitManually(new Position(8,5), GameConstants.SETTLER, Player.BLUE);
+        game.moveUnit(new Position(8,6), new Position(8,5));
+        assertThat(game.getUnitAt(new Position(8,5)).getOwner(), is(Player.RED));
+
+        //red is not winner (only one attack won after 20 rounds)
+        assertThat(game.getWinner(), is(nullValue()));
+    }
+
+    @Test
+    public void blueWinsThreeAttacksAfter20RoundsBecomesWinner() {
+        game.advanceTurns(2*20 + 2);
+        assertThat(game.getWinner(), is(nullValue()));
+
+        //red wins first attack
+        game.placeUnitManually(new Position(7,8), GameConstants.ARCHER, Player.RED);
+        game.placeUnitManually(new Position(7,7), GameConstants.SETTLER, Player.BLUE);
+        game.moveUnit(new Position(7,8), new Position(7,7));
+        assertThat(game.getWinner(), is(nullValue()));
+
+        //red wins second attack
+        game.placeUnitManually(new Position(7,6), GameConstants.SETTLER, Player.BLUE);
+        game.moveUnit(new Position(7,7), new Position(7,6));
+        assertThat(game.getWinner(), is(nullValue()));
+
+        //blue wins first attack (after 20)
+        game.placeUnitManually(new Position(8,8), GameConstants.ARCHER, Player.BLUE);
+        game.placeUnitManually(new Position(8,7), GameConstants.SETTLER, Player.RED);
+        game.moveUnit(new Position(8,8), new Position(8,7));
+        assertThat(game.getUnitAt(new Position(8,7)).getOwner(), is(Player.BLUE));
+
+        assertThat(game.getWinner(), is(nullValue()));
+
+        //blue wins second attack (after 20)
+        game.placeUnitManually(new Position(8,6), GameConstants.SETTLER, Player.RED);
+        game.moveUnit(new Position(8,7), new Position(8,6));
+        assertThat(game.getUnitAt(new Position(8,6)).getOwner(), is(Player.BLUE));
+
+        assertThat(game.getWinner(), is(nullValue()));
+
+        //blue wins third attack (after 20)
+        game.placeUnitManually(new Position(8,5), GameConstants.SETTLER, Player.RED);
+        game.moveUnit(new Position(8,6), new Position(8,5));
+        assertThat(game.getUnitAt(new Position(8,5)).getOwner(), is(Player.BLUE));
+
+        //blue is winner
+        assertThat(game.getWinner(), is(Player.BLUE));
+    }
 }

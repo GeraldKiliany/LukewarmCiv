@@ -150,14 +150,14 @@ public class GameImpl implements Game {
           if (numberOfRoundsPassed > 20) {
             if (getUnitAt(from).getOwner() == Player.RED) {
               redAttacksWon++;
-            } else if (getUnitAt(to).getOwner() == Player.BLUE) {
+            } else if (getUnitAt(from).getOwner() == Player.BLUE) {
               blueAttacksWon++;
             }
           }
         } else {
           if (getUnitAt(from).getOwner() == Player.RED) {
             redAttacksWon++;
-          } else if (getUnitAt(to).getOwner() == Player.BLUE) {
+          } else if (getUnitAt(from).getOwner() == Player.BLUE) {
             blueAttacksWon++;
           }
         }
@@ -184,7 +184,6 @@ public class GameImpl implements Game {
       currPlayer = Player.RED;
       age = agingStrategy.getNewAge(age);
       numberOfRoundsPassed++;
-      //System.out.println("Number of Rounds: " + numberOfRoundsPassed);
     }
   }
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
@@ -224,7 +223,9 @@ public class GameImpl implements Game {
       { endOfTurn(); }
   }
   public void placeCity( Position p, Player owner ) { cities.put(p, new CityImpl(owner, p)); }
-  //public void placeUnitManually ( String p, Player owner ) { units.put(p, new UnitImpl(owner, p)); }
+  public void placeUnitManually ( Position p, String unitType, Player owner ) {
+    units.put(p, new UnitImpl(unitType, owner));
+  }
   public void removeUnit( Position p ) { units.remove(p); }
 
   public int getRedAttacksWon() { return redAttacksWon; }
