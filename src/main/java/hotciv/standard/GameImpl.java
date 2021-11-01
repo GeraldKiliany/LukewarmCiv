@@ -164,6 +164,7 @@ public class GameImpl implements Game {
     else {
       currPlayer = Player.RED;
       age = agingStrategy.getNewAge(age);
+      numberOfRoundsPassed++;
     }
   }
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
