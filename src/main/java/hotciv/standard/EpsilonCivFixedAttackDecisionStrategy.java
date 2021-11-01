@@ -2,6 +2,9 @@ package hotciv.standard;
 import hotciv.framework.*;
 
 public class EpsilonCivFixedAttackDecisionStrategy implements AttackDecisionStrategy{
+
+
+
     public boolean determineWinner(Game game, Position from, Position to){
         int attackerSupport = Utility2.getFriendlySupport(game,from,game.getUnitAt(from).getOwner());
         int defenderSupport = Utility2.getFriendlySupport(game,to,game.getUnitAt(to).getOwner());

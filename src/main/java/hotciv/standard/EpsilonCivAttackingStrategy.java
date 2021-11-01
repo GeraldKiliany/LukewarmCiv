@@ -16,6 +16,8 @@ public class EpsilonCivAttackingStrategy implements AttackingStrategy {
 
     public boolean attack(Game game, Position from, Position to) {
 
+        //return attackWinnerStrategy.determineWinner(game, from, to);
+
         attackerSupport = Utility2.getFriendlySupport(game,from,game.getUnitAt(from).getOwner());
         defenderSupport = Utility2.getFriendlySupport(game,to,game.getUnitAt(to).getOwner());
         attackerTerrain = Utility2.getTerrainFactor(game,to);
