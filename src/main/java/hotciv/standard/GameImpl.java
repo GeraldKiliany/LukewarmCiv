@@ -107,7 +107,7 @@ public class GameImpl implements Game {
     this.cities = argStartCitiesStrategy.setStartCities();
     this.units = argStartUnitsStrategy.setStartUnits();
   }*/
-
+//TODO rename all strategies to use descriptive names & not civ version (maybe)
   //accessors
   public Tile getTileAt( Position p ) { return tiles.get(p); }
   public Unit getUnitAt( Position p ) { return units.get(p); }
