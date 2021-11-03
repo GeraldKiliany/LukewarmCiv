@@ -118,11 +118,13 @@ public class GameImpl implements Game {
   private int unitCost(String unitType) {
     if (unitType.equals(GameConstants.ARCHER)) {
       return 10;
-    }
-    else if (unitType.equals(GameConstants.LEGION)) {
+    } else if (unitType.equals(GameConstants.LEGION)) {
       return 15;
+    } else if (unitType.equals(GameConstants.SETTLER)) {
+      return 30;
+    } else {
+      return 60; //ufo
     }
-    else return 30;
   }
 
   //mutators
