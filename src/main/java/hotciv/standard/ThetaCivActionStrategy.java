@@ -1,9 +1,6 @@
 package hotciv.standard;
 
-import hotciv.framework.GameConstants;
-import hotciv.framework.Position;
-import hotciv.framework.Unit;
-import hotciv.framework.UnitActionStrategy;
+import hotciv.framework.*;
 
 public class ThetaCivActionStrategy implements UnitActionStrategy {
     public void performUnitActionAt(Position p, GameImpl game) {
@@ -33,6 +30,10 @@ public class ThetaCivActionStrategy implements UnitActionStrategy {
                     if (game.getCityAt(p) != null) {
                         game.decrementCityPopulation(p);
                         if (game.getCityAt(p).getSize() == 0) { game.removeCity(p); }
+                    } else {
+                        if (game.getTileAt(p).getTypeString().equals(GameConstants.FOREST)) {
+                            game.replaceTile(p, GameConstants.PLAINS);
+                        }
                     }
                 default:
                     break;

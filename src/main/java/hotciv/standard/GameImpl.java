@@ -57,17 +57,6 @@ public class GameImpl implements Game {
   private int numberOfRoundsPassed = 0;
 
   //default Constructor
-  /*public GameImpl(){
-    this.mapStrategy = new AlphaCivMapStrategy();
-    this.tiles = mapStrategy.setMap();
-    this.winnerStrategy = new AlphaCivWinnerStrategy();
-    this.agingStrategy = new AlphaCivAgingStrategy();
-    this.unitActionStrategy = new AlphaCivUnitActionStrategy();
-    this.cities = new AlphaCivStartCitiesStrategy().setStartCities();
-    this.units = new AlphaCivStartUnitsStrategy().setStartUnits();
-
-  }*/
-  //default Constructor
   public GameImpl(){
     this.factory = new AlphaCivFactory();
     this.mapStrategy = factory.createMapStrategy();
@@ -90,23 +79,6 @@ public class GameImpl implements Game {
     this.units = factory.createStartUnitsStrategy().setStartUnits();
     this.attackStrategy = factory.createAttackingStrategy();
   }
-  /*public GameImpl(
-          MapStrategy argMapStrategy,
-          WinnerStrategy argWinnerStrategy,
-          AgingStrategy argAgingStrategy,
-          UnitActionStrategy argUnitActionStrategy,
-          StartCitiesStrategy argStartCitiesStrategy,
-          StartUnitsStrategy argStartUnitsStrategy
-  )
-  {
-    this.mapStrategy = argMapStrategy;
-    this.tiles = mapStrategy.setMap();
-    this.winnerStrategy = argWinnerStrategy;
-    this.agingStrategy = argAgingStrategy;
-    this.unitActionStrategy = argUnitActionStrategy;
-    this.cities = argStartCitiesStrategy.setStartCities();
-    this.units = argStartUnitsStrategy.setStartUnits();
-  }*/
 //TODO rename all strategies to use descriptive names & not civ version (maybe)
   //accessors
   public Tile getTileAt( Position p ) { return tiles.get(p); }
@@ -230,6 +202,7 @@ public class GameImpl implements Game {
   }
   public void removeUnit( Position p ) { units.remove(p); }
   public void removeCity( Position p ) { cities.remove(p); }
+  public void replaceTile( Position p, String tileType ) { tiles.replace(p, new TileImpl(tileType)); }
 
   public void decrementCityPopulation( Position p ) {
     City city = getCityAt(p);
