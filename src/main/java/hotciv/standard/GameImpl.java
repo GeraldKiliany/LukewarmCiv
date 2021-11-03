@@ -229,6 +229,12 @@ public class GameImpl implements Game {
     units.put(p, new UnitImpl(unitType, owner));
   }
   public void removeUnit( Position p ) { units.remove(p); }
+  public void removeCity( Position p ) { cities.remove(p); }
+
+  public void decrementCityPopulation( Position p ) {
+    City city = getCityAt(p);
+    city.setSize( city.getSize() - 1 );
+  }
 
   public int getRedAttacksWon() { return redAttacksWon; }
   public int getBlueAttacksWon() { return blueAttacksWon; }

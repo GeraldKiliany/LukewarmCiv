@@ -46,6 +46,11 @@ public interface City {
    */
   public int getSize();
 
+  /** change the size of the population.
+   * @param newSize the new size of the population.
+   */
+  public void setSize( int newSize );
+
   /** return the treasury, i.e. the
    * number of 'money'/production in the
    * city's treasury which can be used to
