@@ -40,6 +40,10 @@ public  class UnitImpl implements Unit {
                 defensiveStrength = 3;
                 attackingStrength = 0;
                 break;
+            case GameConstants.UFO:
+                moveCount = 2;
+                defensiveStrength = 8;
+                attackingStrength = 1;
             default:
                 moveCount = 0;
                 defensiveStrength = 0;
