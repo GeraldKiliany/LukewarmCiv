@@ -110,99 +110,99 @@ public class TestSemiCiv {
     }
 
     @Test
-    public void SettlerAtFourThreeRemovesItselfFromWorld() {
-        Position fourThree = new Position(4, 3);
-        assertThat(game.getUnitAt(fourThree), is(notNullValue()));
-        assertThat(game.getUnitAt(fourThree).getTypeString(), is(GameConstants.SETTLER));
-        game.performUnitActionAt(fourThree);
-        assertThat(game.getUnitAt(fourThree), is(nullValue()));
+    public void SettlerAtFiveFiveRemovesItselfFromWorld() {
+        Position fiveFive = new Position(5, 5);
+        assertThat(game.getUnitAt(fiveFive), is(notNullValue()));
+        assertThat(game.getUnitAt(fiveFive).getTypeString(), is(GameConstants.SETTLER));
+        game.performUnitActionAt(fiveFive);
+        assertThat(game.getUnitAt(fiveFive), is(nullValue()));
     }
 
     @Test
     public void SettlerBuildsCityAtFourThree() {
-        Position fourThree = new Position(4, 3);
-        assertThat(game.getUnitAt(fourThree).getTypeString(), is(GameConstants.SETTLER));
-        assertThat(game.getCityAt(fourThree), is(nullValue()));
-        game.performUnitActionAt(fourThree);
-        assertThat(game.getCityAt(fourThree), is(notNullValue()));
+        Position fiveFive = new Position(5, 5);
+        assertThat(game.getUnitAt(fiveFive).getTypeString(), is(GameConstants.SETTLER));
+        assertThat(game.getCityAt(fiveFive), is(nullValue()));
+        game.performUnitActionAt(fiveFive);
+        assertThat(game.getCityAt(fiveFive), is(notNullValue()));
     }
 
     @Test
     public void NewCityAndSettlerHaveSameOwner() {
-        Position fourThree = new Position(4, 3);
-        Player settlerOwner = game.getUnitAt(fourThree).getOwner();
-        game.performUnitActionAt(fourThree);
-        assertThat(game.getCityAt(fourThree).getOwner(), is(settlerOwner));
+        Position fiveFive = new Position(5, 5);
+        Player settlerOwner = game.getUnitAt(fiveFive).getOwner();
+        game.performUnitActionAt(fiveFive);
+        assertThat(game.getCityAt(fiveFive).getOwner(), is(settlerOwner));
     }
 
     @Test
     public void NewCityHasPopulationSizeOne() {
-        Position fourThree = new Position(4, 3);
-        game.performUnitActionAt(fourThree);
-        assertThat(game.getCityAt(fourThree).getSize(), is(1));
+        Position fiveFive = new Position(5, 5);
+        game.performUnitActionAt(fiveFive);
+        assertThat(game.getCityAt(fiveFive).getSize(), is(1));
     }
 
     @Test
     public void ArcherFortifiesDefenseDoublesAndMovementZero() {
-        Position twoZero = new Position(2, 0);
-        assertThat(game.getUnitAt(twoZero).getTypeString(), is(GameConstants.ARCHER));
-        assertThat(game.getUnitAt(twoZero).getDefensiveStrength(), is(3));
-        assertThat(game.getUnitAt(twoZero).getMoveCount(), is(1));
-        game.performUnitActionAt(twoZero);
-        assertThat(game.getUnitAt(twoZero).getDefensiveStrength(), is(2 * 3));
-        assertThat(game.getUnitAt(twoZero).getMoveCount(), is(0));
+        Position threeEight = new Position(3, 8);
+        assertThat(game.getUnitAt(threeEight).getTypeString(), is(GameConstants.ARCHER));
+        assertThat(game.getUnitAt(threeEight).getDefensiveStrength(), is(3));
+        assertThat(game.getUnitAt(threeEight).getMoveCount(), is(1));
+        game.performUnitActionAt(threeEight);
+        assertThat(game.getUnitAt(threeEight).getDefensiveStrength(), is(2 * 3));
+        assertThat(game.getUnitAt(threeEight).getMoveCount(), is(0));
     }
 
     @Test
     public void ArcherDeFortifiesGetsOriginalDefenseAndMovement() {
-        Position twoZero = new Position(2, 0);
-        assertThat(game.getUnitAt(twoZero).getTypeString(), is(GameConstants.ARCHER));
-        assertThat(game.getUnitAt(twoZero).getDefensiveStrength(), is(3));
-        assertThat(game.getUnitAt(twoZero).getMoveCount(), is(1));
+        Position threeEight = new Position(3, 8);
+        assertThat(game.getUnitAt(threeEight).getTypeString(), is(GameConstants.ARCHER));
+        assertThat(game.getUnitAt(threeEight).getDefensiveStrength(), is(3));
+        assertThat(game.getUnitAt(threeEight).getMoveCount(), is(1));
 
-        game.performUnitActionAt(twoZero);
-        assertThat(game.getUnitAt(twoZero).getDefensiveStrength(), is(2 * 3));
-        assertThat(game.getUnitAt(twoZero).getMoveCount(), is(0));
+        game.performUnitActionAt(threeEight);
+        assertThat(game.getUnitAt(threeEight).getDefensiveStrength(), is(2 * 3));
+        assertThat(game.getUnitAt(threeEight).getMoveCount(), is(0));
 
-        game.performUnitActionAt(twoZero);
-        assertThat(game.getUnitAt(twoZero).getDefensiveStrength(), is(2 * 3 / 2));
-        assertThat(game.getUnitAt(twoZero).getMoveCount(), is(1));
+        game.performUnitActionAt(threeEight);
+        assertThat(game.getUnitAt(threeEight).getDefensiveStrength(), is(2 * 3 / 2));
+        assertThat(game.getUnitAt(threeEight).getMoveCount(), is(1));
     }
 
     @Test
     public void FortifiedArcherCannotMove() {
-        Position twoZero = new Position(2, 0);
-        Position threeZero = new Position(3, 0);
+        Position threeEight = new Position(3, 8);
+        Position fourEight = new Position(4, 8);
 
-        assertThat(game.getUnitAt(twoZero).getTypeString(), is(GameConstants.ARCHER));
-        assertThat(game.getUnitAt(twoZero).getMoveCount(), is(1));
+        assertThat(game.getUnitAt(threeEight).getTypeString(), is(GameConstants.ARCHER));
+        assertThat(game.getUnitAt(threeEight).getMoveCount(), is(1));
 
-        game.performUnitActionAt(twoZero);
-        assertThat(game.getUnitAt(twoZero).getMoveCount(), is(0));
+        game.performUnitActionAt(threeEight);
+        assertThat(game.getUnitAt(threeEight).getMoveCount(), is(0));
 
-        boolean didMove = game.moveUnit(twoZero, threeZero);
+        boolean didMove = game.moveUnit(threeEight, fourEight);
         assertThat(didMove, is(Boolean.FALSE));
-        assertThat(game.getUnitAt(twoZero), is(notNullValue())); //from position still has archer
-        assertThat(game.getUnitAt(threeZero), is(nullValue()));  //to position is empty
+        assertThat(game.getUnitAt(threeEight), is(notNullValue())); //from position still has archer
+        assertThat(game.getUnitAt(fourEight), is(nullValue()));  //to position is empty
     }
 
     @Test
     public void DeFortifiedArcherCanMoveAgain() {
-        Position twoZero = new Position(2, 0);
-        Position threeZero = new Position(3, 0);
+        Position threeEight = new Position(3, 8);
+        Position fourEight = new Position(4, 8);
 
-        assertThat(game.getUnitAt(twoZero).getTypeString(), is(GameConstants.ARCHER));
-        assertThat(game.getUnitAt(twoZero).getMoveCount(), is(1));
+        assertThat(game.getUnitAt(threeEight).getTypeString(), is(GameConstants.ARCHER));
+        assertThat(game.getUnitAt(threeEight).getMoveCount(), is(1));
 
-        game.performUnitActionAt(twoZero);
-        assertThat(game.getUnitAt(twoZero).getMoveCount(), is(0));
-        game.performUnitActionAt(twoZero);
-        assertThat(game.getUnitAt(twoZero).getMoveCount(), is(1));
+        game.performUnitActionAt(threeEight);
+        assertThat(game.getUnitAt(threeEight).getMoveCount(), is(0));
+        game.performUnitActionAt(threeEight);
+        assertThat(game.getUnitAt(threeEight).getMoveCount(), is(1));
 
-        boolean didMove = game.moveUnit(twoZero, threeZero);
+        boolean didMove = game.moveUnit(threeEight, fourEight);
         assertThat(didMove, is(Boolean.TRUE));
-        assertThat(game.getUnitAt(twoZero), is(nullValue()));      //from position is empty
-        assertThat(game.getUnitAt(threeZero), is(notNullValue())); //to position now has archer
+        assertThat(game.getUnitAt(threeEight), is(nullValue()));      //from position is empty
+        assertThat(game.getUnitAt(fourEight), is(notNullValue())); //to position now has archer
     }
 
     //Test Map configuration is same as DeltaCiv
@@ -252,16 +252,16 @@ public class TestSemiCiv {
         assertThat(stubGame.getWinner(), is(nullValue()));
 
         //red wins second attack
-        stubGame.placeUnitManually(new Position(8, 6), GameConstants.SETTLER, Player.BLUE);
-        stubGame.moveUnit(new Position(8, 7), new Position(8, 6));
-        assertThat(stubGame.getUnitAt(new Position(8, 6)).getOwner(), is(Player.RED));
+        stubGame.placeUnitManually(new Position(8, 8), GameConstants.SETTLER, Player.BLUE);
+        stubGame.moveUnit(new Position(8, 7), new Position(8, 8));
+        assertThat(stubGame.getUnitAt(new Position(8, 8)).getOwner(), is(Player.RED));
 
         assertThat(stubGame.getWinner(), is(nullValue()));
 
         //red wins third attack
-        stubGame.placeUnitManually(new Position(8, 5), GameConstants.SETTLER, Player.BLUE);
-        stubGame.moveUnit(new Position(8, 6), new Position(8, 5));
-        assertThat(stubGame.getUnitAt(new Position(8, 5)).getOwner(), is(Player.RED));
+        stubGame.placeUnitManually(new Position(8, 7), GameConstants.SETTLER, Player.BLUE);
+        stubGame.moveUnit(new Position(8, 8), new Position(8, 7));
+        assertThat(stubGame.getUnitAt(new Position(8, 7)).getOwner(), is(Player.RED));
 
         //red is winner
         assertThat(stubGame.getWinner(), is(Player.RED));
@@ -271,17 +271,17 @@ public class TestSemiCiv {
     //Test Attacking Algorithm is like EpsilonCiv
     @Test
     public void legionAttackingStrengthIs4() {
-        Position threeTwo = new Position(3, 2);
-        Position fourThree = new Position(4, 3);
-        Position threeThree = new Position(3, 3);
+        Position fourFour = new Position(4, 4);
+        Position fiveFive = new Position(5, 5);
+        Position fiveFour = new Position(5, 4);
 
-        assertThat(game.getUnitAt(threeTwo).getTypeString(), is(GameConstants.LEGION));
-        assertThat(game.getUnitAt(fourThree).getTypeString(), is(GameConstants.SETTLER));
+        assertThat(game.getUnitAt(fourFour).getTypeString(), is(GameConstants.LEGION));
+        assertThat(game.getUnitAt(fiveFive).getTypeString(), is(GameConstants.SETTLER));
 
-        game.moveUnit(threeTwo, threeThree);
-        assertThat(game.getUnitAt(threeThree).getTypeString(), is(GameConstants.LEGION));
+        game.moveUnit(fourFour, fiveFour);
+        assertThat(game.getUnitAt(fiveFour).getTypeString(), is(GameConstants.LEGION));
         TestEpsilonCivAttackingStub testStrategy = new TestEpsilonCivAttackingStub();
-        testStrategy.setCurrentAttack(game, threeThree, fourThree);
+        testStrategy.setCurrentAttack(game, fiveFour, fiveFive);
 
         assertThat(testStrategy.getAttackerTerrain(), is(1));
         assertThat(testStrategy.getAttackerSupport(), is(0));
@@ -292,37 +292,37 @@ public class TestSemiCiv {
     }
 
     @Test
-    public void settlerDefendingStrengthIs3() {
-        Position threeTwo = new Position(3, 2);
-        Position fourThree = new Position(4, 3);
-        Position threeThree = new Position(3, 3);
+    public void settlerDefendingStrengthIs6() {
+        Position fourFour = new Position(4, 4);
+        Position fiveFive = new Position(5, 5);
+        Position fiveFour = new Position(5, 4);
 
-        assertThat(game.getUnitAt(threeTwo).getTypeString(), is(GameConstants.LEGION));
-        assertThat(game.getUnitAt(fourThree).getTypeString(), is(GameConstants.SETTLER));
+        assertThat(game.getUnitAt(fourFour).getTypeString(), is(GameConstants.LEGION));
+        assertThat(game.getUnitAt(fiveFive).getTypeString(), is(GameConstants.SETTLER));
 
-        game.moveUnit(threeTwo, threeThree);
-        assertThat(game.getUnitAt(threeThree).getTypeString(), is(GameConstants.LEGION));
+        game.moveUnit(fourFour, fiveFour);
+        assertThat(game.getUnitAt(fiveFour).getTypeString(), is(GameConstants.LEGION));
         TestEpsilonCivAttackingStub testStrategy = new TestEpsilonCivAttackingStub();
-        testStrategy.setCurrentAttack(game, threeThree, fourThree);
-        assertThat(testStrategy.getDefenderTerrain(), is(1));
+        testStrategy.setCurrentAttack(game, fiveFour, fiveFive);
+        assertThat(testStrategy.getDefenderTerrain(), is(2));
         assertThat(testStrategy.getDefenderSupport(), is(0));
-        assertThat(testStrategy.getDefenderStrength(), is((3 + 0) * 1));
+        assertThat(testStrategy.getDefenderStrength(), is((3 + 0) * 2));
     }
 
 
     @Test
-    public void legionAttackingSettlerWinsWith1Rolls() {
+    public void legionAttackingSettlerLosesWith1RollsAndTerrainFactor() {
         Game stubGame = new GameImpl(new SemiCivFactoryStub());
-        Position threeTwo = new Position(3, 2);
-        Position fourThree = new Position(4, 3);
-        Position threeThree = new Position(3, 3);
-        assertThat(stubGame.getUnitAt(threeTwo).getTypeString(), is(GameConstants.LEGION));
-        assertThat(stubGame.getUnitAt(fourThree).getTypeString(), is(GameConstants.SETTLER));
-        stubGame.moveUnit(threeTwo, threeThree);
-        assertThat(stubGame.getUnitAt(threeThree).getTypeString(), is(GameConstants.LEGION));
-        stubGame.moveUnit(threeThree, fourThree);
-        assertThat(stubGame.getUnitAt(fourThree).getTypeString(), is(GameConstants.LEGION));
-        assertThat(stubGame.getUnitAt(threeThree), is(nullValue()));
+        Position fourFour = new Position(4, 4);
+        Position fiveFive = new Position(5, 5);
+        Position fiveFour = new Position(5, 4);
+        assertThat(stubGame.getUnitAt(fourFour).getTypeString(), is(GameConstants.LEGION));
+        assertThat(stubGame.getUnitAt(fiveFive).getTypeString(), is(GameConstants.SETTLER));
+        stubGame.moveUnit(fourFour, fiveFour);
+        assertThat(stubGame.getUnitAt(fiveFour).getTypeString(), is(GameConstants.LEGION));
+        stubGame.moveUnit(fiveFour, fiveFive);
+        assertThat(stubGame.getUnitAt(fiveFive).getTypeString(), is(GameConstants.SETTLER));
+        assertThat(stubGame.getUnitAt(fiveFour), is(nullValue()));
 
 
     }
@@ -400,7 +400,7 @@ class SemiCivFactoryStub implements GameFactory  {
     public AgingStrategy createAgingStrategy() { return new BetaCivAgingStrategy(); }
     public UnitActionStrategy createUnitActionStrategy() { return new GammaCivUnitActionStrategy(); }
     public StartCitiesStrategy createStartCitiesStrategy() { return new DeltaCivStartCitiesStrategy(); }
-    public StartUnitsStrategy createStartUnitsStrategy() { return new AlphaCivStartUnitsStrategy(); }
+    public StartUnitsStrategy createStartUnitsStrategy() { return new DeltaCivStartUnitsStrategy(); }
     public AttackingStrategy createAttackingStrategy(){ return new TestSemiCivAttackingStub(); }
     public String factoryType() { return "SemiCivFactory"; }
 }

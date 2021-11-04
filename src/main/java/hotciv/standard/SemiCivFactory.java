@@ -25,7 +25,7 @@ public class SemiCivFactory implements GameFactory {
     }
 
     public StartUnitsStrategy createStartUnitsStrategy() {
-        return new AlphaCivStartUnitsStrategy();
+        return new DeltaCivStartUnitsStrategy();
     }
 
     public AttackingStrategy createAttackingStrategy() {

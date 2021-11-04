@@ -102,10 +102,23 @@ public class GameImpl implements Game {
   //mutators
   public boolean moveUnit( Position from, Position to ) {
 //TODO: Refactor to use variable for units
-    if(getUnitAt(from) == null) { return false; }
+    Unit fromUnit = getUnitAt(from);
+    Unit toUnit = getUnitAt(to);
+    Tile toTile = getTileAt(to);
+    //Check that unit at from can move to specified tile
+    if(fromUnit == null) { return false; }
 
-    if(getUnitAt(from).getMoveCount() == 0) { return false; }
+    if(fromUnit.getMoveCount() == 0) { return false; }
+    boolean toOceanTile = toTile.getTypeString().equals(GameConstants.OCEANS);
+    boolean toMountainTile = toTile.getTypeString().equals(GameConstants.MOUNTAINS);
+    boolean isUFO = fromUnit.getTypeString().equals(GameConstants.UFO);
 
+    if(!isUFO){
+      if(toOceanTile || toMountainTile){
+        return false;
+      }
+    }
+    //Check if to location has a unit and attack if is not owned by player
     if(getUnitAt(to) == null) {
       if (getCityAt(to) != null) {
         getCityAt(to).setOwner(getUnitAt(from).getOwner());
@@ -113,7 +126,7 @@ public class GameImpl implements Game {
       units.put(to,units.get(from));
       units.remove(from);
     }
-    else if(getUnitAt(to).getOwner() != getUnitAt(from).getOwner()){
+    else if(toUnit.getOwner() != fromUnit.getOwner()){
       boolean successfulAttack = attackStrategy.attack(this, from, to);
       if(successfulAttack) {
         if (getCityAt(to) != null) {
@@ -137,6 +150,9 @@ public class GameImpl implements Game {
         }
 
         units.put(to, units.get(from));
+        units.remove(from);
+      }
+      else{
         units.remove(from);
       }
     }
