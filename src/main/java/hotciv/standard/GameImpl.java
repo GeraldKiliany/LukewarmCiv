@@ -101,7 +101,7 @@ public class GameImpl implements Game {
 
   //mutators
   public boolean moveUnit( Position from, Position to ) {
-//TODO: Refactor to use variable for units
+
     Unit fromUnit = getUnitAt(from);
     Unit toUnit = getUnitAt(to);
     Tile toTile = getTileAt(to);
@@ -123,12 +123,20 @@ public class GameImpl implements Game {
       if (getCityAt(to) != null) {
         getCityAt(to).setOwner(getUnitAt(from).getOwner());
       }
+      fromUnit.setMoveCount(fromUnit.getMoveCount()-1);
       units.put(to,units.get(from));
       units.remove(from);
+
+
     }
     else if(toUnit.getOwner() != fromUnit.getOwner()){
       boolean successfulAttack = attackStrategy.attack(this, from, to);
-      if(successfulAttack) {
+      if (!successfulAttack) {
+        units.put(from, units.get(to));
+        units.put(to, units.get(from));
+        units.remove(from);
+        return false;
+      } else {
         if (getCityAt(to) != null) {
           getCityAt(to).setOwner(getUnitAt(from).getOwner());
         }
@@ -152,9 +160,6 @@ public class GameImpl implements Game {
         units.put(to, units.get(from));
         units.remove(from);
       }
-      else{
-        units.remove(from);
-      }
     }
 
     return true;
@@ -167,7 +172,15 @@ public class GameImpl implements Game {
         currCity.incrementTreasury(6);
       }
     }
-
+    for(Position p : units.keySet()) {
+      Unit currUnit = units.get(p);
+      if(currUnit.getTypeString().equals(GameConstants.UFO)){
+        currUnit.setMoveCount(2);
+      }
+      else{
+        currUnit.setMoveCount(1);
+      }
+    }
     if (currPlayer == Player.RED)
       currPlayer = Player.BLUE;
     else {
