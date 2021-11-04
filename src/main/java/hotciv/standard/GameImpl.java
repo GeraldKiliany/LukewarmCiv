@@ -135,16 +135,16 @@ public class GameImpl implements Game {
 
         if (factory.factoryType().equals("ZetaCivFactory")) {
           if (numberOfRoundsPassed > 20) {
-            if (getUnitAt(from).getOwner() == Player.RED) {
+            if (fromUnit.getOwner() == Player.RED) {
               redAttacksWon++;
-            } else if (getUnitAt(from).getOwner() == Player.BLUE) {
+            } else if (fromUnit.getOwner() == Player.BLUE) {
               blueAttacksWon++;
             }
           }
         } else {
-          if (getUnitAt(from).getOwner() == Player.RED) {
+          if (fromUnit.getOwner() == Player.RED) {
             redAttacksWon++;
-          } else if (getUnitAt(from).getOwner() == Player.BLUE) {
+          } else if (fromUnit.getOwner() == Player.BLUE) {
             blueAttacksWon++;
           }
         }
