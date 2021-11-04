@@ -2,7 +2,7 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 
-public class ThetaCivActionStrategy implements UnitActionStrategy {
+public class ThetaCivUnitActionStrategy implements UnitActionStrategy {
     public void performUnitActionAt(Position p, GameImpl game) {
         Unit unit = game.getUnitAt(p);
 

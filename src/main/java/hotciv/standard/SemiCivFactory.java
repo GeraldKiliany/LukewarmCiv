@@ -3,7 +3,6 @@ package hotciv.standard;
 import hotciv.framework.*;
 
 public class SemiCivFactory implements GameFactory {
-
     public MapStrategy createMapStrategy() {
         return new DeltaCivMapStrategy();
     }
