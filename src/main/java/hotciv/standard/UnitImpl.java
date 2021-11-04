@@ -44,6 +44,7 @@ public  class UnitImpl implements Unit {
                 moveCount = 2;
                 defensiveStrength = 8;
                 attackingStrength = 1;
+                break;
             default:
                 moveCount = 0;
                 defensiveStrength = 0;

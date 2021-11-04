@@ -107,7 +107,7 @@ public class GameImpl implements Game {
     Tile toTile = getTileAt(to);
     //Check that unit at from can move to specified tile
     if(fromUnit == null) { return false; }
-
+    System.out.println(fromUnit.getMoveCount());
     if(fromUnit.getMoveCount() == 0) { return false; }
     boolean toOceanTile = toTile.getTypeString().equals(GameConstants.OCEANS);
     boolean toMountainTile = toTile.getTypeString().equals(GameConstants.MOUNTAINS);
