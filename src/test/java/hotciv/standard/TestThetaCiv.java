@@ -35,6 +35,15 @@ public class TestThetaCiv {
         assertThat(game.getUnitAt(new Position(1,3)).getTypeString(), is (GameConstants.UFO));
     }
 
+    @Test
+    public void UFOCanMoveOverOceans(){
+        game.changeProductionInCityAt(new Position(1,1), GameConstants.UFO);
+        assertThat(game.getTileAt(new Position(1,0)).getTypeString(), is (GameConstants.OCEANS));
+        game.advanceTurns(23);
+        assertTrue(game.moveUnit(new Position(1,1), new Position(1,0)));
+        assertThat(game.getUnitAt(new Position(1,0)).getTypeString(), is (GameConstants.UFO));
+    }
+
 
 
 }
