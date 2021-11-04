@@ -151,6 +151,7 @@ public class TestBetaCiv {
         assertThat(game.getCityAt(new Position(4,1)).getOwner(), is(Player.BLUE));
 
         game.moveUnit(new Position(4,3), new Position(4,2));
+        game.advanceTurns(2);
         game.moveUnit(new Position(4,2), new Position(4,1));
 
         //red unit moves into blue city, blue city becomes red city
@@ -165,6 +166,7 @@ public class TestBetaCiv {
         assertThat(game.getUnitAt(new Position(4,1)).getOwner(), is(Player.BLUE));
 
         game.moveUnit(new Position(4,3), new Position(4,2));
+        game.advanceTurns(2);
         game.moveUnit(new Position(4,2), new Position(4,1));
 
         //red unit defeats blue unit, blue city becomes red city
@@ -180,6 +182,7 @@ public class TestBetaCiv {
         assertThat(game.getWinner(), is(nullValue()));
 
         game.moveUnit(new Position(4,3), new Position(4,2));
+        game.advanceTurns(2);
         game.moveUnit(new Position(4,2), new Position(4,1));
 
         assertThat(game.getWinner(), is(Player.RED));

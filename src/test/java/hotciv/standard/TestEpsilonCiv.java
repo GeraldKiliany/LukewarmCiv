@@ -96,6 +96,7 @@ public class TestEpsilonCiv {
         assertThat(game.getUnitAt(threeTwo).getTypeString(), is(GameConstants.LEGION));
         assertThat(game.getUnitAt(fourThree).getTypeString(), is(GameConstants.SETTLER));
         game.moveUnit(threeTwo, threeThree);
+        game.advanceTurns(2);
         assertThat(game.getUnitAt(threeThree).getTypeString(), is(GameConstants.LEGION));
         game.moveUnit(threeThree, fourThree);
         assertThat(game.getUnitAt(fourThree).getTypeString(), is(GameConstants.LEGION));

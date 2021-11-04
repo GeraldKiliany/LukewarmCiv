@@ -311,21 +311,40 @@ public class TestSemiCiv {
 
 
     @Test
-    public void legionAttackingSettlerLosesWith1RollsAndTerrainFactor() {
+    public void legionAttackingSettlerWinsWith1Rolls() {
         Game stubGame = new GameImpl(new SemiCivFactoryStub());
         Position fourFour = new Position(4, 4);
         Position fiveFive = new Position(5, 5);
         Position fiveFour = new Position(5, 4);
         assertThat(stubGame.getUnitAt(fourFour).getTypeString(), is(GameConstants.LEGION));
         assertThat(stubGame.getUnitAt(fiveFive).getTypeString(), is(GameConstants.SETTLER));
+        stubGame.moveUnit(fiveFive, fiveFour);
+        //game.advanceTurns(2);
+        assertThat(stubGame.getUnitAt(fiveFour).getTypeString(), is(GameConstants.SETTLER));
         stubGame.moveUnit(fourFour, fiveFour);
         assertThat(stubGame.getUnitAt(fiveFour).getTypeString(), is(GameConstants.LEGION));
+        assertThat(stubGame.getUnitAt(fourFour), is(nullValue()));
+
+
+    }
+    @Test
+    public void legionAttackingSettlerLosesWithSettlerTerrainFactor() {
+        Game stubGame = new GameImpl(new SemiCivFactoryStub());
+        Position fourFour = new Position(4, 4);
+        Position fiveFive = new Position(5, 5); //location (5,5) is a forest, so settler has terrain factor of 2
+        Position fiveFour = new Position(5, 4);
+        assertThat(stubGame.getUnitAt(fourFour).getTypeString(), is(GameConstants.LEGION));
+        stubGame.placeUnitManually(new Position(5, 4), GameConstants.LEGION, Player.BLUE);
+        assertThat(stubGame.getUnitAt(fiveFour).getTypeString(), is(GameConstants.LEGION));
+
         stubGame.moveUnit(fiveFour, fiveFive);
+
         assertThat(stubGame.getUnitAt(fiveFive).getTypeString(), is(GameConstants.SETTLER));
         assertThat(stubGame.getUnitAt(fiveFour), is(nullValue()));
 
 
     }
+
     //City Workforce and Population Increase are same as AlphaCiv which do nothing
     @Test
     public void citiesAreAlwaysPopulationOne(){
