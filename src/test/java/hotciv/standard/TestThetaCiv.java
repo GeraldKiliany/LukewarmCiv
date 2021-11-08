@@ -121,14 +121,14 @@ public class TestThetaCiv {
     }
 
     @Test
-    public void UFOHasDefenseStrengthof8(){
+    public void UFOHasDefenseStrengthOf8(){
         game.changeProductionInCityAt(new Position(1,1), GameConstants.UFO);
         game.advanceTurns(23);
         assertThat(game.getUnitAt(new Position(1,1)).getDefensiveStrength(), is (8));
     }
 
     @Test
-    public void UFOHasAttackingStrengthof1(){
+    public void UFOHasAttackingStrengthOf1(){
         game.changeProductionInCityAt(new Position(1,1), GameConstants.UFO);
         game.advanceTurns(23);
         assertThat(game.getUnitAt(new Position(1,1)).getAttackingStrength(), is (1));
