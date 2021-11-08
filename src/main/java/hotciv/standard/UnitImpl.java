@@ -94,6 +94,4 @@ public  class UnitImpl implements Unit {
     public int getDefensiveStrength() { return defensiveStrength; }
     public void setDefensiveStrength(int newDefensiveStrength) { defensiveStrength = newDefensiveStrength; }
     public int getAttackingStrength() { return attackingStrength; }
-
-
 }

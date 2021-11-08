@@ -120,23 +120,30 @@ public class GameImpl implements Game {
     }
     //Check if to location has a unit and attack if is not owned by player
     if(getUnitAt(to) == null) {
-      if (getCityAt(to) != null) {
+      if (fromUnit.getTypeString().equals(GameConstants.UFO)){
+      }
+      else if (tiles.get(to).getTypeString().equals(GameConstants.FOREST)){
+        tiles.put(to, new TileImpl(GameConstants.PLAINS));
+      }
+      else if (getCityAt(to) != null) {
         getCityAt(to).setOwner(getUnitAt(from).getOwner());
       }
       fromUnit.setMoveCount(fromUnit.getMoveCount()-1);
       units.put(to,units.get(from));
       units.remove(from);
-
-
     }
     else if(toUnit.getOwner() != fromUnit.getOwner()){
       boolean successfulAttack = attackStrategy.attack(this, from, to);
+      if (fromUnit.getTypeString().equals(GameConstants.UFO)) {
+
+      }
       if (!successfulAttack) {
         units.put(from, units.get(to));
         units.put(to, units.get(from));
         units.remove(from);
         return false;
-      } else {
+      }
+      else {
         if (getCityAt(to) != null) {
           getCityAt(to).setOwner(getUnitAt(from).getOwner());
         }

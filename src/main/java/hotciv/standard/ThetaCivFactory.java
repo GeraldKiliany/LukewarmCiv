@@ -3,7 +3,7 @@ package hotciv.standard;
 import hotciv.framework.*;
 
 public class ThetaCivFactory implements GameFactory{
-    public MapStrategy createMapStrategy() { return new AlphaCivMapStrategy(); }
+    public MapStrategy createMapStrategy() { return new DeltaCivMapStrategy(); }
     public WinnerStrategy createWinnerStrategy() { return new AlphaCivWinnerStrategy(); }
     public AgingStrategy createAgingStrategy() { return new AlphaCivAgingStrategy(); }
     public UnitActionStrategy createUnitActionStrategy() { return new ThetaCivUnitActionStrategy(); }
