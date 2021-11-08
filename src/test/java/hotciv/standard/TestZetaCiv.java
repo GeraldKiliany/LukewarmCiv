@@ -53,6 +53,7 @@ public class TestZetaCiv {
         assertThat(game.getWinner(), is(nullValue()));
 
         game.moveUnit(new Position(4,3), new Position(4,2));
+        game.advanceTurns(2);
         game.moveUnit(new Position(4,2), new Position(4,1));
 
         assertThat(game.getUnitAt(new Position(4,1)).getOwner(), is(Player.RED));

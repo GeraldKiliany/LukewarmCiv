@@ -40,6 +40,11 @@ public  class UnitImpl implements Unit {
                 defensiveStrength = 3;
                 attackingStrength = 0;
                 break;
+            case GameConstants.UFO:
+                moveCount = 2;
+                defensiveStrength = 8;
+                attackingStrength = 1;
+                break;
             default:
                 moveCount = 0;
                 defensiveStrength = 0;
@@ -71,6 +76,11 @@ public  class UnitImpl implements Unit {
                 defensiveStrength = 3;
                 attackingStrength = 0;
                 break;
+            case GameConstants.UFO:
+                moveCount = 2;
+                defensiveStrength = 8;
+                attackingStrength = 1;
+                break;
             default:
                 moveCount = 0;
                 defensiveStrength = 0;
@@ -84,6 +94,4 @@ public  class UnitImpl implements Unit {
     public int getDefensiveStrength() { return defensiveStrength; }
     public void setDefensiveStrength(int newDefensiveStrength) { defensiveStrength = newDefensiveStrength; }
     public int getAttackingStrength() { return attackingStrength; }
-
-
 }

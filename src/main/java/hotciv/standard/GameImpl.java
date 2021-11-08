@@ -58,17 +58,6 @@ public class GameImpl implements Game {
   private int numberOfRoundsPassed = 0;
 
   //default Constructor
-  /*public GameImpl(){
-    this.mapStrategy = new AlphaCivMapStrategy();
-    this.tiles = mapStrategy.setMap();
-    this.winnerStrategy = new AlphaCivWinnerStrategy();
-    this.agingStrategy = new AlphaCivAgingStrategy();
-    this.unitActionStrategy = new AlphaCivUnitActionStrategy();
-    this.cities = new AlphaCivStartCitiesStrategy().setStartCities();
-    this.units = new AlphaCivStartUnitsStrategy().setStartUnits();
-
-  }*/
-  //default Constructor
   public GameImpl(){
     this.factory = new AlphaCivFactory();
     this.mapStrategy = factory.createMapStrategy();
@@ -91,24 +80,7 @@ public class GameImpl implements Game {
     this.units = factory.createStartUnitsStrategy().setStartUnits();
     this.attackStrategy = factory.createAttackingStrategy();
   }
-  /*public GameImpl(
-          MapStrategy argMapStrategy,
-          WinnerStrategy argWinnerStrategy,
-          AgingStrategy argAgingStrategy,
-          UnitActionStrategy argUnitActionStrategy,
-          StartCitiesStrategy argStartCitiesStrategy,
-          StartUnitsStrategy argStartUnitsStrategy
-  )
-  {
-    this.mapStrategy = argMapStrategy;
-    this.tiles = mapStrategy.setMap();
-    this.winnerStrategy = argWinnerStrategy;
-    this.agingStrategy = argAgingStrategy;
-    this.unitActionStrategy = argUnitActionStrategy;
-    this.cities = argStartCitiesStrategy.setStartCities();
-    this.units = argStartUnitsStrategy.setStartUnits();
-  }*/
-
+//TODO rename all strategies to use descriptive names & not civ version (maybe)
   //accessors
   public Tile getTileAt( Position p ) { return tiles.get(p); }
   public Unit getUnitAt( Position p ) { return units.get(p); }
@@ -119,46 +91,75 @@ public class GameImpl implements Game {
   private int unitCost(String unitType) {
     if (unitType.equals(GameConstants.ARCHER)) {
       return 10;
-    }
-    else if (unitType.equals(GameConstants.LEGION)) {
+    } else if (unitType.equals(GameConstants.LEGION)) {
       return 15;
+    } else if (unitType.equals(GameConstants.SETTLER)) {
+      return 30;
+    } else {
+      return 60; //ufo
     }
-    else return 30;
   }
 
   //mutators
   public boolean moveUnit( Position from, Position to ) {
-//TODO: Refactor to use variable for units
-    if(getUnitAt(from) == null) { return false; }
 
-    if(getUnitAt(from).getMoveCount() == 0) { return false; }
+    Unit fromUnit = getUnitAt(from);
+    Unit toUnit = getUnitAt(to);
+    Tile toTile = getTileAt(to);
+    //Check that unit at from can move to specified tile
+    if(fromUnit == null) { return false; }
+    if(fromUnit.getMoveCount() == 0) { return false; }
+    boolean toOceanTile = toTile.getTypeString().equals(GameConstants.OCEANS);
+    boolean toMountainTile = toTile.getTypeString().equals(GameConstants.MOUNTAINS);
+    boolean isUFO = fromUnit.getTypeString().equals(GameConstants.UFO);
 
+    if(!isUFO){
+      if(toOceanTile || toMountainTile){
+        return false;
+      }
+    }
+    //Check if to location has a unit and attack if is not owned by player
     if(getUnitAt(to) == null) {
-      if (getCityAt(to) != null) {
+      if (fromUnit.getTypeString().equals(GameConstants.UFO)){
+      }
+      else if (tiles.get(to).getTypeString().equals(GameConstants.FOREST)){
+        tiles.put(to, new TileImpl(GameConstants.PLAINS));
+      }
+      else if (getCityAt(to) != null) {
         getCityAt(to).setOwner(getUnitAt(from).getOwner());
       }
+      fromUnit.setMoveCount(fromUnit.getMoveCount()-1);
       units.put(to,units.get(from));
       units.remove(from);
     }
-    else if(getUnitAt(to).getOwner() != getUnitAt(from).getOwner()){
+    else if(toUnit.getOwner() != fromUnit.getOwner()){
       boolean successfulAttack = attackStrategy.attack(this, from, to);
-      if(successfulAttack) {
+      if (fromUnit.getTypeString().equals(GameConstants.UFO)) {
+
+      }
+      if (!successfulAttack) {
+        units.put(from, units.get(to));
+        units.put(to, units.get(from));
+        units.remove(from);
+        return false;
+      }
+      else {
         if (getCityAt(to) != null) {
           getCityAt(to).setOwner(getUnitAt(from).getOwner());
         }
 
         if (factory.factoryType().equals("ZetaCivFactory")) {
           if (numberOfRoundsPassed > 20) {
-            if (getUnitAt(from).getOwner() == Player.RED) {
+            if (fromUnit.getOwner() == Player.RED) {
               redAttacksWon++;
-            } else if (getUnitAt(from).getOwner() == Player.BLUE) {
+            } else if (fromUnit.getOwner() == Player.BLUE) {
               blueAttacksWon++;
             }
           }
         } else {
-          if (getUnitAt(from).getOwner() == Player.RED) {
+          if (fromUnit.getOwner() == Player.RED) {
             redAttacksWon++;
-          } else if (getUnitAt(from).getOwner() == Player.BLUE) {
+          } else if (fromUnit.getOwner() == Player.BLUE) {
             blueAttacksWon++;
           }
         }
@@ -178,7 +179,15 @@ public class GameImpl implements Game {
         currCity.incrementTreasury(6);
       }
     }
-
+    for(Position p : units.keySet()) {
+      Unit currUnit = units.get(p);
+      if(currUnit.getTypeString().equals(GameConstants.UFO)){
+        currUnit.setMoveCount(2);
+      }
+      else{
+        currUnit.setMoveCount(1);
+      }
+    }
     if (currPlayer == Player.RED)
       currPlayer = Player.BLUE;
     else {
@@ -228,6 +237,13 @@ public class GameImpl implements Game {
     units.put(p, new UnitImpl(unitType, owner));
   }
   public void removeUnit( Position p ) { units.remove(p); }
+  public void removeCity( Position p ) { cities.remove(p); }
+  public void replaceTile( Position p, String tileType ) { tiles.replace(p, new TileImpl(tileType)); }
+
+  public void decrementCityPopulation( Position p ) {
+    City city = getCityAt(p);
+    city.setSize( city.getSize() - 1 );
+  }
 
   public int getRedAttacksWon() { return redAttacksWon; }
   public int getBlueAttacksWon() { return blueAttacksWon; }
