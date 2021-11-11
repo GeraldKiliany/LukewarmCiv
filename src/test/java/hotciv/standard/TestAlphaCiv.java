@@ -40,17 +40,6 @@ public class TestAlphaCiv {
   private Game game;
 
   /** Fixture for AlphaCiv testing. */
-  /*@Before
-  public void setUp() {
-    MapStrategy mapStrategy = new AlphaCivMapStrategy();
-    AgingStrategy agingStrategy = new AlphaCivAgingStrategy();
-    WinnerStrategy winnerStrategy = new AlphaCivWinnerStrategy();
-    UnitActionStrategy unitActionStrategy = new AlphaCivUnitActionStrategy();
-    StartCitiesStrategy startCitiesStrategy = new AlphaCivStartCitiesStrategy();
-    StartUnitsStrategy startUnitsStrategy = new AlphaCivStartUnitsStrategy();
-    game = new GameImpl(mapStrategy,winnerStrategy, agingStrategy, unitActionStrategy, startCitiesStrategy, startUnitsStrategy);
-    //game = new GameImpl();
-  }*/
 
   @Before
   public void setUp() {
