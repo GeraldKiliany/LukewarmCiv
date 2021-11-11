@@ -34,15 +34,27 @@ public class TranscriptionDecorator implements Game {
     }
 
     public boolean moveUnit( Position from, Position to ) {
-      return game.moveUnit(from,to);
+
+    boolean successfulMove = game.moveUnit(from,to);
+    if(successfulMove){
+      System.out.print(game.getPlayerInTurn() + "successfully moved unit from " + from + " to " + to);
+    }
+    else{
+      System.out.print(game.getPlayerInTurn() + "could not move unit ");
+    }
+    return successfulMove;
     }
 
     public void endOfTurn() {
+      System.out.print(game.getPlayerInTurn() + "ended their turn. ");
       game.endOfTurn();
+
     }
 
     public void changeWorkForceFocusInCityAt( Position p, String balance ) {
-      game.changeProductionInCityAt(p,balance);
+
+    game.changeWorkForceFocusInCityAt(p,balance);
+    System.out.print(game.getPlayerInTurn() + " changed workforce focus in city at " + p.getRow() + " " + p.getColumn() + " to " + balance);
     }
 
     public void changeProductionInCityAt( Position p, String unitType ) {
