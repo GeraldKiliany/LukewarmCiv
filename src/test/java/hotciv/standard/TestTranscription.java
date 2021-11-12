@@ -86,11 +86,13 @@ public class TestTranscription {
     public void turnTranscriptionOffThenOn(){
 
         game.setTranscription(false);
+        assertEquals(false,game.transcriptionOn());
         game.performUnitActionAt(new Position(3,2));
         Position p = new Position(3,2);
         assertEquals("",outContent.toString());
 
         game.setTranscription(true);
+        assertEquals(true,game.transcriptionOn());
         game.performUnitActionAt(new Position(3,2));
         //Position p = new Position(3,2);
         assertEquals(game.getPlayerInTurn() + " performed unit action at " + p, outContent.toString());

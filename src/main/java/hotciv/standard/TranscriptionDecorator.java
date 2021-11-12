@@ -93,6 +93,10 @@ public class TranscriptionDecorator implements Game {
     public void setTranscription(Boolean transcribing) {
         this.transcription = transcribing;
     }
+
+    public boolean transcriptionOn(){
+      return this.transcription;
+    }
 }
 
 
