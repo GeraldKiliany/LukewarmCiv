@@ -39,122 +39,122 @@ import java.util.*;
 public class TestEpsilonCiv {
     private Game game;
 
-    /** Fixture for EpsilonCiv testing. */
+    /**
+     * Fixture for EpsilonCiv testing.
+     */
     @Before
     public void setUp() {
-        game = new GameImpl( new EpsilonCivFactoryStub() );
+        game = new GameImpl(new EpsilonCivFactoryStub());
     }
 
     @Test
-    public void legionAttackingStrengthIs4(){
+    public void legionAttackingStrengthIs4() {
         Position threeTwo = new Position(3, 2);
         Position fourThree = new Position(4, 3);
-        Position threeThree = new Position(3,3);
+        Position threeThree = new Position(3, 3);
 
         assertThat(game.getUnitAt(threeTwo).getTypeString(), is(GameConstants.LEGION));
-        assertThat(game.getUnitAt(fourThree).getTypeString(),is(GameConstants.SETTLER));
+        assertThat(game.getUnitAt(fourThree).getTypeString(), is(GameConstants.SETTLER));
 
-        game.moveUnit(threeTwo,threeThree);
+        game.moveUnit(threeTwo, threeThree);
         assertThat(game.getUnitAt(threeThree).getTypeString(), is(GameConstants.LEGION));
         TestEpsilonCivAttackingStub testStrategy = new TestEpsilonCivAttackingStub();
-        testStrategy.setCurrentAttack(game,threeThree,fourThree);
+        testStrategy.setCurrentAttack(game, threeThree, fourThree);
 
         assertThat(testStrategy.getAttackerTerrain(), is(1));
         assertThat(testStrategy.getAttackerSupport(), is(0));
 
-        assertThat(testStrategy.getAttackerStrength(), is((4+0)*1));
+        assertThat(testStrategy.getAttackerStrength(), is((4 + 0) * 1));
 
 
     }
+
     @Test
-    public void settlerDefendingStrengthIs3(){
+    public void settlerDefendingStrengthIs3() {
         Position threeTwo = new Position(3, 2);
         Position fourThree = new Position(4, 3);
-        Position threeThree = new Position(3,3);
+        Position threeThree = new Position(3, 3);
 
         assertThat(game.getUnitAt(threeTwo).getTypeString(), is(GameConstants.LEGION));
-        assertThat(game.getUnitAt(fourThree).getTypeString(),is(GameConstants.SETTLER));
+        assertThat(game.getUnitAt(fourThree).getTypeString(), is(GameConstants.SETTLER));
 
-        game.moveUnit(threeTwo,threeThree);
+        game.moveUnit(threeTwo, threeThree);
         assertThat(game.getUnitAt(threeThree).getTypeString(), is(GameConstants.LEGION));
         TestEpsilonCivAttackingStub testStrategy = new TestEpsilonCivAttackingStub();
-        testStrategy.setCurrentAttack(game,threeThree,fourThree);
+        testStrategy.setCurrentAttack(game, threeThree, fourThree);
         assertThat(testStrategy.getDefenderTerrain(), is(1));
         assertThat(testStrategy.getDefenderSupport(), is(0));
-        assertThat(testStrategy.getDefenderStrength(), is((3+0)*1));
+        assertThat(testStrategy.getDefenderStrength(), is((3 + 0) * 1));
     }
 
 
     @Test
-    public void legionAttackingSettlerWinsWith1Rolls(){
+    public void legionAttackingSettlerWinsWith1Rolls() {
         Position threeTwo = new Position(3, 2);
         Position fourThree = new Position(4, 3);
-        Position threeThree = new Position(3,3);
+        Position threeThree = new Position(3, 3);
         assertThat(game.getUnitAt(threeTwo).getTypeString(), is(GameConstants.LEGION));
-        assertThat(game.getUnitAt(fourThree).getTypeString(),is(GameConstants.SETTLER));
-        game.moveUnit(threeTwo,threeThree);
+        assertThat(game.getUnitAt(fourThree).getTypeString(), is(GameConstants.SETTLER));
+        game.moveUnit(threeTwo, threeThree);
+        game.advanceTurns(2);
         assertThat(game.getUnitAt(threeThree).getTypeString(), is(GameConstants.LEGION));
-        game.moveUnit(threeThree,fourThree);
+        game.moveUnit(threeThree, fourThree);
         assertThat(game.getUnitAt(fourThree).getTypeString(), is(GameConstants.LEGION));
         assertThat(game.getUnitAt(threeThree), is(nullValue()));
 
 
-
-
     }
 
-    @Test
-    public void legionAttackingSettlerFailsWithSettlerRoll2(){
+   /* @Test
+    public void legionAttackingSettlerFailsWithSettlerRoll2() {
         Position threeTwo = new Position(3, 2);
         Position fourThree = new Position(4, 3);
-        Position threeThree = new Position(3,3);
+        Position threeThree = new Position(3, 3);
         assertThat(game.getUnitAt(threeTwo).getTypeString(), is(GameConstants.LEGION));
-        assertThat(game.getUnitAt(fourThree).getTypeString(),is(GameConstants.SETTLER));
-        game.moveUnit(threeTwo,threeThree);
+        assertThat(game.getUnitAt(fourThree).getTypeString(), is(GameConstants.SETTLER));
+        game.moveUnit(threeTwo, threeThree);
         assertThat(game.getUnitAt(threeThree).getTypeString(), is(GameConstants.LEGION));
 
         TestEpsilonCivAttackingStub testStrategy = new TestEpsilonCivAttackingStub();
-        testStrategy.setCurrentAttack(game,threeThree,fourThree);
+        testStrategy.setCurrentAttack(game, threeThree, fourThree);
 
-        game.moveUnit(threeThree,fourThree);
+        game.moveUnit(threeThree, fourThree);
         assertThat(game.getUnitAt(fourThree).getTypeString(), is(GameConstants.LEGION));
         assertThat(game.getUnitAt(threeThree), is(nullValue()));
 
 
-
-
-    }
+    }*/
 
     @Test
-    public void redWinsThreeAttacksAfter20RoundsBecomesWinner() {
+    public void redWinsThreeAttacksAndBecomesWinner() {
         assertThat(game.getWinner(), is(nullValue()));
 
         //red wins first attack
-        game.placeUnitManually(new Position(8,8), GameConstants.LEGION, Player.RED);
-        game.placeUnitManually(new Position(8,7), GameConstants.SETTLER, Player.BLUE);
-        game.moveUnit(new Position(8,8), new Position(8,7));
-        assertThat(game.getUnitAt(new Position(8,7)).getOwner(), is(Player.RED));
+        game.placeUnitManually(new Position(8, 8), GameConstants.LEGION, Player.RED);
+        game.placeUnitManually(new Position(8, 7), GameConstants.SETTLER, Player.BLUE);
+        game.moveUnit(new Position(8, 8), new Position(8, 7));
+        assertThat(game.getUnitAt(new Position(8, 7)).getOwner(), is(Player.RED));
 
         assertThat(game.getWinner(), is(nullValue()));
 
         //red wins second attack
-        game.placeUnitManually(new Position(8,6), GameConstants.SETTLER, Player.BLUE);
-        game.moveUnit(new Position(8,7), new Position(8,6));
-        assertThat(game.getUnitAt(new Position(8,6)).getOwner(), is(Player.RED));
+        game.placeUnitManually(new Position(8, 6), GameConstants.SETTLER, Player.BLUE);
+        game.moveUnit(new Position(8, 7), new Position(8, 6));
+        assertThat(game.getUnitAt(new Position(8, 6)).getOwner(), is(Player.RED));
 
         assertThat(game.getWinner(), is(nullValue()));
 
         //red wins third attack
-        game.placeUnitManually(new Position(8,5), GameConstants.SETTLER, Player.BLUE);
-        game.moveUnit(new Position(8,6), new Position(8,5));
-        assertThat(game.getUnitAt(new Position(8,5)).getOwner(), is(Player.RED));
+        game.placeUnitManually(new Position(8, 5), GameConstants.SETTLER, Player.BLUE);
+        game.moveUnit(new Position(8, 6), new Position(8, 5));
+        assertThat(game.getUnitAt(new Position(8, 5)).getOwner(), is(Player.RED));
 
         //red is winner
         assertThat(game.getWinner(), is(Player.RED));
     }
 
+}
 
-   }
 class TestEpsilonCivAttackingStub implements AttackingStrategy{
     int attackerSupport;
     int defenderSupport;
@@ -210,10 +210,10 @@ class TestEpsilonCivAttackingStub implements AttackingStrategy{
 }
 
     class EpsilonCivFactoryStub implements GameFactory  {
-    boolean useTestStub;
-    public EpsilonCivFactoryStub(boolean useTestStub) {this.useTestStub = useTestStub;}
-    public EpsilonCivFactoryStub() {this.useTestStub = true;}
-    public boolean getUseTestStub(){return useTestStub;}
+  //  boolean useTestStub;
+  //  public EpsilonCivFactoryStub(boolean useTestStub) {this.useTestStub = useTestStub;}
+  //  public EpsilonCivFactoryStub() {this.useTestStub = true;}
+  //  public boolean getUseTestStub(){return useTestStub;}
     public MapStrategy createMapStrategy() { return new AlphaCivMapStrategy(); }
     public WinnerStrategy createWinnerStrategy() { return new EpsilonCivWinnerStrategy(); }
     public AgingStrategy createAgingStrategy() { return new AlphaCivAgingStrategy(); }

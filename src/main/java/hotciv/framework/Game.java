@@ -138,6 +138,7 @@ public interface Game{
   /** advance the game specified number of turns
    * @param numberOfTurns the number of turns to advance the game
    */
+  //TODO: Move advanceTurns and placeUnitManually to Test stubs where needed
   public void advanceTurns( int numberOfTurns );
 
   /** place a unit on the map manually for testing

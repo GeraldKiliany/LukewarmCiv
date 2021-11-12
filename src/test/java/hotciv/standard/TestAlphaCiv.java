@@ -40,17 +40,6 @@ public class TestAlphaCiv {
   private Game game;
 
   /** Fixture for AlphaCiv testing. */
-  /*@Before
-  public void setUp() {
-    MapStrategy mapStrategy = new AlphaCivMapStrategy();
-    AgingStrategy agingStrategy = new AlphaCivAgingStrategy();
-    WinnerStrategy winnerStrategy = new AlphaCivWinnerStrategy();
-    UnitActionStrategy unitActionStrategy = new AlphaCivUnitActionStrategy();
-    StartCitiesStrategy startCitiesStrategy = new AlphaCivStartCitiesStrategy();
-    StartUnitsStrategy startUnitsStrategy = new AlphaCivStartUnitsStrategy();
-    game = new GameImpl(mapStrategy,winnerStrategy, agingStrategy, unitActionStrategy, startCitiesStrategy, startUnitsStrategy);
-    //game = new GameImpl();
-  }*/
 
   @Before
   public void setUp() {
@@ -230,6 +219,7 @@ public class TestAlphaCiv {
     assertThat(game.getUnitAt(threeTwo).getTypeString(), is(GameConstants.LEGION));
     assertThat(game.getUnitAt(fourThree).getTypeString(),is(GameConstants.SETTLER));
     game.moveUnit(threeTwo,threeThree);
+    game.advanceTurns(2);
     assertThat(game.getUnitAt(threeThree).getTypeString(), is(GameConstants.LEGION));
     game.moveUnit(threeThree,fourThree);
     assertThat(game.getUnitAt(fourThree).getTypeString(), is(GameConstants.LEGION));
