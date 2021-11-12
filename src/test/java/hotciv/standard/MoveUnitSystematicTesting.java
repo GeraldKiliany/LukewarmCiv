@@ -43,7 +43,7 @@ public class MoveUnitSystematicTesting {
 
     @Before
     public void setUp() { game = new GameImpl( new MoveUnitFactory() ); }
-    
+
     @Test
     public void redUnitUnableToMoveToTileWithFriendlyUnit() {
         Position twoZero = new Position(2,0);
@@ -70,7 +70,7 @@ public class MoveUnitSystematicTesting {
     }
 
     @Test
-    public void redUnitUnableToMoveToMountainTile() {
+    public void redSettlerUnableToMoveToMountainTile() {
         Position twoOne = new Position(2,1);
         Position twoTwo = new Position(2,2);
         game.placeUnitManually(twoOne, GameConstants.SETTLER, Player.RED);
@@ -83,7 +83,7 @@ public class MoveUnitSystematicTesting {
     }
 
     @Test
-    public void redUnitUnableToMoveToOceanTile() {
+    public void redSettlerUnableToMoveToOceanTile() {
         Position oneOne = new Position(1,1);
         Position oneZero = new Position(1,0);
         game.placeUnitManually(oneOne, GameConstants.SETTLER, Player.RED);
@@ -96,7 +96,33 @@ public class MoveUnitSystematicTesting {
     }
 
     @Test
-    public void redUnitAbleToMoveToPlainsTile() {
+    public void redUFOAbleToMoveToMountainTile() {
+        Position twoOne = new Position(2,1);
+        Position twoTwo = new Position(2,2);
+        game.placeUnitManually(twoOne, GameConstants.UFO, Player.RED);
+        assertThat(game.getTileAt(twoTwo).getTypeString(), is(GameConstants.MOUNTAINS));
+
+        boolean didMove = game.moveUnit(twoOne, twoTwo);
+        assertThat(didMove, is(true));
+        assertThat(game.getUnitAt(twoOne), is(nullValue()));
+        assertThat(game.getUnitAt(twoTwo).getTypeString(), is(GameConstants.UFO));
+    }
+
+    @Test
+    public void redUFOAbleToMoveToOceanTile() {
+        Position oneOne = new Position(1,1);
+        Position oneZero = new Position(1,0);
+        game.placeUnitManually(oneOne, GameConstants.UFO, Player.RED);
+        assertThat(game.getTileAt(oneZero).getTypeString(), is(GameConstants.OCEANS));
+
+        boolean didMove = game.moveUnit(oneOne, oneZero);
+        assertThat(didMove, is(true));
+        assertThat(game.getUnitAt(oneZero).getTypeString(), is(GameConstants.UFO));
+        assertThat(game.getUnitAt(oneOne), is(nullValue()));
+    }
+
+    @Test
+    public void redSettlerAbleToMoveToPlainsTile() {
         Position fiveFour = new Position(5,4);
         Position fiveFive = new Position(5,5);
         game.placeUnitManually(fiveFour, GameConstants.SETTLER, Player.RED);
@@ -109,7 +135,7 @@ public class MoveUnitSystematicTesting {
     }
 
     @Test
-    public void redUnitAbleToMoveToForestTile() {
+    public void redSettlerAbleToMoveToForestTile() {
         Position fifteenFourteen = new Position(15,14);
         Position fifteenFifteen = new Position(15,15);
         game.placeUnitManually(fifteenFourteen, GameConstants.SETTLER, Player.RED);
@@ -122,7 +148,7 @@ public class MoveUnitSystematicTesting {
     }
 
     @Test
-    public void redUnitAbleToMoveToHillsTile() {
+    public void redSettlerAbleToMoveToHillsTile() {
         Position zeroZero = new Position(0,0);
         Position zeroOne = new Position(0,1);
         game.placeUnitManually(zeroZero, GameConstants.SETTLER, Player.RED);
