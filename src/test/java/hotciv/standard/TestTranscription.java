@@ -9,8 +9,9 @@ import java.io.PrintStream;
 
 
 public class TestTranscription {
-    private Game game;
-
+   // private Game game;
+    private Game alphaGame;
+    private TranscriptionDecorator game;
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
@@ -23,13 +24,21 @@ public class TestTranscription {
     public void setUp() {
         //Variability that allows to switch game type
         System.setOut(new PrintStream(outContent));
-        Game alphaGame = new GameImpl(new AlphaCivFactory());
+        alphaGame = new GameImpl(new AlphaCivFactory());
+        //Update with every function call to keep game without transcription up to date
+        //decoratorGame = new TranscriptionDecorator(alphaGame, true);
         game = new TranscriptionDecorator(alphaGame);
     }
 
     @After
     public void restoreStreams() {
         System.setOut(originalOut);
+    }
+
+    @Test
+    public void printGetWinner(){
+        Player winningPlayer = game.getWinner();
+        assertEquals(winningPlayer + " is the winner.", outContent.toString());
     }
 
     @Test
@@ -53,7 +62,7 @@ public class TestTranscription {
         Position p = new Position(1,1);
         String balance = GameConstants.foodFocus;
         game.changeWorkForceFocusInCityAt(p,balance);
-        assertEquals(game.getPlayerInTurn() + " changed workforce focus in city at " + p.getRow() + " " + p.getColumn() + " to " + balance, outContent.toString());
+        assertEquals(game.getPlayerInTurn() + " changed workforce focus in city at " + p + " to " + balance, outContent.toString());
     }
 
     @Test
@@ -61,7 +70,7 @@ public class TestTranscription {
         game.changeProductionInCityAt(new Position(1,1), GameConstants.LEGION);
         Position p = new Position(1,1);
         String unitType = GameConstants.LEGION;
-        assertEquals(game.getPlayerInTurn() + " changed production in city at " + p.getRow() + " " + p.getColumn() + " to " + unitType, outContent.toString());
+        assertEquals(game.getPlayerInTurn() + " changed production in city at " + p + " to " + unitType, outContent.toString());
     }
 
 
@@ -69,8 +78,23 @@ public class TestTranscription {
     public void printPerformingUnitActionAtThreeTwo(){
         game.performUnitActionAt(new Position(3,2));
         Position p = new Position(3,2);
-        assertEquals(game.getPlayerInTurn() + " performed unit action at " + p.getRow() + " " + p.getColumn(), outContent.toString());
+        assertEquals(game.getPlayerInTurn() + " performed unit action at " + p, outContent.toString());
     }
 
 
+    @Test
+    public void turnTranscriptionOffThenOn(){
+
+        game.setTranscription(false);
+        assertEquals(false,game.transcriptionOn());
+        game.performUnitActionAt(new Position(3,2));
+        Position p = new Position(3,2);
+        assertEquals("",outContent.toString());
+
+        game.setTranscription(true);
+        assertEquals(true,game.transcriptionOn());
+        game.performUnitActionAt(new Position(3,2));
+        //Position p = new Position(3,2);
+        assertEquals(game.getPlayerInTurn() + " performed unit action at " + p, outContent.toString());
+    }
 }
