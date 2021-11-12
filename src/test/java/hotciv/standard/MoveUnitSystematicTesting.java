@@ -47,5 +47,8 @@ public class MoveUnitSystematicTesting {
     }
 
     /*@Test
-    public void*/
+    public void redUnitMovesToTileWithFriendlyUnit {
+        game.placeUnitManually(new Position(2,0), GameConstants.ARCHER, Player.RED);
+
+    }*/
 }
