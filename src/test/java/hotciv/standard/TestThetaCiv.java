@@ -136,5 +136,29 @@ public class TestThetaCiv {
         assertThat(game.getUnitAt(new Position(1,1)).getAttackingStrength(), is (1));
     }
 
+    @Test
+    public void redSettlerUnableToMoveToMountainTile() {
+        Position zeroFour = new Position(0,4);
+        Position zeroFive = new Position(0,5);
+        game.placeUnitManually(zeroFour, GameConstants.SETTLER, Player.RED);
+        assertThat(game.getTileAt(zeroFive).getTypeString(), is(GameConstants.MOUNTAINS));
 
+        boolean didMove = game.moveUnit(zeroFour, zeroFive);
+        assertThat(didMove, is(false));
+        assertThat(game.getUnitAt(zeroFour).getTypeString(), is(GameConstants.SETTLER));
+        assertThat(game.getUnitAt(zeroFive), is(nullValue()));
+    }
+
+    @Test
+    public void redSettlerUnableToMoveToOceanTile() {
+        Position zeroThree = new Position(0,3);
+        Position zeroTwo = new Position(0,2);
+        game.placeUnitManually(zeroThree, GameConstants.SETTLER, Player.RED);
+        assertThat(game.getTileAt(zeroTwo).getTypeString(), is(GameConstants.OCEANS));
+
+        boolean didMove = game.moveUnit(zeroThree, zeroTwo);
+        assertThat(didMove, is(false));
+        assertThat(game.getUnitAt(zeroThree).getTypeString(), is(GameConstants.SETTLER));
+        assertThat(game.getUnitAt(zeroTwo), is(nullValue()));
+    }
 }
