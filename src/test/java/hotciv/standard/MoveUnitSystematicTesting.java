@@ -42,15 +42,15 @@ public class MoveUnitSystematicTesting {
     /** Fixture for MoveUnitSystematicTesting. */
 
     @Before
-    public void setUp() {
-        game = new GameImpl( new AlphaCivFactory() );
-    }
+    public void setUp() { game = new GameImpl( new AlphaCivFactory() ); }
 
     //Ben
     @Test
-    public void redUnitMovesToTileWithFriendlyUnit {
+    public void redUnitMovesToTileWithFriendlyUnit() {
         game.placeUnitManually(new Position(2,0), GameConstants.ARCHER, Player.RED);
-
+        game.placeUnitManually(new Position(3,0), GameConstants.LEGION, Player.RED);
+        boolean didMove = game.moveUnit(new Position(2,0), new Position(3,0));
+        assertThat(didMove, is(false));
     }
 
     //Matt

@@ -131,6 +131,7 @@ public class GameImpl implements Game {
       units.put(to,units.get(from));
       units.remove(from);
     }
+    else if(toUnit.getOwner() == fromUnit.getOwner()){ return false; }
     else if(toUnit.getOwner() != fromUnit.getOwner()){
       boolean successfulAttack = attackStrategy.attack(this, from, to);
       if (fromUnit.getTypeString().equals(GameConstants.UFO)) {
