@@ -46,9 +46,12 @@ public class MoveUnitSystematicTesting {
         game = new GameImpl( new AlphaCivFactory() );
     }
 
-    /*@Test
+    //Ben
+    @Test
     public void redUnitMovesToTileWithFriendlyUnit {
         game.placeUnitManually(new Position(2,0), GameConstants.ARCHER, Player.RED);
 
-    }*/
+    }
+
+    //Matt
 }
