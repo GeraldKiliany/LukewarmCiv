@@ -226,4 +226,51 @@ public class MoveUnitSystematicTesting {
         assertThat(game.getUnitAt(eightOne).getTypeString(), is(GameConstants.SETTLER));
         assertThat(game.getUnitAt(eightTwo), is(nullValue()));
     }
+
+    @Test
+    public void redUFOAbleToMoveTwiceInOneTurn() {
+        Position eightZero = new Position(8,0);
+        Position eightOne = new Position(8,1);
+        Position eightTwo = new Position(8,2);
+        game.placeUnitManually(eightZero, GameConstants.UFO, Player.RED);
+
+        //can move once
+        boolean didMoveOne = game.moveUnit(eightZero, eightOne);
+        assertThat(didMoveOne, is(true));
+        assertThat(game.getUnitAt(eightZero), is(nullValue()));
+        assertThat(game.getUnitAt(eightOne).getTypeString(), is(GameConstants.UFO));
+
+        //can move twice
+        boolean didMoveTwo = game.moveUnit(eightOne, eightTwo);
+        assertThat(didMoveTwo, is(true));
+        assertThat(game.getUnitAt(eightOne), is(nullValue()));
+        assertThat(game.getUnitAt(eightTwo).getTypeString(), is(GameConstants.UFO));
+    }
+
+    @Test
+    public void redUFOUnableToMoveThriceInOneTurn() {
+        Position eightZero = new Position(8,0);
+        Position eightOne = new Position(8,1);
+        Position eightTwo = new Position(8,2);
+        Position eightThree = new Position(8,3);
+        game.placeUnitManually(eightZero, GameConstants.UFO, Player.RED);
+
+        //can move once
+        boolean didMoveOne = game.moveUnit(eightZero, eightOne);
+        assertThat(didMoveOne, is(true));
+        assertThat(game.getUnitAt(eightZero), is(nullValue()));
+        assertThat(game.getUnitAt(eightOne).getTypeString(), is(GameConstants.UFO));
+
+        //can move second time
+        boolean didMoveTwo = game.moveUnit(eightOne, eightTwo);
+        assertThat(didMoveTwo, is(true));
+        assertThat(game.getUnitAt(eightOne), is(nullValue()));
+        assertThat(game.getUnitAt(eightTwo).getTypeString(), is(GameConstants.UFO));
+
+        //can't move third time
+        boolean didMoveThree = game.moveUnit(eightTwo, eightThree);
+        assertThat(didMoveThree, is(false));
+        assertThat(game.getUnitAt(eightTwo).getTypeString(), is(GameConstants.UFO));
+        assertThat(game.getUnitAt(eightThree), is(nullValue()));
+    }
 }
