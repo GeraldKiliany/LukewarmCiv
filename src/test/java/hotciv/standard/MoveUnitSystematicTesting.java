@@ -206,4 +206,24 @@ public class MoveUnitSystematicTesting {
         assertThat(game.getUnitAt(fiveFive).getTypeString(), is(GameConstants.SETTLER));
         assertThat(game.getUnitAt(fourFour), is(nullValue()));
     }
+
+    @Test
+    public void redSettlerUnableToMoveTwiceInOneTurn() {
+        Position eightZero = new Position(8,0);
+        Position eightOne = new Position(8,1);
+        Position eightTwo = new Position(8,2);
+        game.placeUnitManually(eightZero, GameConstants.SETTLER, Player.RED);
+
+        //can move once
+        boolean didMoveOne = game.moveUnit(eightZero, eightOne);
+        assertThat(didMoveOne, is(true));
+        assertThat(game.getUnitAt(eightZero), is(nullValue()));
+        assertThat(game.getUnitAt(eightOne).getTypeString(), is(GameConstants.SETTLER));
+
+        //can't move again in the same turn
+        boolean didMoveTwo = game.moveUnit(eightOne, eightTwo);
+        assertThat(didMoveTwo, is(false));
+        assertThat(game.getUnitAt(eightOne).getTypeString(), is(GameConstants.SETTLER));
+        assertThat(game.getUnitAt(eightTwo), is(nullValue()));
+    }
 }

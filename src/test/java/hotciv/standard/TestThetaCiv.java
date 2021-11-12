@@ -81,12 +81,14 @@ public class TestThetaCiv {
         Position fourone = new Position(4,1);
         Position fiveone = new Position(5,1);
         Position oneone = new Position(1, 1);
+        Position twoone = new Position(2, 1);
         Position threeone = new Position(3, 1);
         game.changeProductionInCityAt(oneone, GameConstants.UFO);
         game.changeProductionInCityAt(fourone, GameConstants.UFO);
         game.advanceTurns(23);
         game.moveUnit(fourone,fiveone );
-        game.moveUnit(oneone, threeone);
+        game.moveUnit(oneone, twoone);
+        game.moveUnit(twoone, threeone);
         game.advanceTurns(2);
         int citySize = game.getCityAt(fourone).getSize();
         game.moveUnit(threeone, fourone);
