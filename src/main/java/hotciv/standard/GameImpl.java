@@ -105,6 +105,18 @@ public class GameImpl implements Game {
     Unit fromUnit = getUnitAt(from);
     Unit toUnit = getUnitAt(to);
     Tile toTile = getTileAt(to);
+
+    int fromRow = from.getRow(), fromCol = from.getColumn();
+    int toRow = to.getRow(), toCol = to.getColumn();
+    int distRow = Math.abs(toRow - fromRow), distCol = Math.abs(toCol - fromCol);
+
+    boolean sameLocation = (distRow == 0 && distCol == 0);
+    boolean leftRight = (distRow == 1 && distCol == 0);
+    boolean upDown = (distRow == 0 && distCol == 1);
+    boolean validDistance = sameLocation || leftRight || upDown;
+
+    if (!validDistance) { return false; }
+
     //Check that unit at from can move to specified tile
     if(fromUnit == null) { return false; }
     if(fromUnit.getMoveCount() == 0) { return false; }
