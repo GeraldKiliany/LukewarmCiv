@@ -3,7 +3,7 @@ import hotciv.framework.*;
 
 public class TranscriptionDecorator implements Game {
     private Game game;
-    boolean transcription = false;
+    boolean transcription = true;
 
   public TranscriptionDecorator(Game argGame){
         this.game = argGame;
@@ -26,7 +26,11 @@ public class TranscriptionDecorator implements Game {
     }
 
     public Player getWinner() {
-      return game.getWinner();
+    Player winningPlayer = game.getWinner();
+    if(transcription){
+      System.out.print(winningPlayer + " is the winner.");
+    }
+      return winningPlayer;
     }
 
     public int getAge() {
@@ -35,36 +39,46 @@ public class TranscriptionDecorator implements Game {
 
     public boolean moveUnit( Position from, Position to ) {
 
-    boolean successfulMove = game.moveUnit(from,to);
-    if(successfulMove){
-      System.out.print(game.getPlayerInTurn() + "successfully moved unit from " + from + " to " + to);
-    }
-    else{
-      System.out.print(game.getPlayerInTurn() + "could not move unit ");
-    }
-    return successfulMove;
-    }
+      boolean successfulMove = game.moveUnit(from, to);
+      if (transcription) {
+        if (successfulMove) {
+          System.out.print(game.getPlayerInTurn() + "successfully moved unit from " + from + " to " + to);
+        } else {
+          System.out.print(game.getPlayerInTurn() + "could not move unit ");
+        }
+      }
+        return successfulMove;
+      }
+
 
     public void endOfTurn() {
+    if(transcription) {
       System.out.print(game.getPlayerInTurn() + "ended their turn. ");
+    }
       game.endOfTurn();
 
     }
 
     public void changeWorkForceFocusInCityAt( Position p, String balance ) {
 
-    game.changeWorkForceFocusInCityAt(p,balance);
-    System.out.print(game.getPlayerInTurn() + " changed workforce focus in city at " + p.getRow() + " " + p.getColumn() + " to " + balance);
+      game.changeWorkForceFocusInCityAt(p, balance);
+      if (transcription) {
+        System.out.print(game.getPlayerInTurn() + " changed workforce focus in city at " + p + " to " + balance);
+      }
     }
 
     public void changeProductionInCityAt( Position p, String unitType ) {
-      game.changeProductionInCityAt(p,unitType);
-      System.out.print(game.getPlayerInTurn() + " changed production in city at " + p.getRow() + " " + p.getColumn() + " to " + unitType);
+      game.changeProductionInCityAt(p, unitType);
+      if (transcription) {
+        System.out.print(game.getPlayerInTurn() + " changed production in city at " + p + " to " + unitType);
+      }
     }
 
     public void performUnitActionAt( Position p ) {
       game.performUnitActionAt(p);
-      System.out.print(game.getPlayerInTurn() + " performed unit action at " + p.getRow() + " " + p.getColumn());
+      if(transcription) {
+        System.out.print(game.getPlayerInTurn() + " performed unit action at " + p);
+      }
     }
 
     public void advanceTurns( int numberOfTurns ) {
