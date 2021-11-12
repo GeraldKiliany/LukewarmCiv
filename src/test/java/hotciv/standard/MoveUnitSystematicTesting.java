@@ -43,8 +43,7 @@ public class MoveUnitSystematicTesting {
 
     @Before
     public void setUp() { game = new GameImpl( new MoveUnitFactory() ); }
-
-    //Ben
+    
     @Test
     public void redUnitUnableToMoveToTileWithFriendlyUnit() {
         Position twoZero = new Position(2,0);

@@ -352,6 +352,235 @@ public class TestSemiCiv {
         assertThat(game.getCityAt(new Position(4,5)).getSize(), is(1));
     }
 
+    @Test
+    public void redUnitUnableToMoveToTileWithFriendlyUnit() {
+        Position twoZero = new Position(2,0);
+        Position threeZero = new Position(3,0);
+        game.placeUnitManually(twoZero, GameConstants.ARCHER, Player.RED);
+        game.placeUnitManually(threeZero, GameConstants.LEGION, Player.RED);
+
+        boolean didMove = game.moveUnit(twoZero, threeZero);
+        assertThat(didMove, is(false));
+        assertThat(game.getUnitAt(twoZero).getTypeString(), is(GameConstants.ARCHER));
+        assertThat(game.getUnitAt(threeZero).getTypeString(), is(GameConstants.LEGION));
+    }
+
+    @Test
+    public void redUnitAbleToMoveToEmptyTile() {
+        Position twoOne = new Position(2,1);
+        Position threeOne = new Position(3,1);
+        game.placeUnitManually(twoOne, GameConstants.ARCHER, Player.RED);
+
+        boolean didMove = game.moveUnit(twoOne, threeOne);
+        assertThat(didMove, is(true));
+        assertThat(game.getUnitAt(twoOne), is(nullValue()));
+        assertThat(game.getUnitAt(threeOne).getTypeString(), is(GameConstants.ARCHER));
+    }
+
+    @Test
+    public void redUnitUnableToMoveToMountainTile() {
+        Position zeroFour = new Position(0,4);
+        Position zeroFive = new Position(0,5);
+        game.placeUnitManually(zeroFour, GameConstants.SETTLER, Player.RED);
+        assertThat(game.getTileAt(zeroFive).getTypeString(), is(GameConstants.MOUNTAINS));
+
+        boolean didMove = game.moveUnit(zeroFour, zeroFive);
+        assertThat(didMove, is(false));
+        assertThat(game.getUnitAt(zeroFour).getTypeString(), is(GameConstants.SETTLER));
+        assertThat(game.getUnitAt(zeroFive), is(nullValue()));
+    }
+
+    @Test
+    public void redUnitUnableToMoveToOceanTile() {
+        Position zeroThree = new Position(0,3);
+        Position zeroTwo = new Position(0,2);
+        game.placeUnitManually(zeroThree, GameConstants.SETTLER, Player.RED);
+        assertThat(game.getTileAt(zeroTwo).getTypeString(), is(GameConstants.OCEANS));
+
+        boolean didMove = game.moveUnit(zeroThree, zeroTwo);
+        assertThat(didMove, is(false));
+        assertThat(game.getUnitAt(zeroThree).getTypeString(), is(GameConstants.SETTLER));
+        assertThat(game.getUnitAt(zeroTwo), is(nullValue()));
+    }
+
+    @Test
+    public void redUnitAbleToMoveToPlainsTile() {
+        Position zeroThree = new Position(0,3);
+        Position zeroFour = new Position(0,4);
+        game.placeUnitManually(zeroThree, GameConstants.SETTLER, Player.RED);
+        assertThat(game.getTileAt(zeroFour).getTypeString(), is(GameConstants.PLAINS));
+
+        boolean didMove = game.moveUnit(zeroThree, zeroFour);
+        assertThat(didMove, is(true));
+        assertThat(game.getUnitAt(zeroThree), is(nullValue()));
+        assertThat(game.getUnitAt(zeroFour).getTypeString(), is(GameConstants.SETTLER));
+    }
+
+    @Test
+    public void redUnitAbleToMoveToForestTile() {
+        Position oneEight = new Position(1,8);
+        Position oneNine = new Position(1,9);
+        game.placeUnitManually(oneEight, GameConstants.SETTLER, Player.RED);
+        assertThat(game.getTileAt(oneNine).getTypeString(), is(GameConstants.FOREST));
+
+        boolean didMove = game.moveUnit(oneEight, oneNine);
+        assertThat(didMove, is(true));
+        assertThat(game.getUnitAt(oneEight), is(nullValue()));
+        assertThat(game.getUnitAt(oneNine).getTypeString(), is(GameConstants.SETTLER));
+    }
+
+    @Test
+    public void redUnitAbleToMoveToHillsTile() {
+        Position oneTwo = new Position(1,2);
+        Position oneThree = new Position(1,3);
+        game.placeUnitManually(oneTwo, GameConstants.SETTLER, Player.RED);
+        assertThat(game.getTileAt(oneThree).getTypeString(), is(GameConstants.HILLS));
+
+        boolean didMove = game.moveUnit(oneTwo, oneThree);
+        assertThat(didMove, is(true));
+        assertThat(game.getUnitAt(oneTwo), is(nullValue()));
+        assertThat(game.getUnitAt(oneThree).getTypeString(), is(GameConstants.SETTLER));
+    }
+
+    @Test
+    public void redUnitAbleToMoveOneTileLeft() {
+        Position fiveFive = new Position(5,5);
+        Position fourFive = new Position(4,5);
+        game.placeUnitManually(fiveFive, GameConstants.SETTLER, Player.RED);
+
+        boolean didMove = game.moveUnit(fiveFive, fourFive);
+        assertThat(didMove, is(true));
+        assertThat(game.getUnitAt(fourFive).getTypeString(), is(GameConstants.SETTLER));
+        assertThat(game.getUnitAt(fiveFive), is(nullValue()));
+    }
+
+    @Test
+    public void redUnitAbleToMoveOneTileRight() {
+        Position fiveFive = new Position(5,5);
+        Position sixFive = new Position(6,5);
+        game.placeUnitManually(fiveFive, GameConstants.SETTLER, Player.RED);
+
+        boolean didMove = game.moveUnit(fiveFive, sixFive);
+        assertThat(didMove, is(true));
+        assertThat(game.getUnitAt(sixFive).getTypeString(), is(GameConstants.SETTLER));
+        assertThat(game.getUnitAt(fiveFive), is(nullValue()));
+    }
+
+    @Test
+    public void redUnitAbleToMoveOneTileUp() {
+        Position fiveFive = new Position(5,5);
+        Position fiveFour = new Position(5,4);
+        game.placeUnitManually(fiveFive, GameConstants.SETTLER, Player.RED);
+
+        boolean didMove = game.moveUnit(fiveFive, fiveFour);
+        assertThat(didMove, is(true));
+        assertThat(game.getUnitAt(fiveFour).getTypeString(), is(GameConstants.SETTLER));
+        assertThat(game.getUnitAt(fiveFive), is(nullValue()));
+    }
+
+    @Test
+    public void redUnitAbleToMoveOneTileDown() {
+        Position fiveFive = new Position(5,5);
+        Position fiveSix = new Position(5,6);
+        game.placeUnitManually(fiveFive, GameConstants.SETTLER, Player.RED);
+
+        boolean didMove = game.moveUnit(fiveFive, fiveSix);
+        assertThat(didMove, is(true));
+        assertThat(game.getUnitAt(fiveSix).getTypeString(), is(GameConstants.SETTLER));
+        assertThat(game.getUnitAt(fiveFive), is(nullValue()));
+    }
+
+    @Test
+    public void redUnitUnableToMoveTwoTilesDown() {
+        Position fiveFive = new Position(5,5);
+        Position fiveSeven = new Position(5,7);
+        game.placeUnitManually(fiveFive, GameConstants.SETTLER, Player.RED);
+
+        boolean didMove = game.moveUnit(fiveFive, fiveSeven);
+        assertThat(didMove, is(false));
+        assertThat(game.getUnitAt(fiveFive).getTypeString(), is(GameConstants.SETTLER));
+        assertThat(game.getUnitAt(fiveSeven), is(nullValue()));
+    }
+
+    @Test
+    public void redUnitUnableToMoveToDiagonalTile() {
+        Position twoOne = new Position(2,1);
+        Position threeTwo = new Position(3,2);
+        game.placeUnitManually(twoOne, GameConstants.SETTLER, Player.RED);
+
+        boolean didMove = game.moveUnit(twoOne, threeTwo);
+        assertThat(didMove, is(false));
+        assertThat(game.getUnitAt(twoOne).getTypeString(), is(GameConstants.SETTLER));
+        assertThat(game.getUnitAt(threeTwo), is(nullValue()));
+    }
+
+    @Test
+    public void redSettlerUnableToMoveTwiceInOneTurn() {
+        Position eightZero = new Position(8,0);
+        Position eightOne = new Position(8,1);
+        Position eightTwo = new Position(8,2);
+        game.placeUnitManually(eightZero, GameConstants.SETTLER, Player.RED);
+
+        //can move once
+        boolean didMoveOne = game.moveUnit(eightZero, eightOne);
+        assertThat(didMoveOne, is(true));
+        assertThat(game.getUnitAt(eightZero), is(nullValue()));
+        assertThat(game.getUnitAt(eightOne).getTypeString(), is(GameConstants.SETTLER));
+
+        //can't move again in the same turn
+        boolean didMoveTwo = game.moveUnit(eightOne, eightTwo);
+        assertThat(didMoveTwo, is(false));
+        assertThat(game.getUnitAt(eightOne).getTypeString(), is(GameConstants.SETTLER));
+        assertThat(game.getUnitAt(eightTwo), is(nullValue()));
+    }
+
+    @Test
+    public void redUFOAbleToMoveTwiceInOneTurn() {
+        Position eightZero = new Position(8,0);
+        Position eightOne = new Position(8,1);
+        Position eightTwo = new Position(8,2);
+        game.placeUnitManually(eightZero, GameConstants.UFO, Player.RED);
+
+        //can move once
+        boolean didMoveOne = game.moveUnit(eightZero, eightOne);
+        assertThat(didMoveOne, is(true));
+        assertThat(game.getUnitAt(eightZero), is(nullValue()));
+        assertThat(game.getUnitAt(eightOne).getTypeString(), is(GameConstants.UFO));
+
+        //can move twice
+        boolean didMoveTwo = game.moveUnit(eightOne, eightTwo);
+        assertThat(didMoveTwo, is(true));
+        assertThat(game.getUnitAt(eightOne), is(nullValue()));
+        assertThat(game.getUnitAt(eightTwo).getTypeString(), is(GameConstants.UFO));
+    }
+
+    @Test
+    public void redUFOUnableToMoveThriceInOneTurn() {
+        Position eightZero = new Position(8,0);
+        Position eightOne = new Position(8,1);
+        Position eightTwo = new Position(8,2);
+        Position eightThree = new Position(8,3);
+        game.placeUnitManually(eightZero, GameConstants.UFO, Player.RED);
+
+        //can move once
+        boolean didMoveOne = game.moveUnit(eightZero, eightOne);
+        assertThat(didMoveOne, is(true));
+        assertThat(game.getUnitAt(eightZero), is(nullValue()));
+        assertThat(game.getUnitAt(eightOne).getTypeString(), is(GameConstants.UFO));
+
+        //can move second time
+        boolean didMoveTwo = game.moveUnit(eightOne, eightTwo);
+        assertThat(didMoveTwo, is(true));
+        assertThat(game.getUnitAt(eightOne), is(nullValue()));
+        assertThat(game.getUnitAt(eightTwo).getTypeString(), is(GameConstants.UFO));
+
+        //can't move third time
+        boolean didMoveThree = game.moveUnit(eightTwo, eightThree);
+        assertThat(didMoveThree, is(false));
+        assertThat(game.getUnitAt(eightTwo).getTypeString(), is(GameConstants.UFO));
+        assertThat(game.getUnitAt(eightThree), is(nullValue()));
+    }
+
 }
 
 //Test Stubs for Epsilon Attacking to remove randomness for tests
