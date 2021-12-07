@@ -1,6 +1,7 @@
 package hotciv.stub;
 
 import hotciv.framework.*;
+import hotciv.standard.UpdateTool;
 
 import java.util.*;
 
@@ -42,6 +43,8 @@ public class StubGame2 implements Game {
   private Position pos_ufo_red;
 
   private Unit red_archer;
+
+  private UpdateTool updateTool = new UpdateTool();
 
   public Unit getUnitAt(Position p) {
     if ( p.equals(pos_archer_red) ) {
