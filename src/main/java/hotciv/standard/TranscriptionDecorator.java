@@ -90,13 +90,19 @@ public class TranscriptionDecorator implements Game {
     }
 
 
-    public void setTranscription(Boolean transcribing) {
+  public void setTranscription(Boolean transcribing) {
         this.transcription = transcribing;
     }
 
     public boolean transcriptionOn(){
       return this.transcription;
     }
+
+  @Override
+  public void addObserver(GameObserver observer) {}
+
+  @Override
+  public void setTileFocus(Position position) {}
 }
 
 

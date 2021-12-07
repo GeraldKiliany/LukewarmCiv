@@ -47,8 +47,11 @@ public class StubGame1 implements Game {
   public void endOfTurn() {}
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {}
-  public void performUnitActionAt( Position p ) {}  
-  public void addObserver(GameObserver observer) {} 
+  public void performUnitActionAt( Position p ) {}
+
+  @Override
+  public void addObserver(GameObserver observer) {}
+  @Override
   public void setTileFocus(Position position) {}
 
   // A simple implementation to draw the map of DeltaCiv
@@ -99,4 +102,10 @@ public class StubGame1 implements Game {
     }
     return theWorld;
   }
+
+  @Override
+  public void advanceTurns(int numberOfTurns) {}
+
+  @Override
+  public void placeUnitManually(Position p, String unitType, Player owner) {}
 }

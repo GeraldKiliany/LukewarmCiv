@@ -87,6 +87,7 @@ public class StubGame2 implements Game {
   // === Observer handling ===
   protected GameObserver gameObserver;
   // observer list is only a single one...
+  @Override
   public void addObserver(GameObserver observer) {
     gameObserver = observer;
   } 
@@ -130,14 +131,20 @@ public class StubGame2 implements Game {
   public int getAge() { return 0; }  
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {}
-  public void performUnitActionAt( Position p ) {}  
+  public void performUnitActionAt( Position p ) {}
 
+  @Override
   public void setTileFocus(Position position) {
     // TODO: setTileFocus implementation pending.
     System.out.println("-- StubGame2 / setTileFocus called.");
     System.out.println(" *** IMPLEMENTATION PENDING ***");
   }
 
+  @Override
+  public void advanceTurns(int numberOfTurns) {}
+
+  @Override
+  public void placeUnitManually(Position p, String unitType, Player owner) {}
 }
 
 class StubUnit implements  Unit {
@@ -148,8 +155,24 @@ class StubUnit implements  Unit {
     this.owner = owner;
   }
   public String getTypeString() { return type; }
+
   public Player getOwner() { return owner; }
+
   public int getMoveCount() { return 1; }
+
   public int getDefensiveStrength() { return 0; }
+
   public int getAttackingStrength() { return 0; }
+
+  @Override
+  public void setTypeString(String unitType) {}
+
+  @Override
+  public void setOwner(Player newOwner) {}
+
+  @Override
+  public void setMoveCount(int newMoveCount) {}
+
+  @Override
+  public void setDefensiveStrength(int newDefensiveStrength) {}
 }

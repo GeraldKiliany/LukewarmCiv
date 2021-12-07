@@ -91,9 +91,11 @@ class CityStub implements City {
   public Player getOwner() {
     return (redOwns ? Player.RED : Player.BLUE);
   }
+
   public int getSize() {
     return (redOwns ? 4 : 9);
   }
+
   public int getTreasury() {
     return 0;
   }
@@ -103,4 +105,10 @@ class CityStub implements City {
   public String getWorkforceFocus() {
     return null;
   }
+
+  @Override
+  public void setOwner(Player newOwner) {}
+
+  @Override
+  public void setSize(int newSize) {}
 }

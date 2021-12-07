@@ -249,6 +249,7 @@ public class GameImpl implements Game {
   public void placeUnitManually ( Position p, String unitType, Player owner ) {
     units.put(p, new UnitImpl(unitType, owner));
   }
+
   public void removeUnit( Position p ) { units.remove(p); }
   public void removeCity( Position p ) { cities.remove(p); }
   public void replaceTile( Position p, String tileType ) { tiles.replace(p, new TileImpl(tileType)); }
@@ -261,4 +262,10 @@ public class GameImpl implements Game {
   public int getRedAttacksWon() { return redAttacksWon; }
   public int getBlueAttacksWon() { return blueAttacksWon; }
   public int getNumberOfRoundsPassed() { return numberOfRoundsPassed; }
+
+  @Override
+  public void addObserver(GameObserver observer) {}
+
+  @Override
+  public void setTileFocus(Position position) {}
 }
