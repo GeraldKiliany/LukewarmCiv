@@ -53,6 +53,8 @@ public class GameImpl implements Game {
 
   private GameFactory factory;
 
+  private GameObserver observer;
+
   private int redAttacksWon = 0;
   private int blueAttacksWon = 0;
   private int numberOfRoundsPassed = 0;
@@ -143,6 +145,10 @@ public class GameImpl implements Game {
       fromUnit.setMoveCount(fromUnit.getMoveCount()-1);
       units.put(to,units.get(from));
       units.remove(from);
+      if (observer != null) {
+        observer.worldChangedAt(from);
+        observer.worldChangedAt(to);
+      }
     }
     else if(toUnit.getOwner() == fromUnit.getOwner()){ return false; }
     else if(toUnit.getOwner() != fromUnit.getOwner()){
@@ -154,11 +160,18 @@ public class GameImpl implements Game {
         units.put(from, units.get(to));
         units.put(to, units.get(from));
         units.remove(from);
+        if (observer != null) {
+          observer.worldChangedAt(from);
+          observer.worldChangedAt(to);
+        }
         return false;
       }
       else {
         if (getCityAt(to) != null) {
           getCityAt(to).setOwner(getUnitAt(from).getOwner());
+          if (observer != null) {
+            observer.worldChangedAt(to); //city changes player color
+          }
         }
 
         if (factory.factoryType().equals("ZetaCivFactory")) {
@@ -179,12 +192,21 @@ public class GameImpl implements Game {
 
         units.put(to, units.get(from));
         units.remove(from);
+        if (observer != null) {
+          observer.worldChangedAt(from);
+          observer.worldChangedAt(to);
+        }
       }
     }
 
     return true;
   }
   public void endOfTurn() {
+    //update GUI
+    if (observer != null) {
+      observer.turnEnds(currPlayer, age);
+    }
+
     for(Position p : cities.keySet()) {
       CityImpl currCity = cities.get(p);
       if (currCity.getOwner() == currPlayer) {
@@ -227,6 +249,9 @@ public class GameImpl implements Game {
       if(units.get(p) == null) {
         city.decrementTreasury(currUnitCost);
         units.put(p, new UnitImpl(currUnit,currPlayer));
+        if (observer != null) {
+          observer.worldChangedAt(p);
+        }
         return true;
       }
       for(Position neighbors : Utility.get8neighborhoodOf(p)) {
@@ -234,6 +259,9 @@ public class GameImpl implements Game {
           //remove the cost of the unitType from the city's treasury
           city.decrementTreasury(currUnitCost);
           units.put(neighbors, new UnitImpl(currUnit, currPlayer));
+          if (observer != null) {
+            observer.worldChangedAt(neighbors);
+          }
           return true;
 
         }
@@ -245,14 +273,34 @@ public class GameImpl implements Game {
     for (int enfOfTurnsCalled=0; enfOfTurnsCalled<numberOfTurns; enfOfTurnsCalled++)
       { endOfTurn(); }
   }
-  public void placeCity( Position p, Player owner ) { cities.put(p, new CityImpl(owner, p)); }
+  public void placeCity( Position p, Player owner ) {
+    cities.put(p, new CityImpl(owner, p));
+    if (observer != null) {
+      observer.worldChangedAt(p);
+    }
+  }
   public void placeUnitManually ( Position p, String unitType, Player owner ) {
     units.put(p, new UnitImpl(unitType, owner));
   }
 
-  public void removeUnit( Position p ) { units.remove(p); }
-  public void removeCity( Position p ) { cities.remove(p); }
-  public void replaceTile( Position p, String tileType ) { tiles.replace(p, new TileImpl(tileType)); }
+  public void removeUnit( Position p ) {
+    units.remove(p);
+    if (observer != null) {
+      observer.worldChangedAt(p);
+    }
+  }
+  public void removeCity( Position p ) {
+    cities.remove(p);
+    if (observer != null) {
+      observer.worldChangedAt(p);
+    }
+  }
+  public void replaceTile( Position p, String tileType ) {
+    tiles.replace(p, new TileImpl(tileType));
+    if (observer != null) {
+      observer.worldChangedAt(p);
+    }
+  }
 
   public void decrementCityPopulation( Position p ) {
     City city = getCityAt(p);
@@ -264,7 +312,9 @@ public class GameImpl implements Game {
   public int getNumberOfRoundsPassed() { return numberOfRoundsPassed; }
 
   @Override
-  public void addObserver(GameObserver observer) {}
+  public void addObserver(GameObserver observer) {
+    this.observer = observer;
+  }
 
   @Override
   public void setTileFocus(Position position) {}
