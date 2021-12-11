@@ -6,6 +6,7 @@ import java.awt.*;
 import java.util.*;
 import java.util.List;
 
+import hotciv.standard.CityImpl;
 import minidraw.framework.*;
 import minidraw.standard.*;
 
@@ -134,8 +135,9 @@ public class CivDrawing
     unitFigureMap.clear();
   }
 
-  protected ImageFigure turnShieldIcon, unitShieldIcon;
-  protected TextFigure unitCount, unitType;
+  protected ImageFigure turnShieldIcon, unitShieldIcon,cityShieldIcon;
+  protected TextFigure unitCountText, cityProdText, cityBalText;
+  protected CityFigure redCityFig, blueCityFig;
   protected void defineIcons() {
     // TODO: Further development to include rest of figures needed
     turnShieldIcon = 
@@ -152,9 +154,18 @@ public class CivDrawing
     // insert in delegate figure list to ensure graphical
     // rendering.
     delegate.add(unitShieldIcon);
-    unitCount = new TextFigure("",new Point(GfxConstants.UNIT_COUNT_X,GfxConstants.UNIT_COUNT_Y));
-    delegate.add(unitCount);
-
+    unitCountText = new TextFigure("",new Point(GfxConstants.UNIT_COUNT_X,GfxConstants.UNIT_COUNT_Y));
+    delegate.add(unitCountText);
+    cityShieldIcon = new ImageFigure("black", new Point(GfxConstants.CITY_SHIELD_X,GfxConstants.CITY_SHIELD_Y));
+    delegate.add(cityShieldIcon);
+    redCityFig = new CityFigure(new CityImpl(Player.RED,new Position(1,1)),new Point(GfxConstants.getXFromColumn(1),GfxConstants.getYFromRow(1)));
+    delegate.add(redCityFig);
+    blueCityFig = new CityFigure(new CityImpl(Player.BLUE,new Position(4,1)),new Point(GfxConstants.getXFromColumn(1),GfxConstants.getYFromRow(4)));
+    delegate.add(blueCityFig);
+    cityProdText = new TextFigure("", new Point(GfxConstants.CITY_PRODUCTION_X, GfxConstants.CITY_PRODUCTION_Y));
+    delegate.add(cityProdText);
+    cityBalText = new TextFigure("", new Point(GfxConstants.WORKFORCEFOCUS_X,GfxConstants.WORKFORCEFOCUS_Y));
+    delegate.add(cityBalText);
   }
  
   // === Observer Methods ===
@@ -200,17 +211,35 @@ public class CivDrawing
       // insert in delegate figure list to ensure graphical
       // rendering.
       Integer moveCount = new Integer(currUnit.getMoveCount());
-     unitCount.setText(moveCount.toString());
+     unitCountText.setText(moveCount.toString());
     }
     //No unit at current position, set to default values
     else {
       unitShieldIcon.set("black",
               new Point( GfxConstants.UNIT_SHIELD_X,
                       GfxConstants.UNIT_SHIELD_Y ) );
-      unitCount.setText("");
+      unitCountText.setText("");
+    }
+    //city at current position, show its information
+    if(game.getCityAt(position) != null){
+      if(game.getCityAt(position).getOwner().equals(Player.BLUE)) {
+        cityShieldIcon.set("blueshield", new Point(GfxConstants.CITY_SHIELD_X,GfxConstants.CITY_SHIELD_Y));
+      }
+      else{
+        cityShieldIcon.set("redshield", new Point(GfxConstants.CITY_SHIELD_X,GfxConstants.CITY_SHIELD_Y));
+      }
+      cityProdText.setText(game.getCityAt(position).getProduction());
+      //TODO: If implement etaciv, uncomment this to show correct value
+     // cityBalText.setText(game.getCityAt(position).getWorkforceFocus());
+    }
+    //No city at current position
+    else{
+      cityShieldIcon.set("black", new Point(GfxConstants.CITY_SHIELD_X,GfxConstants.CITY_SHIELD_Y));
+      cityProdText.setText("");
+      //cityBalText.setText("");
     }
 
-    System.out.println( "Fake it: tileFocusChangedAt "+position );
+
   }
 
   @Override
