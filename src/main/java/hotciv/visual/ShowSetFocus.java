@@ -1,5 +1,6 @@
 package hotciv.visual;
 
+import hotciv.standard.TileTool;
 import minidraw.standard.*;
 import minidraw.framework.*;
 
@@ -39,6 +40,6 @@ public class ShowSetFocus {
     editor.showStatus("Click a tile to see Game's setFocus method being called.");
 
     // TODO: Replace the setting of the tool with your SetFocusTool implementation.
-    editor.setTool( new SelectionTool(editor) );
+    editor.setTool( new TileTool(editor,game) );
   }
 }

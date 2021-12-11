@@ -134,7 +134,8 @@ public class CivDrawing
     unitFigureMap.clear();
   }
 
-  protected ImageFigure turnShieldIcon;
+  protected ImageFigure turnShieldIcon, unitShieldIcon;
+  protected TextFigure unitCount, unitType;
   protected void defineIcons() {
     // TODO: Further development to include rest of figures needed
     turnShieldIcon = 
@@ -144,6 +145,16 @@ public class CivDrawing
     // insert in delegate figure list to ensure graphical
     // rendering.
     delegate.add(turnShieldIcon);
+    unitShieldIcon =
+            new ImageFigure( "black",
+                    new Point( GfxConstants.UNIT_SHIELD_X,
+                            GfxConstants.UNIT_SHIELD_Y ) );
+    // insert in delegate figure list to ensure graphical
+    // rendering.
+    delegate.add(unitShieldIcon);
+    unitCount = new TextFigure("",new Point(GfxConstants.UNIT_COUNT_X,GfxConstants.UNIT_COUNT_Y));
+    delegate.add(unitCount);
+
   }
  
   // === Observer Methods ===
@@ -170,7 +181,35 @@ public class CivDrawing
   }
 
   public void tileFocusChangedAt(Position position) {
-    // TODO: Implementation pending
+    // TODO: CITY Implementation pending
+    if(game.getUnitAt(position) != null) {
+      //Unit is at current position, show its owner, move count and type on GUI
+      Unit currUnit = game.getUnitAt(position);
+      String playername;
+      if(currUnit.getOwner().equals(Player.BLUE)){
+        playername = "blue";
+      }
+      else{
+        playername = "red";
+      }
+      String unitName = currUnit.getTypeString();
+      unitShieldIcon.set(playername+"shield",
+                      new Point( GfxConstants.UNIT_SHIELD_X,
+                                 GfxConstants.UNIT_SHIELD_Y ) );
+
+      // insert in delegate figure list to ensure graphical
+      // rendering.
+      Integer moveCount = new Integer(currUnit.getMoveCount());
+     unitCount.setText(moveCount.toString());
+    }
+    //No unit at current position, set to default values
+    else {
+      unitShieldIcon.set("black",
+              new Point( GfxConstants.UNIT_SHIELD_X,
+                      GfxConstants.UNIT_SHIELD_Y ) );
+      unitCount.setText("");
+    }
+
     System.out.println( "Fake it: tileFocusChangedAt "+position );
   }
 
