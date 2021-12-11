@@ -117,9 +117,9 @@ public class GameImpl implements Game {
     boolean sameLocation = (distRow == 0 && distCol == 0);
     boolean leftRight = (distRow == 1 && distCol == 0);
     boolean upDown = (distRow == 0 && distCol == 1);
-    boolean validDistance = sameLocation || leftRight || upDown;
 
-    if (!validDistance) { return false; }
+    if (sameLocation) { return false; }
+    if (!leftRight && !upDown) { return false; }
 
     //Check that unit at from can move to specified tile
     if(fromUnit == null) { return false; }
