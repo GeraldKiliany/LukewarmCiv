@@ -44,7 +44,7 @@ public class StubGame2 implements Game {
 
   private Unit red_archer;
 
-  private UpdateTool updateTool = new UpdateTool();
+ // private UpdateTool updateTool = new UpdateTool();
 
   public Unit getUnitAt(Position p) {
     if ( p.equals(pos_archer_red) ) {
@@ -140,7 +140,8 @@ public class StubGame2 implements Game {
   public void setTileFocus(Position position) {
     // TODO: setTileFocus implementation pending.
     System.out.println("-- StubGame2 / setTileFocus called.");
-    System.out.println(" *** IMPLEMENTATION PENDING ***");
+    //System.out.println(" *** IMPLEMENTATION PENDING ***");
+    gameObserver.tileFocusChangedAt(position);
   }
 
   @Override
