@@ -35,10 +35,30 @@ public class ShowEndOfTurn {
     DrawingEditor editor = 
       new MiniDrawApplication( "Click top shield to end the turn",  
                                new HotCivFactory4(game) );
+
+
+
     editor.open();
     editor.showStatus("Click to shield to see Game's endOfTurn method being called.");
 
     // TODO: Replace the setting of the tool with your EndOfTurnTool implementation.
-    editor.setTool( new NullTool() );
+
+    editor.setTool( new EndOfTurnTool(game) );
   }
+}
+
+
+class EndOfTurnTool extends NullTool{
+  private DrawingEditor editor;
+  private Game game;
+  public EndOfTurnTool(Game g) {
+    game = g;
+  }
+  public void mouseDown(MouseEvent e, int x, int y) {
+    if(x >= GfxConstants.TURN_SHIELD_X && x <= GfxConstants.TURN_SHIELD_X + GfxConstants.TILESIZE &&
+            y >= GfxConstants.TURN_SHIELD_Y && y <= GfxConstants.TURN_SHIELD_Y + GfxConstants.TILESIZE){
+      game.endOfTurn();
+    }
+  }
+
 }
