@@ -54,6 +54,7 @@ public class GameImpl implements Game {
   private GameFactory factory;
 
   private GameObserver observer;
+  private Tile tileFocus;
 
   private int redAttacksWon = 0;
   private int blueAttacksWon = 0;
@@ -317,5 +318,7 @@ public class GameImpl implements Game {
   }
 
   @Override
-  public void setTileFocus(Position position) {}
+  public void setTileFocus(Position position) {
+    tileFocus = tiles.get(position);
+  }
 }

@@ -126,6 +126,12 @@ public class TestIntegrationPart1 {
         assertThat(thetaGame.getTileAt(new Position(0,0)).getTypeString(), is(GameConstants.OCEANS));
         assertThat(observer.getObserved(), is(""));
     }
+
+    @Test
+    public void changeTileFocusFromZeroZeroToZeroOne() {
+        alphaGame.setTileFocus(new Position(0,0));
+        alphaGame.setTileFocus(new Position(0,1));
+    }
 }
 
 class GameObserverTestSpy implements GameObserver {
