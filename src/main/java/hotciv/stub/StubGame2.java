@@ -147,7 +147,10 @@ public class StubGame2 implements Game {
   public int getAge() { return 0; }  
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {}
-  public void performUnitActionAt( Position p ) {}
+  public void performUnitActionAt( Position p ) {
+    System.out.println( "-- StubGame2 / performUnitActionAt called." );
+    gameObserver.worldChangedAt(p);
+  }
 
   @Override
   public void setTileFocus(Position position) {
