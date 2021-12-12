@@ -38,6 +38,11 @@ public class TileTool extends NullTool {
        // civDrawing.tileFocusChangedAt()
     }
 
+    @Override
+    public void mouseUp(MouseEvent e, int x, int y){
+        Drawing model = editor().drawing();
+        model.unlock();
+    }
     public DrawingEditor editor() {
         return editor;
     }

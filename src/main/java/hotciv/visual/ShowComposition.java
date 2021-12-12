@@ -1,5 +1,6 @@
 package hotciv.visual;
 
+import hotciv.standard.CompositionTool;
 import minidraw.standard.*;
 import minidraw.framework.*;
 
@@ -10,6 +11,7 @@ import javax.swing.*;
 import hotciv.framework.*;
 import hotciv.view.*;
 import hotciv.stub.*;
+import minidraw.standard.handlers.StandardRubberBandSelectionStrategy;
 
 /** Template code for exercise FRS 36.44.
 
@@ -39,6 +41,6 @@ public class ShowComposition {
     editor.showStatus("Click and drag any item to see Game's proper response.");
 
     // TODO: Replace the setting of the tool with your CompositionTool implementation.
-    editor.setTool( new NullTool() );
+    editor.setTool( new CompositionTool(editor, new StandardRubberBandSelectionStrategy(), game) );
   }
 }

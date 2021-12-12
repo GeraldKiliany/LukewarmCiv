@@ -6,6 +6,7 @@ import minidraw.standard.NullTool;
 
 import java.awt.event.MouseEvent;
 
+//NOT USED, already provided in files for iteration 8
 public class UpdateTool extends NullTool {
     private Game game;
     private int count = 0;
