@@ -53,6 +53,8 @@ public class CompositionTool extends AbstractTool implements Tool {
             game.setTileFocus(tilePos);
             editor.showStatus("Set tile focus to " + tilePos.toString());
         }
+
+        //editor.drawing().findFigure(x,y);
     }
 
 
