@@ -1,14 +1,10 @@
 package hotciv.visual;
 
+import hotciv.standard.UnitMoveTool;
 import minidraw.standard.*;
 import minidraw.framework.*;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-
 import hotciv.framework.*;
-import hotciv.view.*;
 import hotciv.stub.*;
 import minidraw.standard.handlers.StandardRubberBandSelectionStrategy;
 

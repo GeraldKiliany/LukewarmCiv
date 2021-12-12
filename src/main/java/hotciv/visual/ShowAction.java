@@ -1,14 +1,10 @@
 package hotciv.visual;
 
+import hotciv.standard.ActionTool;
 import minidraw.standard.*;
 import minidraw.framework.*;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-
 import hotciv.framework.*;
-import hotciv.view.*;
 import hotciv.stub.*;
 
 /** Template code for exercise FRS 36.43.
@@ -41,34 +37,5 @@ public class ShowAction {
     // TODO: Replace the setting of the tool with your ActionTool implementation.
     //editor.setTool( new NullTool() );
     editor.setTool( new ActionTool(editor, game) );
-  }
-}
-
-class ActionTool extends NullTool {
-  private DrawingEditor editor;
-  private Game game;
-  private boolean shiftKeyPressed = false;
-  private KeyListener listener;
-
-  public ActionTool(DrawingEditor editor, Game game) {
-    this.editor = editor;
-    this.game = game;
-  }
-
-  public void mouseDown(MouseEvent e, int x, int y) {
-    if (shiftKeyPressed) {
-      if (game.getUnitAt(GfxConstants.getPositionFromXY(x,y)) != null) {
-        game.performUnitActionAt(GfxConstants.getPositionFromXY(x,y));
-      }
-    }
-    shiftKeyPressed = false;
-  }
-
-  public void mouseUp(MouseEvent e, int x, int y) {
-    editor.showStatus("Shift-Click on unit to see Game's performAction method being called.");
-  }
-
-  public void keyDown(KeyEvent evt, int key) {
-    shiftKeyPressed = evt.isShiftDown();
   }
 }

@@ -1,5 +1,6 @@
 package hotciv.visual;
 
+import hotciv.standard.EndOfTurnTool;
 import minidraw.standard.*;
 import minidraw.framework.*;
 
@@ -45,20 +46,4 @@ public class ShowEndOfTurn {
 
     editor.setTool( new EndOfTurnTool(game) );
   }
-}
-
-
-class EndOfTurnTool extends NullTool{
-  private DrawingEditor editor;
-  private Game game;
-  public EndOfTurnTool(Game g) {
-    game = g;
-  }
-  public void mouseDown(MouseEvent e, int x, int y) {
-    if(x >= GfxConstants.TURN_SHIELD_X && x <= GfxConstants.TURN_SHIELD_X + GfxConstants.TILESIZE &&
-            y >= GfxConstants.TURN_SHIELD_Y && y <= GfxConstants.TURN_SHIELD_Y + GfxConstants.TILESIZE){
-      game.endOfTurn();
-    }
-  }
-
 }

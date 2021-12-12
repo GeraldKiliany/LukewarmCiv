@@ -1,4 +1,4 @@
-package minidraw.standard;
+package hotciv.standard;
 
 import java.awt.event.MouseEvent;
 
@@ -6,6 +6,8 @@ import hotciv.framework.Game;
 import hotciv.framework.Position;
 import hotciv.view.GfxConstants;
 import minidraw.framework.*;
+import minidraw.standard.AbstractTool;
+import minidraw.standard.NullTool;
 import minidraw.standard.handlers.*;
 
 public class UnitMoveTool extends AbstractTool implements Tool {
