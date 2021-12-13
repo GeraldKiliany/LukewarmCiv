@@ -96,9 +96,9 @@ public class SemiCivTool extends AbstractTool implements Tool {
         editor().drawing().unlock();
 
 
-        fChild.mouseUp(e, x, y);
-        fChild = cachedNullTool;
-        draggedFigure = null;
+      //  fChild.mouseUp(e, x, y);
+      //  fChild = cachedNullTool;
+      //  draggedFigure = null;
 
         if (unitSelected) {
             to = GfxConstants.getPositionFromXY(x, y);

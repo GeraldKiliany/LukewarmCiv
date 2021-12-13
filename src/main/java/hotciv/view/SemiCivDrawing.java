@@ -163,11 +163,9 @@ public class SemiCivDrawing
         delegate.add(unitCountText);
         cityShieldIcon = new ImageFigure("black", new Point(GfxConstants.CITY_SHIELD_X,GfxConstants.CITY_SHIELD_Y));
         delegate.add(cityShieldIcon);
-        //redCityFig = new CityFigure(new CityImpl(Player.RED,new Position(8,12)),new Point(GfxConstants.getXFromColumn(1),GfxConstants.getYFromRow(1)));
-        //delegate.add(redCityFig);
-        //blueCityFig = new CityFigure(new CityImpl(Player.BLUE,new Position(4,5)),new Point(GfxConstants.getXFromColumn(1),GfxConstants.getYFromRow(4)));
-        //delegate.add(blueCityFig);
-        cityProdText = new TextFigure("", new Point(GfxConstants.CITY_PRODUCTION_X, GfxConstants.CITY_PRODUCTION_Y));
+
+        //changed to use workforce focus X value so they are aligned
+        cityProdText = new TextFigure("", new Point(GfxConstants.WORKFORCEFOCUS_X, GfxConstants.CITY_PRODUCTION_Y));
         delegate.add(cityProdText);
         cityBalText = new TextFigure("", new Point(GfxConstants.WORKFORCEFOCUS_X,GfxConstants.WORKFORCEFOCUS_Y));
         delegate.add(cityBalText);
@@ -270,13 +268,14 @@ public class SemiCivDrawing
             }
             cityProdText.setText(game.getCityAt(position).getProduction());
             //TODO: If implement etaciv, uncomment this to show correct value
-            // cityBalText.setText(game.getCityAt(position).getWorkforceFocus());
+            cityBalText.setText(GameConstants.foodFocus);
+
         }
         //No city at current position
         else{
             cityShieldIcon.set("black", new Point(GfxConstants.CITY_SHIELD_X,GfxConstants.CITY_SHIELD_Y));
             cityProdText.setText("");
-            //cityBalText.setText("");
+            cityBalText.setText("");
         }
 
 

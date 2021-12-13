@@ -117,14 +117,14 @@ public class GameImpl implements Game {
     boolean sameLocation = (distRow == 0 && distCol == 0);
     boolean leftRight = (distRow == 1 && distCol == 0);
     boolean upDown = (distRow == 0 && distCol == 1);
-    boolean wrongOwner = (fromUnit.getOwner() != getPlayerInTurn());
 
-    if (wrongOwner) {return false;}
     if (sameLocation) { return false; }
     if (!leftRight && !upDown) { return false; }
 
     //Check that unit at from can move to specified tile
     if(fromUnit == null) { return false; }
+    boolean wrongOwner = (fromUnit.getOwner() != getPlayerInTurn());
+    if (wrongOwner) {return false;}
     if(fromUnit.getMoveCount() == 0) { return false; }
     boolean toOceanTile = toTile.getTypeString().equals(GameConstants.OCEANS);
     boolean toMountainTile = toTile.getTypeString().equals(GameConstants.MOUNTAINS);
