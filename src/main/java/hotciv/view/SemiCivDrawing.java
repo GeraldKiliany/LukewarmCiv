@@ -208,12 +208,12 @@ public class SemiCivDrawing
 
     public void worldChangedAt(Position pos) {
         // TODO: Remove system.out debugging output
-        System.out.println( "CivDrawing: world changes at "+pos);
+        //System.out.println( "CivDrawing: world changes at "+pos);
         // this is a really brute-force algorithm: destroy
         // all known units and build up the entire set again
         defineUnitMap();
+        defineCityMap();
 
-        // TODO: Cities may change on position as well
     }
 
     public void turnEnds(Player nextPlayer, int age) {
@@ -284,8 +284,9 @@ public class SemiCivDrawing
         // everything. We simply rebuild the
         // entire Drawing.
         defineUnitMap();
+        defineCityMap();
         defineIcons();
-        // TODO: Cities pending
+
     }
 
     @Override
