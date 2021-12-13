@@ -232,7 +232,6 @@ public class GameImpl implements Game {
       observer.turnEnds(currPlayer, age);
     }
 
-
   }
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {
