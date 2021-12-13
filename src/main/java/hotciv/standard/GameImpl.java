@@ -323,4 +323,5 @@ public class GameImpl implements Game {
     if (observer != null)
       observer.tileFocusChangedAt(position);
   }
+
 }

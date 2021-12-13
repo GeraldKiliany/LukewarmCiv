@@ -40,7 +40,7 @@ public class ShowSemiCiv {
         // need to make our own factory
         DrawingEditor editor =
                 new MiniDrawApplication( "Semi Civ Unit Integration",
-                        new HotCivFactory4(game) );
+                        new HotCivFactory5(game) );
         editor.open();
         editor.showStatus("");
 
