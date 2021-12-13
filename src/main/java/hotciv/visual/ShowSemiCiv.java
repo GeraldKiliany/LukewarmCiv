@@ -35,7 +35,7 @@ public class ShowSemiCiv {
 
     public static void main(String[] args) {
         // need to make our own StubGame
-        Game game = new StubGame2();
+        Game game = new GameImpl( new SemiCivFactory());
 
         // need to make our own factory
         DrawingEditor editor =

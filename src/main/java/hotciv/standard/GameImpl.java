@@ -320,5 +320,7 @@ public class GameImpl implements Game {
   @Override
   public void setTileFocus(Position position) {
     tileFocus = tiles.get(position);
+    if (observer != null)
+      observer.tileFocusChangedAt(position);
   }
 }
