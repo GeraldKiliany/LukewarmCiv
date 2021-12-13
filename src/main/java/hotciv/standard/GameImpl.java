@@ -117,7 +117,9 @@ public class GameImpl implements Game {
     boolean sameLocation = (distRow == 0 && distCol == 0);
     boolean leftRight = (distRow == 1 && distCol == 0);
     boolean upDown = (distRow == 0 && distCol == 1);
+    boolean wrongOwner = (fromUnit.getOwner() != getPlayerInTurn());
 
+    if (wrongOwner) {return false;}
     if (sameLocation) { return false; }
     if (!leftRight && !upDown) { return false; }
 
