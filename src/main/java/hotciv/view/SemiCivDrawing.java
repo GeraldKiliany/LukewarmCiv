@@ -141,8 +141,8 @@ public class SemiCivDrawing
     }
 
     protected ImageFigure turnShieldIcon, unitShieldIcon,cityShieldIcon;
-    protected TextFigure unitCountText, cityProdText, cityBalText;
-    protected CityFigure redCityFig, blueCityFig;
+    protected TextFigure unitCountText, cityProdText, cityBalText, ageText;
+    //protected CityFigure redCityFig, blueCityFig;
     protected void defineIcons() {
         // TODO: Further development to include rest of figures needed
         turnShieldIcon =
@@ -171,6 +171,8 @@ public class SemiCivDrawing
         delegate.add(cityProdText);
         cityBalText = new TextFigure("", new Point(GfxConstants.WORKFORCEFOCUS_X,GfxConstants.WORKFORCEFOCUS_Y));
         delegate.add(cityBalText);
+        ageText = new TextFigure("-4000", new Point(GfxConstants.AGE_TEXT_X,GfxConstants.AGE_TEXT_Y));
+        delegate.add(ageText);
     }
 
     protected void defineCityMap(){
@@ -224,7 +226,9 @@ public class SemiCivDrawing
         turnShieldIcon.set( playername+"shield",
                 new Point( GfxConstants.TURN_SHIELD_X,
                         GfxConstants.TURN_SHIELD_Y ) );
-        // TODO: Age output pending
+
+        ageText.setText(new Integer(game.getAge()).toString());
+
     }
 
     public void tileFocusChangedAt(Position position) {

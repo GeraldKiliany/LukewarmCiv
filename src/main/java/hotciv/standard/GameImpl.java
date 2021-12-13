@@ -204,9 +204,6 @@ public class GameImpl implements Game {
   }
   public void endOfTurn() {
     //update GUI
-    if (observer != null) {
-      observer.turnEnds(currPlayer, age);
-    }
 
     for(Position p : cities.keySet()) {
       CityImpl currCity = cities.get(p);
@@ -231,6 +228,11 @@ public class GameImpl implements Game {
       age = agingStrategy.getNewAge(age);
       numberOfRoundsPassed++;
     }
+    if (observer != null) {
+      observer.turnEnds(currPlayer, age);
+    }
+
+
   }
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {
