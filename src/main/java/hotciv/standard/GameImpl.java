@@ -220,7 +220,7 @@ public class GameImpl implements Game {
       if(currUnit.getTypeString().equals(GameConstants.UFO)){
         currUnit.setMoveCount(2);
       }
-      else{
+      else if(currUnit.getDefensiveStrength() < 5){
         currUnit.setMoveCount(1);
       }
     }

@@ -21,7 +21,7 @@ public class ThetaCivUnitActionStrategy implements UnitActionStrategy {
                         unit.setMoveCount(0);
                     }
                     //de-fortification
-                    else {
+                    else if(unit.getDefensiveStrength() > new UnitImpl(GameConstants.ARCHER,Player.RED).getDefensiveStrength()){
                         unit.setDefensiveStrength(unit.getDefensiveStrength() / 2);
                         unit.setMoveCount(1);
                     }

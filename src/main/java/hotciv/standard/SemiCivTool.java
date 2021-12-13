@@ -75,8 +75,8 @@ public class SemiCivTool extends AbstractTool implements Tool {
         to = null;
 
         if (game.getUnitAt(from) != null) {
-            unitSelected = true;
-            editor.showStatus("UnitMoveTool: Valid unit selected at [" + from.getRow() + ", " + from.getColumn() + "].");
+                unitSelected = true;
+                editor.showStatus("UnitMoveTool: Valid unit selected at [" + from.getRow() + ", " + from.getColumn() + "].");
         }
     }
 
