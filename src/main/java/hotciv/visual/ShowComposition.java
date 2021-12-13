@@ -1,6 +1,7 @@
 package hotciv.visual;
 
 import hotciv.standard.CompositionTool;
+import hotciv.standard.SemiCivTool;
 import minidraw.standard.*;
 import minidraw.framework.*;
 

@@ -1,61 +1,62 @@
 package hotciv.standard;
 
-import hotciv.framework.Game;
-import hotciv.framework.Position;
-import hotciv.view.GfxConstants;
-import minidraw.framework.DrawingEditor;
-import minidraw.framework.Figure;
-import minidraw.framework.RubberBandSelectionStrategy;
-import minidraw.framework.Tool;
-import minidraw.standard.AbstractTool;
-import minidraw.standard.NullTool;
+import hotciv.standard.*;
+import minidraw.standard.*;
+import minidraw.framework.*;
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+import hotciv.framework.*;
+import hotciv.view.*;
+import hotciv.stub.*;
+import minidraw.standard.handlers.StandardRubberBandSelectionStrategy;
+
 
 import java.awt.event.MouseEvent;
 
-public class CompositionTool extends AbstractTool implements Tool {
+public class CompositionTool extends NullTool {
 
-    protected DrawingEditor editor;
-    protected int fAnchorX, fAnchorY;
-    Game game;
-    Position tilePos;
+    private StandardRubberBandSelectionStrategy standardRubberBandSelectionStrategy;
+    private DrawingEditor editor;
+    private Game game;
 
-    private Position from;
-    private Position to;
-    boolean unitSelected = false;
+    private EndOfTurnTool endOfTurnTool;
+    private UnitMoveTool unitMoveTool;
+    private ActionTool actionTool;
+    private TileTool tileTool;
 
-    protected Tool fChild;
-    protected Tool cachedNullTool;
-    protected Figure draggedFigure;
-    RubberBandSelectionStrategy selectionStrategy;
-
-
-    public CompositionTool(DrawingEditor editor,
-                           RubberBandSelectionStrategy selectionStrategy, Game game){
-        super(editor);
-        fChild = cachedNullTool = new NullTool();
-        draggedFigure = null;
-        this.selectionStrategy = selectionStrategy;
-        this.game = game;
-        this.editor = editor;
-
+    public CompositionTool(DrawingEditor e, StandardRubberBandSelectionStrategy s,Game g){
+        standardRubberBandSelectionStrategy = s;
+        editor = e;
+        game = g;
+        endOfTurnTool = new EndOfTurnTool(game);
+        unitMoveTool = new UnitMoveTool(editor, standardRubberBandSelectionStrategy, game);
+        actionTool = new ActionTool(editor, game);
+        tileTool = new TileTool(editor, game);
     }
+
     @Override
     public void mouseDown(MouseEvent e, int x, int y) {
-        //End of turn functionality: click on turn shield
-        if(x >= GfxConstants.TURN_SHIELD_X && x <= GfxConstants.TURN_SHIELD_X + GfxConstants.TILESIZE &&
-                y >= GfxConstants.TURN_SHIELD_Y && y <= GfxConstants.TURN_SHIELD_Y + GfxConstants.TILESIZE){
-            game.endOfTurn();
-            editor.showStatus("Ending turn");
-        }
-        else {
-            //Set Tile Focus functionality: click on a tile
-            tilePos = GfxConstants.getPositionFromXY(x, y);
-            game.setTileFocus(tilePos);
-            editor.showStatus("Set tile focus to " + tilePos.toString());
-        }
-
-        //editor.drawing().findFigure(x,y);
+        tileTool.mouseDown(e,x,y);
+        endOfTurnTool.mouseDown(e,x,y);
+        unitMoveTool.mouseDown(e,x,y);
+        actionTool.mouseDown(e,x,y);
     }
 
+    @Override
+    public void mouseDrag(MouseEvent e, int x, int y){
+        unitMoveTool.mouseDrag(e,x,y);
+    }
 
+    @Override
+    public void mouseMove(MouseEvent e, int x, int y){
+        unitMoveTool.mouseMove(e, x, y);
+    }
+
+    @Override
+    public void mouseUp(MouseEvent e, int x, int y) {
+        unitMoveTool.mouseUp(e, x, y);
+    }
 }

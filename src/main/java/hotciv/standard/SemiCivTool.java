@@ -24,6 +24,8 @@ public class SemiCivTool extends NullTool {
 
     private EndOfTurnTool endOfTurnTool;
     private UnitMoveTool unitMoveTool;
+    private ActionTool actionTool;
+    private TileTool tileTool;
 
     public SemiCivTool(DrawingEditor e, StandardRubberBandSelectionStrategy s,Game g){
         standardRubberBandSelectionStrategy = s;
@@ -31,12 +33,16 @@ public class SemiCivTool extends NullTool {
         game = g;
         endOfTurnTool = new EndOfTurnTool(game);
         unitMoveTool = new UnitMoveTool(editor, standardRubberBandSelectionStrategy, game);
+        actionTool = new ActionTool(editor, game);
+        tileTool = new TileTool(editor, game);
     }
 
     @Override
     public void mouseDown(MouseEvent e, int x, int y) {
+        tileTool.mouseDown(e,x,y);
         endOfTurnTool.mouseDown(e,x,y);
         unitMoveTool.mouseDown(e,x,y);
+        actionTool.mouseDown(e,x,y);
     }
 
     @Override
